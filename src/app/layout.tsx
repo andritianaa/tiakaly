@@ -35,7 +35,7 @@ export default function RootLayout({
       <body
         translate="no"
         suppressHydrationWarning
-        className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-indigo-100 selection:text-indigo-700`}
+        className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-yellow-100 selection:text-yellow-500`}
       >
         <TopLoader showSpinner={false} color="#2ccfff" />
         <Providers>{children}</Providers>

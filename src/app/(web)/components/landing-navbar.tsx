@@ -28,7 +28,7 @@ export default function LandingNavbar() {
       )}
       <div className="relative flex w-full max-w-[1274px] items-center justify-between">
         <Link href="/#hero">
-          <Logo withName color="white" />
+          <Logo withName />
         </Link>
         <div className="flex">
           <Link href={"/auth/login"}>

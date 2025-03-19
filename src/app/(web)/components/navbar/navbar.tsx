@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/logo";
-import ThemeToggle from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
 import { NavMenu } from "./nav-menu";
@@ -16,7 +15,7 @@ const Navbar = () => {
         <NavMenu className="hidden md:block" />
 
         <div className="flex items-center gap-3">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <Link href="/auth/login">
             <Button variant="outline" className="hidden sm:inline-flex">
               Sign In

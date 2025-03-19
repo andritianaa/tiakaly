@@ -10,15 +10,15 @@ const Hero = () => {
       <div className="max-w-screen-xl w-full flex flex-col lg:flex-row mx-auto items-center justify-between gap-y-14 gap-x-10 px-6 py-12 lg:py-0">
         <div className="max-w-xl">
           <Badge className="rounded-full py-1 border-none">
-            Just released v1.0.0
+            Bienvenue les tiakaly
           </Badge>
           <h1 className="mt-6 max-w-[20ch] text-3xl xs:text-4xl sm:text-5xl lg:text-[2.75rem] xl:text-5xl font-bold !leading-[1.2] tracking-tight">
-            Customized Shadcn UI Blocks & Components
+            Les meilleurs plans bouffe de Madagascar
           </h1>
           <p className="mt-6 max-w-[60ch] xs:text-lg">
-            Explore a collection of Shadcn UI blocks and components, ready to
-            preview and copy. Streamline your development workflow with
-            easy-to-implement examples.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore
+            architecto ipsum harum illum nihil expedita, commodi dignissimos
+            dolorum eveniet beatae.
           </p>
           <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">
             <Button

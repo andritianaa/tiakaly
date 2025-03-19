@@ -31,9 +31,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
         ></video>
         <Logo
           withName
-          color="white"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-32 max-lg:h-24"
-          nameClassName=" text-[6rem] max-lg:text-[4rem]"
         />
       </div>
     </div>

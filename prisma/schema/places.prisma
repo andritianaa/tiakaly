@@ -1,0 +1,82 @@
+model Place {
+    id           String       @id @default(cuid())
+    title        String
+    localisation String
+    content      String
+    longitude    Float
+    latitude     Float
+    keywords     String[]
+    rating       Int
+    mainMediaId  String
+    createdAt    DateTime     @default(now())
+    priceMin     Int
+    priceMax     Int
+    type         PlaceType
+    menu         String[]
+    status       Status
+    mainMedia    Media        @relation(fields: [mainMediaId], references: [id])
+    MediaPlace   MediaPlace[]
+    Contact      Contact[]
+    MenuPlace    MenuPlace[]
+}
+
+enum PlaceType {
+    restaurant
+    bar
+    rooftop
+    snack
+}
+
+model Menu {
+    id        String      @id @default(cuid())
+    name      String
+    createdAt DateTime    @default(now())
+    MenuPlace MenuPlace[]
+}
+
+model MediaPlace {
+    id        String   @id @default(cuid())
+    placeId   String
+    place     Place    @relation(fields: [placeId], references: [id])
+    mediaId   String
+    media     Media    @relation(fields: [mediaId], references: [id])
+    createdAt DateTime @default(now())
+}
+
+model MenuPlace {
+    id        String   @id @default(cuid())
+    placeId   String
+    place     Place    @relation(fields: [placeId], references: [id])
+    menuId    String
+    menu      Menu     @relation(fields: [menuId], references: [id])
+    createdAt DateTime @default(now())
+}
+
+model Contact {
+    id        String      @id @default(cuid())
+    type      ContactType
+    placeId   String
+    place     Place       @relation(fields: [placeId], references: [id])
+    createdAt DateTime    @default(now())
+}
+
+enum ContactType {
+    mobile
+    fixe
+    email
+}
+
+enum Status {
+    published
+    draft
+    archived
+}
+
+model Media {
+    id         String       @id @default(cuid())
+    url        String
+    type       String
+    createdAt  DateTime     @default(now())
+    MediaPlace MediaPlace[]
+    Place      Place[]
+}
