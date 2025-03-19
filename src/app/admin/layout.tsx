@@ -10,11 +10,16 @@ export default async function RouteLayout({
   children: React.ReactNode;
 }) {
   const user = await currentUser();
-  if (!user) return redirect("/auth/login");
-  return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>{children}</SidebarInset>
-    </SidebarProvider>
-  );
+  if (!user) {
+    return redirect("/auth/login");
+  } else if (user.permissions.includes("ADMIN")) {
+    return (
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>{children}</SidebarInset>
+      </SidebarProvider>
+    );
+  } else {
+    return redirect("/");
+  }
 }
