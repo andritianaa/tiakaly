@@ -1,0 +1,63 @@
+model User {
+  id              String   @id @default(cuid())
+  firstname       String?
+  lastname        String?
+  fullname        String?
+  image           String
+  tourOnboarding  String[]
+  username        String   @unique
+  email           String   @unique
+  language        String   @default("en")
+  description     String?
+  theme           String   @default("light")
+  password        String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  permissions     Roles[]
+  isEmailVerified Boolean  @default(false)
+
+  Session         Session[]
+  Activity        Activity[]
+  TaskComment     TaskComment[]
+  Tasks           Task[]        @relation(name: "TaskUser")
+  TasksModerated  Task[]        @relation(name: "TaskModerator")
+  TasksAssignated Task[]        @relation(name: "TaskUserAssignation")
+  TaskHistory     TaskHistory[]
+}
+
+model Session {
+  id             String     @id @default(cuid())
+  userId         String
+  token          String     @unique
+  deviceType     String
+  deviceOs       String
+  deviceModel    String?
+  browser        String?
+  browserVersion String?
+  authType       String     @default("classic")
+  ip             String
+  country        String?
+  lastActive     DateTime   @default(now())
+  createdAt      DateTime   @default(now())
+  user           User       @relation(fields: [userId], references: [id])
+  Activity       Activity[]
+
+  @@index([userId])
+  @@index([token])
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+}
+
+enum Roles {
+  ADMIN
+  DEV
+  MODERATOR
+  SUPERADMIN
+  MONITOR
+}

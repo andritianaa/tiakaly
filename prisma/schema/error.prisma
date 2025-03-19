@@ -1,0 +1,20 @@
+model ErrorLog {
+    id             String   @id @default(cuid())
+    createdAt      DateTime @default(now())
+    level          String // ERROR, WARN, INFO
+    message        String
+    stack          String?
+    path           String? // URL ou chemin où l'erreur s'est produite
+    method         String? // GET, POST, etc.
+    userId         String? // ID de l'utilisateur si connecté
+    userAgent      String? // Navigateur/device info
+    ip             String?
+    statusCode     Int?
+    requestBody    Json? // Corps de la requête
+    requestHeaders Json? // En-têtes de la requête
+    environment    String // dev, prod, etc.
+    tags           String[] // Pour le filtrage et la catégorisation
+    resolved       Boolean  @default(false)
+    resolution     String? // Notes sur la résolution
+    additionalData String?
+}
