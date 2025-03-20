@@ -14,12 +14,14 @@ export type logoProps = {
 
 export const Logo = ({ withName, icon, className }: logoProps) => {
   const { theme } = useTheme();
-  const [url, seturl] = useState("/logo-round.png");
+  const [url, seturl] = useState("/logo.png");
   useEffect(() => {
     if (icon) {
       seturl("/logo.png");
     } else if (withName) {
-      seturl("logo-large.png");
+      seturl("/logo-large.png");
+    } else {
+      seturl("/logo-round.png");
     }
   }, []);
 

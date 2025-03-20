@@ -30,8 +30,8 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
           className="w-full h-full object-cover lg:rounded-tl-[100px] select-none pointer-events-none"
         ></video>
         <Logo
-          withName
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-32 max-lg:h-24"
+          icon
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-52 max-lg:h-24"
         />
       </div>
     </div>

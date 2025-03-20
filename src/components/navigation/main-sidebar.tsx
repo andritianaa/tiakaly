@@ -1,108 +1,59 @@
 "use client";
 
-import { BookOpen, Bot, Frame, Map, PieChart, Settings2, SquareTerminal } from 'lucide-react';
-import * as React from 'react';
+import { Frame, Map, MapPinned, PieChart, SquareKanban } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
-import { Logo } from '@/components/logo';
+import { Logo } from "@/components/logo";
 import {
-    Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton,
-    SidebarMenuItem
-} from '@/components/ui/sidebar';
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 
-import { NavFooter } from './nav-footer';
-import { NavMain } from './nav-main';
-import { NavSecondary } from './nav-secondary';
-import { NavUser } from './nav-user';
+import { NavFooter } from "./nav-footer";
+import { NavMain } from "./nav-main";
+import { NavUser } from "./nav-user";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Endroits",
+      url: "/admin/places",
+      icon: MapPinned,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Liste",
+          url: "/admin/places",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Ajouter",
+          url: "/admin/places/new",
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "Carte",
+          url: "/admin/places/map",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
+      title: "Projet",
+      url: "/kanban",
+      icon: SquareKanban,
+      isActive: true,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Kanban",
+          url: "/admin/kanban",
         },
         {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
+          title: "Liste",
+          url: "/admin/kanban/list",
         },
       ],
     },
@@ -134,22 +85,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="/">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary">
-                  <Logo className="size-4" color="white" />
+                  <Logo className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Tiakaly</span>
-                  <span className="truncate text-xs">Free</span>
+                  <span className="truncate text-xs">Admin</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary projects={data.projects} />
+        {/* <NavSecondary projects={data.projects} /> */}
         <NavFooter className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

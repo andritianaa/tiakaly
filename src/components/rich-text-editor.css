@@ -1,0 +1,73 @@
+/* Custom styles for the rich text editor */
+
+.rich-text-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+.rich-text-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+.rich-text-content li {
+  margin-bottom: 0.25rem !important;
+}
+
+.rich-text-content li p {
+  margin: 0 !important;
+}
+
+.rich-text-content h1 {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.rich-text-content h2 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+.rich-text-content h3 {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.rich-text-content a {
+  color: #eab308 !important; /* text-yellow-500 */
+  text-decoration: underline !important;
+}
+
+.rich-text-content a:hover {
+  color: #ca8a04 !important; /* text-yellow-600 */
+}
+
+.rich-text-content blockquote {
+  border-left: 3px solid #e2e8f0 !important;
+  padding-left: 1rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-style: italic !important;
+}
+
+.rich-text-content p {
+  margin-bottom: 0.5rem !important;
+}
+
+.rich-text-content img {
+  max-height: 300px !important;
+  border-radius: 0.5rem !important;
+}

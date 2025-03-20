@@ -2,68 +2,74 @@ model Place {
     id           String       @id @default(cuid())
     title        String
     localisation String
-    content      String
+    bio          String?      @default("")
+    content      String       @db.Text
     longitude    Float
     latitude     Float
     keywords     String[]
     rating       Int
-    mainMediaId  String
-    createdAt    DateTime     @default(now())
     priceMin     Int
     priceMax     Int
-    type         PlaceType
-    menu         String[]
-    status       Status
-    mainMedia    Media        @relation(fields: [mainMediaId], references: [id])
+    type         String // Changer de PlaceType enum à String
+    placeTypeId  String? // Ajouter cette relation
+    placeType    PlaceType?   @relation(fields: [placeTypeId], references: [id])
+    status       Status       @default(draft)
+    mainMediaId  String
+    mainMedia    Media        @relation("MainMedia", fields: [mainMediaId], references: [id])
     MediaPlace   MediaPlace[]
     Contact      Contact[]
     MenuPlace    MenuPlace[]
+    createdAt    DateTime     @default(now())
+    updatedAt    DateTime     @updatedAt
 }
 
-enum PlaceType {
-    restaurant
-    bar
-    rooftop
-    snack
+model Media {
+    id         String       @id @default(cuid())
+    url        String
+    type       String
+    Place      Place[]      @relation("MainMedia")
+    MediaPlace MediaPlace[]
+    createdAt  DateTime     @default(now())
+}
+
+model MediaPlace {
+    id      String @id @default(cuid())
+    placeId String
+    place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+    mediaId String
+    media   Media  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+    id      String      @id @default(cuid())
+    type    ContactType
+    value   String
+    placeId String
+    place   Place       @relation(fields: [placeId], references: [id], onDelete: Cascade)
 }
 
 model Menu {
     id        String      @id @default(cuid())
     name      String
-    createdAt DateTime    @default(now())
     MenuPlace MenuPlace[]
-}
-
-model MediaPlace {
-    id        String   @id @default(cuid())
-    placeId   String
-    place     Place    @relation(fields: [placeId], references: [id])
-    mediaId   String
-    media     Media    @relation(fields: [mediaId], references: [id])
-    createdAt DateTime @default(now())
+    createdAt DateTime    @default(now())
 }
 
 model MenuPlace {
+    id      String @id @default(cuid())
+    placeId String
+    place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+    menuId  String
+    menu    Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
+}
+
+model PlaceType {
     id        String   @id @default(cuid())
-    placeId   String
-    place     Place    @relation(fields: [placeId], references: [id])
-    menuId    String
-    menu      Menu     @relation(fields: [menuId], references: [id])
+    name      String   @unique
+    value     String   @unique
+    places    Place[]
     createdAt DateTime @default(now())
-}
-
-model Contact {
-    id        String      @id @default(cuid())
-    type      ContactType
-    placeId   String
-    place     Place       @relation(fields: [placeId], references: [id])
-    createdAt DateTime    @default(now())
-}
-
-enum ContactType {
-    mobile
-    fixe
-    email
+    updatedAt DateTime @updatedAt
 }
 
 enum Status {
@@ -72,11 +78,8 @@ enum Status {
     archived
 }
 
-model Media {
-    id         String       @id @default(cuid())
-    url        String
-    type       String
-    createdAt  DateTime     @default(now())
-    MediaPlace MediaPlace[]
-    Place      Place[]
+enum ContactType {
+    mobile
+    fixe
+    email
 }

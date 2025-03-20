@@ -95,3 +95,23 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.leaflet-control-attribution.leaflet-control {
+  display: none !important;
+}
+
+.big-map
+  .leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+  height: calc(100vh - 64px) !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.leaflet-popup-tip {
+  display: none !important;
+}

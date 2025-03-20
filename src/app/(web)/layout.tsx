@@ -1,4 +1,4 @@
-import { MouseAnimation } from "@/components/mouse-animation";
+import { Navbar } from "@/app/(web)/components/navbar";
 
 export default function RouteLayout({
   children,
@@ -7,7 +7,8 @@ export default function RouteLayout({
 }) {
   return (
     <>
-      <MouseAnimation />
+      <Navbar />
+
       {children}
     </>
   );

@@ -14,11 +14,11 @@ const footerSections = [
     title: "Product",
     links: [
       {
-        title: "Overview",
+        title: "Vue d'ensemble",
         href: "#",
       },
       {
-        title: "Features",
+        title: "Fonctionnalités",
         href: "#",
       },
       {
@@ -26,44 +26,32 @@ const footerSections = [
         href: "#",
       },
       {
-        title: "Tutorials",
+        title: "Tarification",
         href: "#",
       },
       {
-        title: "Pricing",
-        href: "#",
-      },
-      {
-        title: "Releases",
+        title: "Nouveautés",
         href: "#",
       },
     ],
   },
   {
-    title: "Company",
+    title: "Tiakaly",
     links: [
       {
-        title: "About us",
+        title: "À propos",
         href: "#",
       },
       {
-        title: "Careers",
+        title: "Histoire",
         href: "#",
       },
       {
-        title: "Press",
+        title: "Nouvelles",
         href: "#",
       },
       {
-        title: "News",
-        href: "#",
-      },
-      {
-        title: "Media kit",
-        href: "#",
-      },
-      {
-        title: "Contact",
+        title: "Contacts",
         href: "#",
       },
     ],
@@ -80,15 +68,11 @@ const footerSections = [
         href: "#",
       },
       {
-        title: "Events",
+        title: "Événements",
         href: "#",
       },
       {
-        title: "Help centre",
-        href: "#",
-      },
-      {
-        title: "Tutorials",
+        title: "Aide",
         href: "#",
       },
       {
@@ -101,27 +85,15 @@ const footerSections = [
     title: "Social",
     links: [
       {
-        title: "Twitter",
-        href: "#",
-      },
-      {
-        title: "LinkedIn",
-        href: "#",
-      },
-      {
         title: "Facebook",
         href: "#",
       },
       {
-        title: "GitHub",
+        title: "Instagram",
         href: "#",
       },
       {
-        title: "AngelList",
-        href: "#",
-      },
-      {
-        title: "Dribbble",
+        title: "Tiktok",
         href: "#",
       },
     ],
@@ -130,23 +102,11 @@ const footerSections = [
     title: "Legal",
     links: [
       {
-        title: "Terms",
+        title: "Termes",
         href: "#",
       },
       {
-        title: "Privacy",
-        href: "#",
-      },
-      {
-        title: "Cookies",
-        href: "#",
-      },
-      {
-        title: "Licenses",
-        href: "#",
-      },
-      {
-        title: "Settings",
+        title: "Confidentialité",
         href: "#",
       },
       {
@@ -165,8 +125,7 @@ const Footer = () => {
           <Logo withName />
 
           <p className="mt-4 text-muted-foreground">
-            Design amazing digital experiences that create more happy in the
-            world.
+            Les meilleurs plans bouffe de Madagascar
           </p>
         </div>
 
@@ -194,25 +153,10 @@ const Footer = () => {
         <span className="text-muted-foreground text-center xs:text-start">
           &copy; {new Date().getFullYear()}{" "}
           <Link href="https://shadcnui-blocks.com" target="_blank">
-            Shadcn UI Blocks
+            Tiakaly
           </Link>
-          . All rights reserved.
+          . Tous droits réservés.
         </span>
-
-        <div className="flex items-center gap-5 text-muted-foreground">
-          {/* <Link href="#" target="_blank">
-            <TwitterIcon className="h-5 w-5" />
-          </Link>
-          <Link href="#" target="_blank">
-            <DribbbleIcon className="h-5 w-5" />
-          </Link>
-          <Link href="#" target="_blank">
-            <TwitchIcon className="h-5 w-5" />
-          </Link>
-          <Link href="#" target="_blank">
-            <GithubIcon className="h-5 w-5" />
-          </Link> */}
-        </div>
       </div>
     </footer>
   );

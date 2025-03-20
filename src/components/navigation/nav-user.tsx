@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
+import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,7 +21,11 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/use-user";
 
-export function NavUser() {
+export type NavUserProps = {
+  avatarOnly?: boolean;
+};
+
+export function NavUser(props: NavUserProps) {
   const { user, isLoading } = useUser();
   const { isMobile } = useSidebar();
 
@@ -36,7 +33,6 @@ export function NavUser() {
     return <Skeleton className="h-12 w-full" />;
   }
   if (user) {
-    console.log("user ==> ", user);
     return (
       <SidebarMenu>
         <SidebarMenuItem>
@@ -80,25 +76,12 @@ export function NavUser() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Sparkles />
-                  Upgrade to Pro
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
+              <DropdownMenuGroup></DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <BadgeCheck />
-                  Account
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CreditCard />
-                  Billing
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Bell />
-                  Notifications
+                  Compte
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />

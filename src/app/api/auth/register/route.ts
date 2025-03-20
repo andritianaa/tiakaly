@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
         email,
         username,
         password: hashedPassword,
-        image: `https://api.dicebear.com/9.x/identicon/svg?seed=${email}&backgroundColor=ffffff`,
+        image: `https://api.dicebear.com/9.x/adventurer/svg?seed=${email}&backgroundColor=ffe900`,
       },
     });
 

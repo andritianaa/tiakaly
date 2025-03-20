@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next as",
-  description: "Created by Andritiana.sh",
+  title: "Tiakaly",
+  description: "Les meilleurs plans bouffe de Madagascar",
 };
 
 export default function RootLayout({
@@ -37,7 +37,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-yellow-100 selection:text-yellow-500`}
       >
-        <TopLoader showSpinner={false} color="#2ccfff" />
+        <TopLoader showSpinner={true} color="#fad02c" />
         <Providers>{children}</Providers>
       </body>
     </html>

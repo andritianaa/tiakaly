@@ -1,5 +1,6 @@
-import { ArrowUpRight, CirclePlay } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,19 +22,23 @@ const Hero = () => {
             dolorum eveniet beatae.
           </p>
           <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">
-            <Button
-              size="lg"
-              className="w-full sm:w-auto rounded-full text-base"
-            >
-              Get Started <ArrowUpRight className="!h-5 !w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto rounded-full text-base shadow-none"
-            >
-              <CirclePlay className="!h-5 !w-5" /> Watch Demo
-            </Button>
+            <Link href={"/auth/register"}>
+              <Button
+                size="lg"
+                className="w-full sm:w-auto rounded-full text-base"
+              >
+                Allons-y! <ArrowUpRight className="!h-5 !w-5" />
+              </Button>
+            </Link>
+            <Link href={"/auth/register"}>
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto rounded-full text-base shadow-none"
+              >
+                Inscription
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="relative lg:max-w-lg xl:max-w-xl w-full bg-accent rounded-xl aspect-square">
