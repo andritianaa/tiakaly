@@ -1,5 +1,5 @@
 "use client";
-import { Mail, MapPin, Phone, Star } from "lucide-react";
+import { Mail, Phone, Star } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -37,25 +37,24 @@ export const PlacePopup = (place: PlaceSummary) => {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-full">
+                    <div className="flex">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`size-4 ${
+                            star <= place.rating
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-muted-foreground"
+                          }`}
+                        />
+                      ))}
+                    </div>
                     <div className="flex justify-between w-full items-center">
                       <h1 className="text-2xl font-bold flex items-center">
                         {place.title}
                       </h1>
-                      <div className="flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
-                            key={star}
-                            className={`size-4 ${
-                              star <= place.rating
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "text-muted-foreground"
-                            }`}
-                          />
-                        ))}
-                      </div>
                     </div>
                     <div className="flex items-center text-muted-foreground text-sm">
-                      <MapPin className="size-4 mr-1" />
                       <span>{place.localisation}</span>
                     </div>
                   </div>
