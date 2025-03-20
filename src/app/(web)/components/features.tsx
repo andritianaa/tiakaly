@@ -78,8 +78,8 @@ const Features = () => {
                     <MapPin className="size-4 mr-1" />
                     <span>{place.localisation}</span>
                   </div>
-                  <p className="mt-1 text-muted-foreground text-sm xs:text-[17px]">
-                    {place.bio} {place.bio}
+                  <p className="mt-1 text-muted-foreground text-sm xs:text-[17px] line-clamp-2">
+                    {place.bio}
                   </p>
                 </CardHeader>
                 <CardContent className="mt-auto px-0 pb-0">

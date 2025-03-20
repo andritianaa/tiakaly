@@ -105,8 +105,8 @@ export function ContactsInput({ value, onChange }: ContactsInputProps) {
                     contactType === ContactType.email
                       ? "email@exemple.com"
                       : contactType === ContactType.mobile
-                      ? "06 12 34 56 78"
-                      : "01 23 45 67 89"
+                      ? "038 62 319 63"
+                      : "020 22 675 89"
                   }
                 />
               </div>

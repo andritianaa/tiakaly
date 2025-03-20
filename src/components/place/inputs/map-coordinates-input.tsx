@@ -41,7 +41,7 @@ function MapComponent({
 
   // Fix for Leaflet marker icons in Next.js
   const icon = L.icon({
-    iconUrl: "/marker-icon-blue.png",
+    iconUrl: "/marker-icon-red.png",
     shadowUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
     iconSize: [25, 41],
     iconAnchor: [12, 41],

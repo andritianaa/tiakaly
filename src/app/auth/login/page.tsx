@@ -69,7 +69,7 @@ export default function LoginPage() {
           description: "Vous êtes maintenant connecté.",
         });
 
-        router.push("/dashboard");
+        router.push("/");
       } else {
         toast({ title: "Erreur", description: data.error, variant: "error" });
       }

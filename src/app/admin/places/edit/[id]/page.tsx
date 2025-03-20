@@ -54,7 +54,7 @@ export default function EditPlacePage() {
           title: "Succès",
           description: "Le lieu a été mis à jour avec succès",
         });
-        router.push("/places");
+        router.push("/map");
       } else {
         throw new Error(result.error);
       }

@@ -54,14 +54,16 @@ export function UserMenu(props: NavUserProps) {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <Link href="/admin">
-              <DropdownMenuItem>
-                <Shield />
-                Admin
-              </DropdownMenuItem>
-            </Link>
-          </DropdownMenuGroup>
+          {user.permissions.includes("ADMIN") && (
+            <DropdownMenuGroup>
+              <Link href="/admin">
+                <DropdownMenuItem>
+                  <Shield />
+                  Admin
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuGroup>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>

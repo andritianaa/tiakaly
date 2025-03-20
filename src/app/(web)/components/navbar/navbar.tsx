@@ -10,7 +10,7 @@ import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 
 const Navbar = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
 
   return (
     <nav className="h-16 bg-background border-b border-accent fixed top-0 w-full z-40">
@@ -23,19 +23,23 @@ const Navbar = () => {
 
         <div className="flex justify-end flex-1 items-center gap-3">
           {/* <ThemeToggle /> */}
-          {user ? (
-            <UserMenu />
-          ) : (
+          {!isLoading && (
             <>
-              <Link href="/auth/login">
-                <Button variant="outline" className="hidden sm:inline-flex">
-                  Sign In
-                </Button>
-              </Link>
+              {user ? (
+                <UserMenu />
+              ) : (
+                <>
+                  <Link href="/auth/login">
+                    <Button variant="outline" className="hidden sm:inline-flex">
+                      Sign In
+                    </Button>
+                  </Link>
 
-              <Link href="/auth/register">
-                <Button className="xs:inline-flex">Get Started</Button>
-              </Link>
+                  <Link href="/auth/register">
+                    <Button className="xs:inline-flex">Get Started</Button>
+                  </Link>
+                </>
+              )}
             </>
           )}
 

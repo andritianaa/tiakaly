@@ -65,7 +65,7 @@ export default function RegisterPage() {
           title: "Inscription réussie",
           description: "Votre compte a été créé avec succès.",
         });
-        router.push("/dashboard");
+        router.push("/");
       } else {
         // Gestion des erreurs spécifiques (inchangée)
         if (data.error === "Email already in use") {

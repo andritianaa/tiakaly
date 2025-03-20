@@ -1,9 +1,9 @@
 import L from "leaflet";
 
 export const MARKER = new L.Icon({
-  iconUrl: "/marker-icon-blue.png",
+  iconUrl: "/marker-icon-red.png",
   className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive",
-  iconRetinaUrl: "/icon_leaflet/marker-icon-blue.png",
+  iconRetinaUrl: "/icon_leaflet/marker-icon-red.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
   iconAnchor: [12 * 1.3, 32 * 1.3],
   popupAnchor: [0, -32 * 1.3],

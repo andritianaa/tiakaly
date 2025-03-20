@@ -19,7 +19,7 @@ export default function NewPlacePage() {
           title: "Succès",
           description: "Le lieu a été créé avec succès",
         });
-        router.push("/places");
+        router.push("/map");
       } else {
         throw new Error(result.error);
       }
