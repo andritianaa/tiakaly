@@ -119,3 +119,9 @@ body {
 .place-card.place-card-large .review-box {
   display: none !important;
 }
+
+.rsme-embed,
+.instagram-media.instagram-media-rendered {
+  border-radius: 0.5rem !important;
+  overflow: hidden !important;
+}

@@ -27,6 +27,7 @@ export async function createPlace(data: PlaceInput) {
       bio,
       priceInDollars,
       gmapEmbed,
+      instagramUrl,
       gmapLink,
     } = data;
 
@@ -48,6 +49,7 @@ export async function createPlace(data: PlaceInput) {
         bio,
         priceInDollars,
         gmapEmbed,
+        instagramUrl,
         gmapLink,
       },
     });
@@ -125,6 +127,7 @@ export async function updatePlace(id: string, data: PlaceInput) {
       bio,
       priceInDollars,
       gmapEmbed,
+      instagramUrl,
       gmapLink,
     } = data;
 
@@ -160,6 +163,7 @@ export async function updatePlace(id: string, data: PlaceInput) {
         bio,
         priceInDollars,
         gmapEmbed,
+        instagramUrl,
         gmapLink,
       },
     });

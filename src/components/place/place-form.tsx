@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { BioInput } from '@/components/place/inputs/bio-input';
 import { GmapEmbedInput, GmapLinkInput } from '@/components/place/inputs/gmapLink-input';
+import { InstaLinkInput } from '@/components/place/inputs/Insta-input';
 import { PriceInDollarsInput } from '@/components/place/inputs/priceInDollars-input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -45,6 +46,9 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
   );
   const [gmapLink, setGmapLink] = useState(initialData?.gmapLink || "");
   const [gmapEmbed, setGmapEmbed] = useState(initialData?.gmapEmbed || "");
+  const [instagramUrl, setinstagramUrl] = useState(
+    initialData?.instagramUrl || ""
+  );
   const [bio, setBio] = useState(initialData?.bio || "");
   const [content, setContent] = useState(initialData?.content || "");
   const [longitude, setLongitude] = useState(initialData?.longitude || 0);
@@ -110,6 +114,7 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
         content,
         longitude,
         gmapEmbed,
+        instagramUrl,
         gmapLink,
         priceInDollars,
         latitude,
@@ -178,6 +183,7 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
           <div className="grid grid-cols-2 gap-4">
             <GmapLinkInput value={gmapLink} onChange={setGmapLink} />
             <GmapEmbedInput value={gmapEmbed} onChange={setGmapEmbed} />
+            <InstaLinkInput value={instagramUrl} onChange={setinstagramUrl} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

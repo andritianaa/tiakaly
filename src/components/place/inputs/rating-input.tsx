@@ -17,7 +17,7 @@ export function RatingInput({ value, onChange }: RatingInputProps) {
     <div className="space-y-2">
       <Label>Note</Label>
       <div className="flex items-center gap-1">
-        {[1, 2, 3, 4, 5].map((rating) => (
+        {[1, 2, 3].map((rating) => (
           <button
             key={rating}
             type="button"
@@ -35,7 +35,7 @@ export function RatingInput({ value, onChange }: RatingInputProps) {
           </button>
         ))}
         <span className="ml-2 text-sm text-muted-foreground">
-          {value} sur 5
+          {value} sur 3
         </span>
       </div>
     </div>

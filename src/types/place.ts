@@ -27,6 +27,7 @@ export type PlaceInput = {
   priceInDollars?: number;
   gmapLink?: string;
   gmapEmbed?: string;
+  instagramUrl?: string;
   latitude: number;
   keywords: string[];
   rating: number;
@@ -48,6 +49,7 @@ export type PlaceWithRelations = {
   priceInDollars?: number;
   gmapLink?: string;
   gmapEmbed?: string;
+  instagramUrl?: string;
   longitude: number;
   bio: string;
   latitude: number;

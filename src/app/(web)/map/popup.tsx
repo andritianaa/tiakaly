@@ -1,11 +1,11 @@
 "use client";
-import { Mail, Phone, Star } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
+import { Mail, Phone, Star } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { PlaceSummary } from "@/types/place";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { PlaceSummary } from '@/types/place';
 
 export const PlacePopup = (place: PlaceSummary) => {
   const [copiedText, setCopiedText] = useState("");
@@ -38,7 +38,7 @@ export const PlacePopup = (place: PlaceSummary) => {
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-full">
                     <div className="flex">
-                      {[1, 2, 3, 4, 5].map((star) => (
+                      {[1, 2, 3].map((star) => (
                         <Star
                           key={star}
                           className={`size-4 ${

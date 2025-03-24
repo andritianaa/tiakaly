@@ -1,47 +1,25 @@
 "use client";
 
-import {
-  Archive,
-  Eye,
-  FileText,
-  MoreHorizontal,
-  Pencil,
-  Trash2,
-  View,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Archive, Eye, FileText, MoreHorizontal, Pencil, Trash2, View } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
+    AlertDialogFooter, AlertDialogHeader, AlertDialogTitle
+} from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+    DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
-import { Status } from "@prisma/client";
+    Table, TableBody, TableCell, TableHead, TableHeader, TableRow
+} from '@/components/ui/table';
+import { useToast } from '@/hooks/use-toast';
+import { Status } from '@prisma/client';
 
 import type { PlaceWithRelations } from "@/types/place";
 interface PlaceListProps {
@@ -69,10 +47,6 @@ export function PlaceList({
     filter === "all"
       ? places
       : places.filter((place) => place.status === filter);
-
-  const handleEdit = (id: string) => {
-    router.push(`/admin/places/edit/${id}`);
-  };
 
   const handleStatusChange = async (id: string, status: Status) => {
     try {
@@ -233,10 +207,12 @@ export function PlaceList({
                             Voir
                           </DropdownMenuItem>
                         </Link>
-                        <DropdownMenuItem onClick={() => handleEdit(place.id)}>
-                          <Pencil className="h-4 w-4 mr-2" />
-                          Modifier
-                        </DropdownMenuItem>
+                        <Link href={`/admin/places/edit/${place.id}`}>
+                          <DropdownMenuItem>
+                            <Pencil className="h-4 w-4 mr-2" />
+                            Modifier
+                          </DropdownMenuItem>
+                        </Link>
                         {place.status !== Status.published && (
                           <DropdownMenuItem
                             onClick={() =>

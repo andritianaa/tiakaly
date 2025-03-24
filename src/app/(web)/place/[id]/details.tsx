@@ -1,10 +1,11 @@
 "use client";
 
 import Autoplay from 'embla-carousel-autoplay';
-import { Check, Edit, Mail, MapPin, Phone } from 'lucide-react';
+import { Check, DollarSign, Mail, MapPin, Phone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { InstagramEmbed } from 'react-social-media-embed';
 
 import DynamicMap from '@/components/place/place-map';
 import { RichTextEditor } from '@/components/rich-text-editor';
@@ -99,16 +100,8 @@ export function PlaceDetailClient({
     <TooltipProvider>
       <div className="max-w-4xl mx-auto py-6 space-y-6">
         {/* En-tête avec actions */}
-        <div className="flex justify-between items-center h-16">
-          <Button size="sm" asChild className="hidden">
-            <Link href={`/admin/places/edit/${place.id}`}>
-              <Edit className="size-4 mr-1" />
-              Modifier
-            </Link>
-          </Button>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-md:p-2 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-md:p-2 mt-12">
           {/* Carousel */}
           <div className="h-full max-md:h-[60vh] rounded-lg overflow-hidden">
             {allMedia.length > 0 ? (
@@ -130,7 +123,7 @@ export function PlaceDetailClient({
                     <CarouselContent className="h-full">
                       {allMedia.map((media, index) => (
                         <CarouselItem key={index} className="h-full">
-                          <div className="relative h-full w-full rounded-lg overflow-hidden">
+                          <div className="relative h-full w-full rounded-lg overflow-hidden bg-muted">
                             {media?.type === "image" ? (
                               <Image
                                 src={media?.url || "/placeholder.svg"}
@@ -154,12 +147,6 @@ export function PlaceDetailClient({
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    {/* {allMedia.length > 1 && (
-                  <>
-                    <CarouselPrevious className="left-2" />
-                    <CarouselNext className="right-2" />
-                  </>
-                )} */}
                   </Carousel>
                 </DialogTrigger>
                 <DialogContent className="max-w-3xl min-h-[80vh] bg-[#00000066] border-none">
@@ -225,7 +212,7 @@ export function PlaceDetailClient({
           </div>
 
           <Card>
-            <CardContent className="p-4 space-y-4">
+            <CardContent className="p-4">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-full">
@@ -233,16 +220,34 @@ export function PlaceDetailClient({
                       <h1 className="text-2xl font-bold flex items-center">
                         {place.title}
                       </h1>
-                      <div className="flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Check
-                            key={star}
-                            color={`${
-                              star <= place.rating ? "#3df50a" : "#9e958e"
-                            }`}
-                            className="size-6"
-                          />
-                        ))}
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center">
+                          {place.priceInDollars && (
+                            <>
+                              {[1, 2, 3].map((dollar) => (
+                                <DollarSign
+                                  key={dollar}
+                                  className={`size-4 ${
+                                    dollar <= place.priceInDollars!
+                                      ? ""
+                                      : "hidden"
+                                  }`}
+                                />
+                              ))}
+                            </>
+                          )}
+                        </div>
+                        <div className="flex items-center justify-center">
+                          {[1, 2, 3].map((star) => (
+                            <Check
+                              key={star}
+                              color={`${
+                                star <= place.rating ? "#3df50a" : "#9e958e"
+                              }`}
+                              className="size-6"
+                            />
+                          ))}
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center text-muted-foreground text-sm">
@@ -253,7 +258,7 @@ export function PlaceDetailClient({
                 </div>
                 <p className="mb-2">{place.bio}</p>
                 <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex items-center">
+                  <div className="items-center hidden">
                     <span>
                       Entre{" "}
                       {place.priceMin
@@ -270,7 +275,7 @@ export function PlaceDetailClient({
               </div>
 
               {place.Contact && place.Contact.length > 0 ? (
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-2">
                   {place.Contact.map((contact) => (
                     <div key={contact.id} className="flex items-center">
                       {contact.type === "mobile" || contact.type === "fixe" ? (
@@ -382,7 +387,15 @@ export function PlaceDetailClient({
             </CardContent>
           </Card>
         )}
-
+        {place.instagramUrl && (
+          <div className="flex items-center justify-center">
+            <InstagramEmbed
+              url={place.instagramUrl}
+              className="w-full max-w-xl max-md:p-2"
+              igVersion=""
+            />
+          </div>
+        )}
         {/* Description */}
         <RichTextEditor content={place.content} readOnly />
 
@@ -406,9 +419,9 @@ export function PlaceDetailClient({
               <div className="w-full overflow-hidden rounded-md ">
                 <iframe
                   src={place.gmapEmbed}
-                  width="1000"
                   height="450"
                   loading="lazy"
+                  className="w-full"
                 ></iframe>
               </div>
             ) : (

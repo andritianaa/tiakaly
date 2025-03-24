@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import './globals.css';
 
-import { Geist, Geist_Mono } from "next/font/google";
-import TopLoader from "nextjs-toploader";
+import { Geist, Geist_Mono } from 'next/font/google';
+import TopLoader from 'nextjs-toploader';
 
-import { Providers } from "@/context/providers";
+import { Providers } from '@/context/providers';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +37,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-yellow-100 selection:text-yellow-500`}
       >
-        <TopLoader showSpinner={true} color="#fad02c" />
+        <TopLoader showSpinner={false} color="#fad02c" />
         <Providers>{children}</Providers>
       </body>
     </html>
