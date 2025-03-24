@@ -23,7 +23,7 @@ export const PlaceResume = (place: PlaceSummary) => {
         width={500}
         height={500}
         alt=""
-        className="transition-transform duration-300 hover:scale-105 h-full w-full object-cover"
+        className="transition-transform duration-300 hover:scale-105 h-full w-full object-cover max-h-[45vh] min-h-[45vh]"
       />
       <div className="absolute bottom-0 p-2 w-full">
         <Card className="w-full h-fit">
@@ -31,7 +31,7 @@ export const PlaceResume = (place: PlaceSummary) => {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <div className="w-full">
-                  <div className="flex justify-between w-full items-center max-md:flex-col max-md:items-start max-md:justify-start">
+                  <div className="flex  w-full flex-col items-start justify-start">
                     <h1 className="text-2xl font-bold flex items-center max-md:text-lg text-start">
                       {place.title}
                     </h1>
