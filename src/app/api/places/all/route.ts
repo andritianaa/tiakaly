@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { prisma } from "@/prisma";
-import { PlaceSummary } from "@/types/place";
+import { prisma } from '@/prisma';
+
+import type { PlaceSummary } from "@/types/place";
 
 export async function GET(req: NextRequest) {
   try {
@@ -21,8 +22,17 @@ export async function GET(req: NextRequest) {
         latitude: true,
         priceMin: true,
         priceMax: true,
+        priceInDollars: true,
+        gmapLink: true,
         rating: true,
+        keywords: true,
         Contact: true,
+        MenuPlace: {
+          select: {
+            id: true,
+            menuId: true,
+          },
+        },
         mainMedia: {
           select: {
             url: true,
@@ -32,6 +42,7 @@ export async function GET(req: NextRequest) {
     });
     return NextResponse.json(places);
   } catch (error) {
+    console.error("Error fetching places:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

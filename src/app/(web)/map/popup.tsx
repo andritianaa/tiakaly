@@ -1,5 +1,5 @@
 "use client";
-import { Mail, Phone, Star } from 'lucide-react';
+import { Check, DollarSign, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -22,37 +22,54 @@ export const PlacePopup = (place: PlaceSummary) => {
     }, 2000);
   };
   return (
-    <Card>
+    <Card className="">
       <CardContent className="p-2">
-        <div className="grid grid-cols-2 gap-2 min-w-[500px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 min-w-[400px] max-md:max-w-[70vw]">
           <Image
             width={500}
             height={500}
             src={place.mainMedia?.url || "/placeholder.svg"}
             alt=""
-            className="rounded"
+            className="rounded max-h-[30vh]  object-cover"
           />
           <Card>
-            <CardContent className="p-4 space-y-4">
+            <CardContent className="p-4">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-full">
-                    <div className="flex">
-                      {[1, 2, 3].map((star) => (
-                        <Star
-                          key={star}
-                          className={`size-4 ${
-                            star <= place.rating
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "text-muted-foreground"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex justify-between w-full items-center">
+                    <div className="flex flex-col justify-center w-full">
                       <h1 className="text-2xl font-bold flex items-center">
                         {place.title}
                       </h1>
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center">
+                          {place.priceInDollars && (
+                            <>
+                              {[1, 2, 3].map((dollar) => (
+                                <DollarSign
+                                  key={dollar}
+                                  className={`size-4 ${
+                                    dollar <= place.priceInDollars!
+                                      ? ""
+                                      : "hidden"
+                                  }`}
+                                />
+                              ))}
+                            </>
+                          )}
+                        </div>
+                        <div className="flex items-center justify-center">
+                          {[1, 2, 3].map((star) => (
+                            <Check
+                              key={star}
+                              color={`${
+                                star <= place.rating ? "#3df50a" : "#9e958e"
+                              }`}
+                              className="size-6"
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </div>
                     <div className="flex items-center text-muted-foreground text-sm">
                       <span>{place.localisation}</span>
@@ -60,8 +77,8 @@ export const PlacePopup = (place: PlaceSummary) => {
                   </div>
                 </div>
                 <p className="mb-2">{place.bio}</p>
-                <div className="grid grid-cols-1 gap-2 text-sm">
-                  <div className="flex items-center">
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="items-center hidden">
                     <span>
                       Entre{" "}
                       {place.priceMin

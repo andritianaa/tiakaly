@@ -87,8 +87,15 @@ export type PlaceSummary = {
   priceMin: number;
   priceMax: number;
   rating: number;
+  priceInDollars?: number | null;
+  gmapLink?: string | null;
   Contact: Contact[];
   mainMedia?: {
     url: string;
   };
+  MenuPlace: {
+    id: string;
+    menuId: string;
+  }[];
+  keywords: string[];
 };

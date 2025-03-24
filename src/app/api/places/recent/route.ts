@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { prisma } from "@/prisma";
-import { PlaceSummary } from "@/types/place";
+import { prisma } from '@/prisma';
+import { PlaceSummary } from '@/types/place';
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,6 +24,8 @@ export async function GET(req: NextRequest) {
         priceMax: true,
         rating: true,
         Contact: true,
+        priceInDollars: true,
+        gmapLink: true,
         mainMedia: {
           select: {
             url: true,

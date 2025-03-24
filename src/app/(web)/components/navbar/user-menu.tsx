@@ -1,20 +1,16 @@
 "use client";
 
-import { BadgeCheck, LogOut, Shield } from "lucide-react";
-import Link from "next/link";
+import { BadgeCheck, LogOut, Shield } from 'lucide-react';
+import Link from 'next/link';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useUser } from "@/hooks/use-user";
+    DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel,
+    DropdownMenuSeparator, DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useUser } from '@/hooks/use-user';
+import { logOut } from '@/lib/utils';
 
 export type NavUserProps = {
   avatarOnly?: boolean;
@@ -72,7 +68,7 @@ export function UserMenu(props: NavUserProps) {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={logOut}>
             <LogOut />
             Log out
           </DropdownMenuItem>

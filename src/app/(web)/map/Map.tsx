@@ -1,29 +1,27 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 // Import Leaflet components only on client side
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import useSWR from "swr";
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import useSWR from 'swr';
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { MARKER } from "@/lib/MarkerIcon";
-import { fetcher } from "@/lib/utils";
-import { PlaceSummary } from "@/types/place";
+    Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger
+} from '@/components/ui/sheet';
+import { Skeleton } from '@/components/ui/skeleton';
+import { MARKER } from '@/lib/MarkerIcon';
+import { fetcher } from '@/lib/utils';
+import { PlaceSummary } from '@/types/place';
 
-import { PlacePopup } from "./popup";
+import { PlacePopup } from './popup';
 
 function MapPlaceholder() {
   return (
@@ -97,7 +95,7 @@ function MapComponent() {
       </div>
       <Sheet>
         <SheetTrigger>
-          <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4">
+          <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 hidden md:flex">
             Rechercher
           </Button>
         </SheetTrigger>
@@ -117,21 +115,76 @@ function MapComponent() {
                 <Skeleton className="rounded-lg shadow-sm h-20" key={index} />
               ))}
             {places.map((place) => (
-              <Card key={place.id} className="cursor-pointer">
-                <div className="space-y-1.5 p-4">
-                  <div className="flex gap-4">
-                    <div className="grid gap-1">
-                      <p className="text-base font-medium leading-none">
-                        {place.title}
-                      </p>
-                    </div>
-                  </div>
+              <Card
+                key={place.id}
+                className="cursor-pointer relative rounded-lg overflow-hidden"
+              >
+                <Image
+                  src={place.mainMedia?.url || ""}
+                  width={500}
+                  height={700}
+                  alt=""
+                  className="w-full h-auto rounded bg-muted"
+                />
+                <div className="absolute bottom-0 w-full h-[50%] bg-gradient-to-t from-black to-transparent"></div>
+                <div className="absolute bottom-2 left-2 z-10 text-white">
+                  <p className="text-lg">{place.title}</p>
+                  <p className="text-sm">{place.localisation}</p>
                 </div>
               </Card>
             ))}
           </div>
         </SheetContent>
       </Sheet>
+
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 flex md:hidden">
+            Rechercher
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="h-[80vh]">
+          <div className="mx-auto w-full max-w-sm">
+            <Input
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className=""
+              placeholder="Rechercher..."
+            />
+            <ScrollArea className="h-[calc(80vh-4rem)] pb-2 w-full">
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {isLoading &&
+                  Array.from({ length: 10 }).map((_, index) => (
+                    <Skeleton
+                      className="rounded-lg shadow-sm h-20"
+                      key={index}
+                    />
+                  ))}
+
+                {places.map((place) => (
+                  <Card
+                    key={place.id}
+                    className="cursor-pointer relative rounded-lg overflow-hidden"
+                  >
+                    <Image
+                      src={place.mainMedia?.url || ""}
+                      width={500}
+                      height={700}
+                      alt={place.title}
+                      className="w-full h-auto rounded bg-muted"
+                    />
+                    <div className="absolute bottom-0 w-full h-[50%] bg-gradient-to-t from-black to-transparent"></div>
+                    <div className="absolute bottom-2 left-2 z-10 text-white">
+                      <p className="text-lg">{place.title}</p>
+                      <p className="text-sm">{place.localisation}</p>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
