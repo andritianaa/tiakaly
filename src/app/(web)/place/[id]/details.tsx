@@ -1,42 +1,36 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
-import { Edit, Mail, MapPin, Phone, Star } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import Autoplay from 'embla-carousel-autoplay';
+import { Check, Edit, Mail, MapPin, Phone } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-import DynamicMap from "@/components/place/place-map";
-import { RichTextEditor } from "@/components/rich-text-editor";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import DynamicMap from '@/components/place/place-map';
+import { RichTextEditor } from '@/components/rich-text-editor';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
+} from '@/components/ui/carousel';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/use-toast";
-import { Media } from "@prisma/client";
+    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useToast } from '@/hooks/use-toast';
+import { PlaceWithRelations } from '@/types/place';
+import { Media } from '@prisma/client';
 
 import type { CarouselApi } from "@/components/ui/carousel";
-export function PlaceDetailClient({ place, mediaItems }) {
+export function PlaceDetailClient({
+  place,
+  mediaItems,
+}: {
+  place: PlaceWithRelations;
+  mediaItems: Media[];
+}) {
   const [copiedText, setCopiedText] = useState("");
   const { toast } = useToast();
 
@@ -52,6 +46,7 @@ export function PlaceDetailClient({ place, mediaItems }) {
         id: "main-image",
         type: "image",
         url: place.mainMedia.url,
+        createdAt: place.mainMedia.createdAt,
       };
 
       // Make sure mediaItems is an array before spreading
@@ -113,9 +108,9 @@ export function PlaceDetailClient({ place, mediaItems }) {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-fit">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-md:p-2 ">
           {/* Carousel */}
-          <div className="h-full">
+          <div className="h-full max-md:h-[60vh] rounded-lg overflow-hidden">
             {allMedia.length > 0 ? (
               <Dialog>
                 <DialogTrigger asChild>
@@ -240,13 +235,12 @@ export function PlaceDetailClient({ place, mediaItems }) {
                       </h1>
                       <div className="flex">
                         {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
+                          <Check
                             key={star}
-                            className={`size-4 ${
-                              star <= place.rating
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "text-muted-foreground"
+                            color={`${
+                              star <= place.rating ? "#3df50a" : "#9e958e"
                             }`}
+                            className="size-6"
                           />
                         ))}
                       </div>
@@ -398,20 +392,34 @@ export function PlaceDetailClient({ place, mediaItems }) {
             <span className="flex gap-2">
               <h2 className="text-lg font-medium mb-2">Localisation</h2>
               <Link
-                href={`https://www.google.com/maps?q=${place.latitude},${place.longitude}`}
+                href={
+                  place.gmapLink ??
+                  `https://www.google.com/maps?q=${place.latitude},${place.longitude}`
+                }
                 className="text-yellow-500 underline"
                 target="_blank"
               >
                 Voir sur google map
               </Link>
             </span>
-            <div className="h-[300px] rounded-md overflow-hidden">
-              <DynamicMap
-                latitude={place.latitude}
-                longitude={place.longitude}
-                title={place.title}
-              />
-            </div>
+            {place.gmapEmbed ? (
+              <div className="w-full overflow-hidden rounded-md ">
+                <iframe
+                  src={place.gmapEmbed}
+                  width="1000"
+                  height="450"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            ) : (
+              <div className="h-[300px] rounded-md overflow-hidden">
+                <DynamicMap
+                  latitude={place.latitude}
+                  longitude={place.longitude}
+                  title={place.title}
+                />
+              </div>
+            )}
           </CardContent>
         </Card>
 

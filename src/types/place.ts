@@ -24,6 +24,9 @@ export type PlaceInput = {
   bio: string;
   content: string;
   longitude: number;
+  priceInDollars?: number;
+  gmapLink?: string;
+  gmapEmbed?: string;
   latitude: number;
   keywords: string[];
   rating: number;
@@ -42,6 +45,9 @@ export type PlaceWithRelations = {
   title: string;
   localisation: string;
   content: string;
+  priceInDollars?: number;
+  gmapLink?: string;
+  gmapEmbed?: string;
   longitude: number;
   bio: string;
   latitude: number;

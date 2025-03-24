@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Label } from "@/components/ui/label"
-import { Star } from "lucide-react"
+import { Check } from 'lucide-react';
+import { useState } from 'react';
+
+import { Label } from '@/components/ui/label';
 
 interface RatingInputProps {
-  value: number
-  onChange: (value: number) => void
+  value: number;
+  onChange: (value: number) => void;
 }
 
 export function RatingInput({ value, onChange }: RatingInputProps) {
-  const [hoverRating, setHoverRating] = useState(0)
+  const [hoverRating, setHoverRating] = useState(0);
 
   return (
     <div className="space-y-2">
@@ -25,16 +26,18 @@ export function RatingInput({ value, onChange }: RatingInputProps) {
             onMouseEnter={() => setHoverRating(rating)}
             onMouseLeave={() => setHoverRating(0)}
           >
-            <Star
-              className={`h-6 w-6 ${
-                (hoverRating || value) >= rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"
+            <Check
+              color={`${
+                (hoverRating || value) >= rating ? "#3df50a" : "#9e958e"
               }`}
+              className="size-6"
             />
           </button>
         ))}
-        <span className="ml-2 text-sm text-muted-foreground">{value} sur 5</span>
+        <span className="ml-2 text-sm text-muted-foreground">
+          {value} sur 5
+        </span>
       </div>
     </div>
-  )
+  );
 }
-

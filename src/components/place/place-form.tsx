@@ -1,26 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { BioInput } from "@/components/place/inputs/bio-input";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
-import { Status } from "@prisma/client";
+import { BioInput } from '@/components/place/inputs/bio-input';
+import { GmapEmbedInput, GmapLinkInput } from '@/components/place/inputs/gmapLink-input';
+import { PriceInDollarsInput } from '@/components/place/inputs/priceInDollars-input';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
+import { Status } from '@prisma/client';
 
-import { ContactsInput } from "./inputs/contacts-input";
-import { ContentInput } from "./inputs/content-input";
-import { KeywordsInput } from "./inputs/keywords-input";
-import { LocalisationInput } from "./inputs/localisation-input";
-import { MainMediaInput } from "./inputs/main-media-input";
-import { MapCoordinatesInput } from "./inputs/map-coordinates-input";
-import { MediaPlaceInput } from "./inputs/media-place-input";
-import { MenuInput } from "./inputs/menu-input";
-import { PlaceTypeInput } from "./inputs/place-type-input";
-import { PriceRangeInput } from "./inputs/price-range-input";
-import { RatingInput } from "./inputs/rating-input";
-import { StatusInput } from "./inputs/status-input";
-import { TitleInput } from "./inputs/title-input";
+import { ContactsInput } from './inputs/contacts-input';
+import { ContentInput } from './inputs/content-input';
+import { KeywordsInput } from './inputs/keywords-input';
+import { LocalisationInput } from './inputs/localisation-input';
+import { MainMediaInput } from './inputs/main-media-input';
+import { MapCoordinatesInput } from './inputs/map-coordinates-input';
+import { MediaPlaceInput } from './inputs/media-place-input';
+import { MenuInput } from './inputs/menu-input';
+import { PlaceTypeInput } from './inputs/place-type-input';
+import { PriceRangeInput } from './inputs/price-range-input';
+import { RatingInput } from './inputs/rating-input';
+import { StatusInput } from './inputs/status-input';
+import { TitleInput } from './inputs/title-input';
 
 import type {
   ContactInput,
@@ -41,6 +43,8 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
   const [localisation, setLocalisation] = useState(
     initialData?.localisation || ""
   );
+  const [gmapLink, setGmapLink] = useState(initialData?.gmapLink || "");
+  const [gmapEmbed, setGmapEmbed] = useState(initialData?.gmapEmbed || "");
   const [bio, setBio] = useState(initialData?.bio || "");
   const [content, setContent] = useState(initialData?.content || "");
   const [longitude, setLongitude] = useState(initialData?.longitude || 0);
@@ -49,6 +53,10 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
     initialData?.keywords || []
   );
   const [rating, setRating] = useState(initialData?.rating || 3);
+  const [priceInDollars, setPriceInDollars] = useState(
+    initialData?.priceInDollars || 2
+  );
+
   const [priceMin, setPriceMin] = useState(initialData?.priceMin || 0);
   const [priceMax, setPriceMax] = useState(initialData?.priceMax || 0);
   const [mainMediaId, setMainMediaId] = useState(
@@ -101,6 +109,9 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
         localisation,
         content,
         longitude,
+        gmapEmbed,
+        gmapLink,
+        priceInDollars,
         latitude,
         keywords,
         rating,
@@ -164,18 +175,28 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
               setLatitude(lat);
             }}
           />
+          <div className="grid grid-cols-2 gap-4">
+            <GmapLinkInput value={gmapLink} onChange={setGmapLink} />
+            <GmapEmbedInput value={gmapEmbed} onChange={setGmapEmbed} />
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <KeywordsInput value={keywords} onChange={setKeywords} />
             <RatingInput value={rating} onChange={setRating} />
           </div>
 
-          <PriceRangeInput
-            minValue={priceMin}
-            maxValue={priceMax}
-            onMinChange={setPriceMin}
-            onMaxChange={setPriceMax}
-          />
+          <div className="space-y-4">
+            <PriceRangeInput
+              minValue={priceMin}
+              maxValue={priceMax}
+              onMinChange={setPriceMin}
+              onMaxChange={setPriceMax}
+            />
+            <PriceInDollarsInput
+              value={priceInDollars}
+              onChange={setPriceInDollars}
+            />
+          </div>
 
           <MainMediaInput
             value={mainMediaId}

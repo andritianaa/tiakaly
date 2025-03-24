@@ -1,26 +1,29 @@
 model Place {
-    id           String       @id @default(cuid())
-    title        String
-    localisation String
-    bio          String?      @default("")
-    content      String       @db.Text
-    longitude    Float
-    latitude     Float
-    keywords     String[]
-    rating       Int
-    priceMin     Int
-    priceMax     Int
-    type         String // Changer de PlaceType enum à String
-    placeTypeId  String? // Ajouter cette relation
-    placeType    PlaceType?   @relation(fields: [placeTypeId], references: [id])
-    status       Status       @default(draft)
-    mainMediaId  String
-    mainMedia    Media        @relation("MainMedia", fields: [mainMediaId], references: [id])
-    MediaPlace   MediaPlace[]
-    Contact      Contact[]
-    MenuPlace    MenuPlace[]
-    createdAt    DateTime     @default(now())
-    updatedAt    DateTime     @updatedAt
+    id             String       @id @default(cuid())
+    title          String
+    localisation   String
+    bio            String?      @default("")
+    content        String       @db.Text
+    longitude      Float
+    latitude       Float
+    keywords       String[]
+    rating         Int
+    priceMin       Int
+    priceMax       Int
+    type           String // Changer de PlaceType enum à String
+    placeTypeId    String? // Ajouter cette relation
+    priceInDollars Int?
+    placeType      PlaceType?   @relation(fields: [placeTypeId], references: [id])
+    status         Status       @default(draft)
+    mainMediaId    String
+    mainMedia      Media        @relation("MainMedia", fields: [mainMediaId], references: [id])
+    MediaPlace     MediaPlace[]
+    Contact        Contact[]
+    MenuPlace      MenuPlace[]
+    gmapLink       String?
+    gmapEmbed      String?
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
 }
 
 model Media {

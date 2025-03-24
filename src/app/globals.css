@@ -115,3 +115,7 @@ body {
 .leaflet-popup-tip {
   display: none !important;
 }
+
+.place-card.place-card-large .review-box {
+  display: none !important;
+}

@@ -1,9 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache';
 
-import { prisma } from "@/prisma";
-import { Status } from "@prisma/client";
+import { prisma } from '@/prisma';
+import { Status } from '@prisma/client';
 
 import type { PlaceInput, PlaceWithRelations } from "@/types/place";
 export async function createPlace(data: PlaceInput) {
@@ -25,6 +25,9 @@ export async function createPlace(data: PlaceInput) {
       contacts,
       mediaIds,
       bio,
+      priceInDollars,
+      gmapEmbed,
+      gmapLink,
     } = data;
 
     // Créer le lieu
@@ -43,6 +46,9 @@ export async function createPlace(data: PlaceInput) {
         status: status || Status.draft,
         mainMediaId,
         bio,
+        priceInDollars,
+        gmapEmbed,
+        gmapLink,
       },
     });
 
@@ -117,6 +123,9 @@ export async function updatePlace(id: string, data: PlaceInput) {
       contacts,
       mediaIds,
       bio,
+      priceInDollars,
+      gmapEmbed,
+      gmapLink,
     } = data;
 
     // Vérifier si le lieu existe
@@ -149,6 +158,9 @@ export async function updatePlace(id: string, data: PlaceInput) {
         status,
         mainMediaId,
         bio,
+        priceInDollars,
+        gmapEmbed,
+        gmapLink,
       },
     });
 
