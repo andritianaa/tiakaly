@@ -1,15 +1,14 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 // Import Leaflet components only on client side
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import useSWR from 'swr';
 
+import { PlaceResume } from '@/components/place-resume';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -115,23 +114,7 @@ function MapComponent() {
                 <Skeleton className="rounded-lg shadow-sm h-20" key={index} />
               ))}
             {places.map((place) => (
-              <Card
-                key={place.id}
-                className="cursor-pointer relative rounded-lg overflow-hidden"
-              >
-                <Image
-                  src={place.mainMedia?.url || ""}
-                  width={500}
-                  height={700}
-                  alt=""
-                  className="w-full h-auto rounded bg-muted"
-                />
-                <div className="absolute bottom-0 w-full h-[50%] bg-gradient-to-t from-black to-transparent"></div>
-                <div className="absolute bottom-2 left-2 z-10 text-white">
-                  <p className="text-lg">{place.title}</p>
-                  <p className="text-sm">{place.localisation}</p>
-                </div>
-              </Card>
+              <PlaceResume key={place.id} {...place} />
             ))}
           </div>
         </SheetContent>
@@ -144,7 +127,7 @@ function MapComponent() {
           </Button>
         </DrawerTrigger>
         <DrawerContent className="h-[80vh]">
-          <div className="mx-auto w-full max-w-sm">
+          <div className="mx-auto w-full px-4">
             <Input
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
@@ -162,23 +145,7 @@ function MapComponent() {
                   ))}
 
                 {places.map((place) => (
-                  <Card
-                    key={place.id}
-                    className="cursor-pointer relative rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      src={place.mainMedia?.url || ""}
-                      width={500}
-                      height={700}
-                      alt={place.title}
-                      className="w-full h-auto rounded bg-muted"
-                    />
-                    <div className="absolute bottom-0 w-full h-[50%] bg-gradient-to-t from-black to-transparent"></div>
-                    <div className="absolute bottom-2 left-2 z-10 text-white">
-                      <p className="text-lg">{place.title}</p>
-                      <p className="text-sm">{place.localisation}</p>
-                    </div>
-                  </Card>
+                  <PlaceResume key={place.id} {...place} />
                 ))}
               </div>
             </ScrollArea>

@@ -2,24 +2,24 @@
 
 import type React from "react";
 
-import { Check, DollarSign, Filter, Search, SearchIcon } from 'lucide-react';
+import { Filter, Search, SearchIcon } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
 
 import { PlaceResume } from '@/components/place-resume';
+import { SearchFilters } from '@/components/search-filters';
 import { Button } from '@/components/ui/button';
 import {
     Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from '@/components/ui/dialog';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
-import {
-    MultiSelect, MultiSelectContent, MultiSelectEmpty, MultiSelectGroup, MultiSelectItem,
-    MultiSelectList, MultiSelectSearch, MultiSelectTrigger, MultiSelectValue
-} from '@/components/ui/multi-select';
-import { Slider } from '@/components/ui/slider';
-import { cn } from '@/lib/utils';
+import { fetcher } from '@/lib/utils';
+import { PlaceType } from '@prisma/client';
 
 import type { PlaceSummary } from "@/types/place";
+// Liste des types de lieux (à remplacer par des données réelles)
 
 export default function SearchPage() {
   const router = useRouter();
@@ -29,12 +29,12 @@ export default function SearchPage() {
   const [priceRange, setPriceRange] = useState<number[]>([0, 200000]);
   const [priceInDollars, setPriceInDollars] = useState<number>(0);
   const [selectedMenus, setSelectedMenus] = useState<string[]>([]);
+  const [rating, setRating] = useState<number>(0);
+  const [placeType, setPlaceType] = useState<string>("");
   const [allPlaces, setAllPlaces] = useState<PlaceSummary[]>([]);
   const [menus, setMenus] = useState<{ id: string; name: string }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  // Ajouter l'état pour le rating
-  const [rating, setRating] = useState<number>(0);
-
+  const { data: placeTypes } = useSWR<PlaceType[]>("/api/place-types", fetcher);
   // Fetch all places once
   useEffect(() => {
     const fetchAllPlaces = async () => {
@@ -72,7 +72,7 @@ export default function SearchPage() {
     fetchMenus();
   }, []);
 
-  // Modifier la fonction de filtrage pour inclure le rating
+  // Modifier la fonction de filtrage pour inclure le placeType et changer la logique des menus
   const filteredPlaces = useMemo(() => {
     if (!allPlaces.length) return [];
 
@@ -98,21 +98,28 @@ export default function SearchPage() {
         priceInDollars === 0 ||
         (place.priceInDollars && place.priceInDollars >= priceInDollars);
 
-      // Menu filter
+      // Menu filter - Logique ET (tous les menus sélectionnés doivent être présents)
       const matchesMenus =
         selectedMenus.length === 0 ||
         (place.MenuPlace &&
-          place.MenuPlace.some((mp) => selectedMenus.includes(mp.menuId)));
+          selectedMenus.every((menuId) =>
+            place.MenuPlace.some((mp) => mp.menuId === menuId)
+          ));
 
       // Rating filter
       const matchesRating = rating === 0 || place.rating >= rating;
+
+      // Place type filter
+      const matchesPlaceType =
+        !placeType || (place.keywords && place.type == placeType);
 
       return (
         matchesSearch &&
         matchesPriceRange &&
         matchesPriceInDollars &&
         matchesMenus &&
-        matchesRating
+        matchesRating &&
+        matchesPlaceType
       );
     });
   }, [
@@ -122,6 +129,7 @@ export default function SearchPage() {
     priceInDollars,
     selectedMenus,
     rating,
+    placeType,
   ]);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -142,8 +150,16 @@ export default function SearchPage() {
     }).format(value);
   };
 
+  const resetFilters = () => {
+    setPriceRange([0, 200000]);
+    setPriceInDollars(0);
+    setRating(0);
+    setSelectedMenus([]);
+    setPlaceType("");
+  };
+
   return (
-    <div className="container mx-auto py-8 mt-14 px-4">
+    <div className="py-8 mt-14 px-4">
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
           <form onSubmit={handleSearch} className="flex-1 flex gap-2">
@@ -158,15 +174,18 @@ export default function SearchPage() {
               />
             </div>
             <Button type="submit">
-              <SearchIcon /> <span className="max-md:hidden">Rechercher</span>
+              <SearchIcon /> <span className="max-lg:hidden">Rechercher</span>
             </Button>
           </form>
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                className="hidden md:flex items-center gap-2"
+              >
                 <Filter className="h-4 w-4" />
-                <span className="max-md:hidden">Filtres</span>
+                <span className="max-lg:hidden">Filtres</span>
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -174,112 +193,53 @@ export default function SearchPage() {
                 <DialogTitle>Filtres de recherche</DialogTitle>
               </DialogHeader>
 
-              {/* Remplacer la section des filtres dans le DialogContent */}
-              <div className="grid gap-6 py-4">
-                <div className="space-y-4 mb-4">
-                  <h3 className="font-medium">Menus</h3>
-                  <MultiSelect
-                    value={selectedMenus}
-                    onValueChange={(values) => setSelectedMenus(values)}
-                  >
-                    <MultiSelectTrigger>
-                      <MultiSelectValue placeholder="Sélectionner des menus" />
-                    </MultiSelectTrigger>
-                    <MultiSelectContent>
-                      <MultiSelectSearch placeholder="Rechercher un menu..." />
-                      <MultiSelectList>
-                        <MultiSelectGroup>
-                          {menus.map((menu) => (
-                            <MultiSelectItem key={menu.id} value={menu.id}>
-                              {menu.name}
-                            </MultiSelectItem>
-                          ))}
-                        </MultiSelectGroup>
-                      </MultiSelectList>
-                      <MultiSelectEmpty>Aucun menu trouvé</MultiSelectEmpty>
-                    </MultiSelectContent>
-                  </MultiSelect>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="font-medium">Fourchette de prix</h3>
-                  <div className="px-2">
-                    <Slider
-                      min={0}
-                      max={200000}
-                      step={1000}
-                      value={priceRange}
-                      onValueChange={setPriceRange}
-                    />
-                    <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-                      <span>{formatPrice(priceRange[0])}</span>
-                      <span>{formatPrice(priceRange[1])}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <h3 className="font-medium">Recommandation</h3>
-                    <div className="flex items-center gap-2">
-                      {[1, 2, 3].map((value) => (
-                        <button
-                          key={value}
-                          type="button"
-                          onClick={() => setRating(value)}
-                          className={`flex items-center justify-center h-10 w-10 rounded-full border ${
-                            rating >= value
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-background"
-                          }`}
-                        >
-                          <Check className={cn("size-5", rating >= value)} />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <h3 className="font-medium">Prix</h3>
-                    <div className="flex items-center gap-2">
-                      {[1, 2, 3, 4].map((value) => (
-                        <button
-                          key={value}
-                          type="button"
-                          onClick={() => setPriceInDollars(value)}
-                          className={`flex items-center justify-center h-10 w-10 rounded-full border ${
-                            priceInDollars >= value
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-background"
-                          }`}
-                        >
-                          <DollarSign
-                            className={cn("size-5", priceInDollars >= value)}
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                {/* Mettre à jour le bouton de réinitialisation pour inclure le rating */}
-                <Button
-                  onClick={() => {
-                    setPriceRange([0, 200000]);
-                    setPriceInDollars(0);
-                    setRating(0);
-                    setSelectedMenus([]);
-                  }}
-                  variant="outline"
-                  className="mr-2"
-                >
-                  Réinitialiser
-                </Button>
-                <Button>Appliquer</Button>
-              </div>
+              <SearchFilters
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                priceInDollars={priceInDollars}
+                setPriceInDollars={setPriceInDollars}
+                rating={rating}
+                setRating={setRating}
+                selectedMenus={selectedMenus}
+                setSelectedMenus={setSelectedMenus}
+                placeType={placeType}
+                setPlaceType={setPlaceType}
+                menus={menus}
+                formatPrice={formatPrice}
+                resetFilters={resetFilters}
+              />
             </DialogContent>
           </Dialog>
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 md:hidden"
+              >
+                <Filter className="h-4 w-4" />
+                <span className="max-lg:hidden">Filtres</span>
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <div className="p-4">
+                <SearchFilters
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  priceInDollars={priceInDollars}
+                  setPriceInDollars={setPriceInDollars}
+                  rating={rating}
+                  setRating={setRating}
+                  selectedMenus={selectedMenus}
+                  setSelectedMenus={setSelectedMenus}
+                  placeType={placeType}
+                  setPlaceType={setPlaceType}
+                  menus={menus}
+                  formatPrice={formatPrice}
+                  resetFilters={resetFilters}
+                />
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
 
         {isLoading ? (
@@ -287,7 +247,7 @@ export default function SearchPage() {
             <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
           </div>
         ) : filteredPlaces.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {filteredPlaces.map((place) => (
               <PlaceResume key={place.id} {...place} />
             ))}

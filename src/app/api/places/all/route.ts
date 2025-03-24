@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
         rating: true,
         keywords: true,
         Contact: true,
+        type: true,
         MenuPlace: {
           select: {
             id: true,

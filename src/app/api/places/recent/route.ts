@@ -10,9 +10,8 @@ export async function GET(req: NextRequest) {
         status: "published",
       },
       orderBy: {
-        createdAt: "desc",
+        rating: "desc",
       },
-      take: 6,
       select: {
         id: true,
         bio: true,
@@ -22,10 +21,18 @@ export async function GET(req: NextRequest) {
         latitude: true,
         priceMin: true,
         priceMax: true,
-        rating: true,
-        Contact: true,
         priceInDollars: true,
         gmapLink: true,
+        rating: true,
+        keywords: true,
+        Contact: true,
+        type: true,
+        MenuPlace: {
+          select: {
+            id: true,
+            menuId: true,
+          },
+        },
         mainMedia: {
           select: {
             url: true,

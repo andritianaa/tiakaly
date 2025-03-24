@@ -98,4 +98,5 @@ export type PlaceSummary = {
     menuId: string;
   }[];
   keywords: string[];
+  type: string;
 };

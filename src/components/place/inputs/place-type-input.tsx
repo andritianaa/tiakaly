@@ -1,27 +1,19 @@
 "use client";
 
-import { Loader2, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Loader2, Plus } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import { createPlaceType } from "@/actions/place-type-actions";
-import { Button } from "@/components/ui/button";
+import { createPlaceType } from '@/actions/place-type-actions';
+import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+    Select, SelectContent, SelectItem, SelectTrigger, SelectValue
+} from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
 interface PlaceType {
   id: string;
@@ -85,7 +77,7 @@ export function PlaceTypeInput({ value, onChange }: PlaceTypeInputProps) {
         if (result.type) {
           setPlaceTypes((prev) => [...prev, result.type]);
           // Sélectionner automatiquement le nouveau type
-          onChange(result.type.value);
+          onChange(result.type.name);
         }
 
         // Fermer le dialogue

@@ -16,14 +16,14 @@ export const PlaceResume = (place: PlaceSummary) => {
     <Link
       href={`/place/${place.id}`}
       key={place.title}
-      className="relative overflow-hidden rounded max-h-[50vh]"
+      className="relative overflow-hidden rounded max-h-[45vh] min-h-[45vh] bg-muted"
     >
       <Image
         src={place.mainMedia!.url}
         width={500}
         height={500}
         alt=""
-        className="transition-transform duration-300 hover:scale-105 h-full object-cover"
+        className="transition-transform duration-300 hover:scale-105 h-full w-full object-cover"
       />
       <div className="absolute bottom-0 p-2 w-full">
         <Card className="w-full h-fit">
