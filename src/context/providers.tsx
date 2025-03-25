@@ -5,6 +5,8 @@ import "../i18n";
 import { ThemeProvider } from "next-themes";
 import { PropsWithChildren, useEffect, useState } from "react";
 
+import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
+import { PWARegister } from "@/components/pwa-register";
 import { Toaster } from "@/components/ui/toaster";
 
 export type ProvidersProps = PropsWithChildren;
@@ -22,8 +24,11 @@ export const Providers = (props: ProvidersProps) => {
   }
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
+      <PWARegister />
+
       <Toaster />
       {props.children}
+      <PWAInstallPrompt />
     </ThemeProvider>
   );
 };
