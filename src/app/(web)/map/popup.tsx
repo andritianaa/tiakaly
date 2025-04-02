@@ -1,11 +1,11 @@
 "use client";
-import { Check, DollarSign, Mail, Phone } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
+import { Check, DollarSign, Mail, Phone } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { PlaceSummary } from '@/types/place';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { PlaceSummary } from "@/types/place";
 
 export const PlacePopup = (place: PlaceSummary) => {
   const [copiedText, setCopiedText] = useState("");
@@ -24,7 +24,7 @@ export const PlacePopup = (place: PlaceSummary) => {
   return (
     <Card className="">
       <CardContent className="p-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 min-w-[400px] max-md:max-w-[70vw]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 min-w-[300px] max-md:max-w-[60vw]">
           <Image
             width={500}
             height={500}

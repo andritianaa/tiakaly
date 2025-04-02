@@ -1,0 +1,15 @@
+model Top {
+    id          String     @id @default(cuid())
+    createdAt   DateTime   @default(now())
+    title       String
+    description String
+    top1Id      String
+    top1Reason  String
+    top2Id      String?
+    top2Reason  String
+    top3Id      String?
+    top3Reason  String
+    top1        PostInsta  @relation(name: "TopTop1", fields: [top1Id], references: [id], onDelete: Cascade)
+    top2        PostInsta? @relation(name: "TopTop2", fields: [top2Id], references: [id], onDelete: Cascade)
+    top3        PostInsta? @relation(name: "TopTop3", fields: [top3Id], references: [id], onDelete: Cascade)
+}

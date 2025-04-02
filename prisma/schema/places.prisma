@@ -25,6 +25,7 @@ model Place {
     instagramUrl   String?
     createdAt      DateTime     @default(now())
     updatedAt      DateTime     @updatedAt
+    PostInsta      PostInsta[]
 }
 
 model Media {
