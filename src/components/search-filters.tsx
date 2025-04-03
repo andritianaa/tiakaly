@@ -164,27 +164,6 @@ export function SearchFilters({
               ))}
             </div>
           </div>
-          <div className="space-y-4">
-            <h3 className="font-medium">Prix</h3>
-            <div className="flex items-center gap-2">
-              {[1, 2, 3, 4].map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setPriceInDollars(value)}
-                  className={`flex items-center justify-center h-10 w-10 rounded-full border ${
-                    priceInDollars >= value
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-background"
-                  }`}
-                >
-                  <DollarSign
-                    className={cn("size-5", priceInDollars >= value)}
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="flex justify-end">

@@ -1,5 +1,5 @@
 "use client";
-import { House, Map, Notebook, Utensils } from 'lucide-react';
+import { House, Map, MapPin, Medal, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 
 import { UserMenu } from '@/app/(web)/components/navbar/user-menu';
@@ -49,30 +49,36 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <div className="fixed bottom-0 w-full md:hidden h-14 border-t grid grid-cols-4 bg-white z-50 p-2">
+      <div className="fixed bottom-0 w-full md:hidden h-14 border-t grid grid-cols-5 bg-white z-50 p-2">
         <Link
           href={"/"}
           className="w-full flex items-center justify-center hover:bg-muted rounded-md"
         >
-          <House />
+          <House size={28} />
         </Link>
         <Link
           href={"/places"}
           className="w-full flex items-center justify-center hover:bg-muted rounded-md"
         >
-          <Utensils />
+          <MapPin size={28} />
         </Link>
         <Link
           href={"/map"}
           className="w-full flex items-center justify-center hover:bg-muted rounded-md"
         >
-          <Map />
+          <Map size={28} />
         </Link>
         <Link
-          href={"/kaline"}
+          href={"/tops"}
           className="w-full flex items-center justify-center hover:bg-muted rounded-md"
         >
-          <Notebook />
+          <Medal size={28} />
+        </Link>
+        <Link
+          href={"/post-instas"}
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+        >
+          <Newspaper size={28} />
         </Link>
       </div>
     </>

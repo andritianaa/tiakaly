@@ -1,19 +1,17 @@
-import FAQ from "@/app/(web)/components/faq";
-import Features from "@/app/(web)/components/features";
-import Footer from "@/app/(web)/components/footer";
-import Testimonial from "@/app/(web)/components/testimonial";
+import FAQ from '@/app/(web)/components/faq';
+import Footer from '@/app/(web)/components/footer';
+import RecentContent from '@/app/(web)/components/recent-content';
+import Testimonial from '@/app/(web)/components/testimonial';
 
-import Hero from "./components/hero";
+import Hero from './components/hero';
 
 export default async function RoutePage() {
   return (
     <>
       <Hero />
-      {/* <MouseAnimation /> */}
-      <Features />
+      <RecentContent />
       <FAQ />
       <Testimonial />
-      {/* <Pricing /> */}
       <Footer />
     </>
   );

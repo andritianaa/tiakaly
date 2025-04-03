@@ -35,6 +35,8 @@ model Media {
     Place      Place[]      @relation("MainMedia")
     MediaPlace MediaPlace[]
     createdAt  DateTime     @default(now())
+    PostInsta  PostInsta[]
+    Top        Top[]
 }
 
 model MediaPlace {

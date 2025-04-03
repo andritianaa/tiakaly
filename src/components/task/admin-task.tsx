@@ -1,75 +1,42 @@
 "use client";
 import {
-  ArrowUpDown,
-  ChevronDown,
-  Clock,
-  Eye,
-  Filter,
-  MessageSquare,
-  Paperclip,
-  Search,
-  X,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
+    ArrowUpDown, ChevronDown, Clock, Eye, Filter, MessageSquare, Paperclip, Search, X
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
-import { commentTask } from "@/actions/task.actions";
+import { commentTask } from '@/actions/task.actions';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+    Accordion, AccordionContent, AccordionItem, AccordionTrigger
+} from '@/components/ui/accordion';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+    Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
+} from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+    Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle
+} from '@/components/ui/dialog';
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+    DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel,
+    DropdownMenuSeparator, DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+    PaginationPrevious
+} from '@/components/ui/pagination';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { fetcher } from "@/lib/utils";
-import { TaskWithRelations } from "@/types/task";
-import { TaskPriority, TaskType } from "@prisma/client";
+    Select, SelectContent, SelectItem, SelectTrigger, SelectValue
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { fetcher } from '@/lib/utils';
+import { TaskWithRelations } from '@/types/task';
+import { TaskPriority, TaskType } from '@prisma/client';
 
 // Define the response type for the paginated API
 interface TaskResponse {
@@ -896,7 +863,7 @@ export function AdminTaskDashboard() {
                     </p>
                     {selectedTask.moderationReason && (
                       <p className="text-sm">
-                        <span className="font-medium">Reason:</span>{" "}
+                        <span className="font-medium">Raison:</span>{" "}
                         {selectedTask.moderationReason}
                       </p>
                     )}

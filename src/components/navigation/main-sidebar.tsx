@@ -1,6 +1,14 @@
 "use client";
 
-import { Frame, Map, MapPinned, PieChart, SquareKanban } from "lucide-react";
+import {
+  Frame,
+  Instagram,
+  Map,
+  MapPinned,
+  Medal,
+  PieChart,
+  SquareKanban,
+} from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -42,10 +50,39 @@ const data = {
       ],
     },
     {
+      title: "Post insta",
+      url: "/admin/post-insta",
+      icon: Instagram,
+      items: [
+        {
+          title: "Liste",
+          url: "/admin/post-insta",
+        },
+        {
+          title: "Ajouter",
+          url: "/admin/post-insta/create",
+        },
+      ],
+    },
+    {
+      title: "Top",
+      url: "/admin/top",
+      icon: Medal,
+      items: [
+        {
+          title: "Liste",
+          url: "/admin/top",
+        },
+        {
+          title: "Ajouter",
+          url: "/admin/top/create",
+        },
+      ],
+    },
+    {
       title: "Projet",
       url: "/kanban",
       icon: SquareKanban,
-      isActive: true,
       items: [
         {
           title: "Kanban",

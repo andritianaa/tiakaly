@@ -20,7 +20,8 @@ const eslintConfig = [
       "@typescript-eslint/ban-ts-comment": "off",
       "react-hooks/exhaustive-deps": "off",
       "tailwindcss/no-custom-classname": "off",
-      "@typescript-eslint/no-require-imports": "off"
+      "@typescript-eslint/no-require-imports": "off",
+      "react/no-unescaped-entities": "off"
     },
   },
 ];
