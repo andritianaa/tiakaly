@@ -41,7 +41,7 @@ export default function RecentContent() {
   }, []);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-secondary to-white">
+    <section className="py-24 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="inline-block bg-yellow-100 text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -100,18 +100,18 @@ export default function RecentContent() {
                   }}
                   className="w-full"
                 >
-                  <CarouselContent className="">
+                  <CarouselContent>
                     {tops.map((top) => (
                       <CarouselItem
                         key={top.id}
-                        className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 rounded overflow-hidden"
+                        className="basis-full md:basis-1/2 lg:basis-1/3 pl-4"
                       >
                         <TopCard top={top} />
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="left-0 md:-left-5 h-12 w-12 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 text-white shadow-md" />
-                  <CarouselNext className="right-0 md:-right-5 h-12 w-12 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 text-white shadow-md" />
+                  <CarouselPrevious className="left-0 md:-left-5 h-12 w-12 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
+                  <CarouselNext className="right-0 md:-right-5 h-12 w-12 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
                 </Carousel>
               </div>
 
@@ -185,8 +185,8 @@ export default function RecentContent() {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="left-0 md:-left-5 h-12 w-12 bg-pink-500 text-white border-2 border-white hover:bg-pink-600 text-white shadow-md" />
-                  <CarouselNext className="right-0 md:-right-5 h-12 w-12 bg-pink-500 text-white border-2 border-white hover:bg-pink-600 text-white shadow-md" />
+                  <CarouselPrevious className="left-0 md:-left-5 h-12 w-12 bg-pink-500 text-white border-2 border-white hover:bg-pink-600 hover:text-white shadow-md" />
+                  <CarouselNext className="right-0 md:-right-5 h-12 w-12 bg-pink-500 text-white border-2 border-white hover:bg-pink-600 hover:text-white shadow-md" />
                 </Carousel>
               </div>
 
@@ -211,11 +211,11 @@ export default function RecentContent() {
 
         {/* Call to Action */}
         <div className="mt-24 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-2xl p-10 text-primary-foreground text-center">
-          <Compass className="h-16 w-16 mx-auto mb-6 text-primary-foreground opacity-90" />
-          <h3 className="text-3xl md:text-4xl font-bold mb-4">
+          <Compass className="h-16 w-16 mx-auto mb-6 text-white opacity-90" />
+          <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Prêt à explorer ?
           </h3>
-          <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto mb-8">
+          <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto mb-8 text-white">
             Rejoignez notre communauté de voyageurs passionnés et découvrez des
             lieux extraordinaires à travers nos sélections exclusives.
           </p>
@@ -230,7 +230,7 @@ export default function RecentContent() {
             <Button
               asChild
               size="lg"
-              className="bg-transparent border-2 border-white hover:bg-white/10 px-8"
+              className="bg-transparent border-2 border-white hover:bg-white/10 px-8 text-white"
             >
               <Link href="/post-instas">Voir les posts Instagram</Link>
             </Button>

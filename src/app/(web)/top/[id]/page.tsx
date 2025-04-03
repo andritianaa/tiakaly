@@ -5,7 +5,6 @@ import { ExternalLink, Trophy } from 'lucide-react';
 import { use } from 'react';
 
 import { getTopById } from '@/actions/top.actions';
-import Footer from '@/app/(web)/components/footer';
 import { InstagramEmbedWrapper } from '@/components/client-wrappers/instagram-embed-wrapper';
 import { RichTextEditor } from '@/components/rich-text-editor';
 import { Button } from '@/components/ui/button';
@@ -104,8 +103,6 @@ export default function TopPage({
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 }

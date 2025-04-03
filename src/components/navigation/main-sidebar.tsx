@@ -1,31 +1,18 @@
 "use client";
 
-import {
-  Frame,
-  Instagram,
-  Map,
-  MapPinned,
-  Medal,
-  PieChart,
-  SquareKanban,
-} from "lucide-react";
-import Link from "next/link";
-import * as React from "react";
+import { Frame, Instagram, Map, MapPinned, Medal, PieChart } from 'lucide-react';
+import Link from 'next/link';
+import * as React from 'react';
 
-import { Logo } from "@/components/logo";
+import { Logo } from '@/components/logo';
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
+    Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton,
+    SidebarMenuItem
+} from '@/components/ui/sidebar';
 
-import { NavFooter } from "./nav-footer";
-import { NavMain } from "./nav-main";
-import { NavUser } from "./nav-user";
+import { NavFooter } from './nav-footer';
+import { NavMain } from './nav-main';
+import { NavUser } from './nav-user';
 
 const data = {
   navMain: [
@@ -79,21 +66,21 @@ const data = {
         },
       ],
     },
-    {
-      title: "Projet",
-      url: "/kanban",
-      icon: SquareKanban,
-      items: [
-        {
-          title: "Kanban",
-          url: "/admin/kanban",
-        },
-        {
-          title: "Liste",
-          url: "/admin/kanban/list",
-        },
-      ],
-    },
+    // {
+    //   title: "Projet",
+    //   url: "/kanban",
+    //   icon: SquareKanban,
+    //   items: [
+    //     {
+    //       title: "Kanban",
+    //       url: "/admin/kanban",
+    //     },
+    //     {
+    //       title: "Liste",
+    //       url: "/admin/kanban/list",
+    //     },
+    //   ],
+    // },
   ],
 
   projects: [

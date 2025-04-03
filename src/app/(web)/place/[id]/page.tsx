@@ -1,9 +1,8 @@
-import { use } from "react";
+import { use } from 'react';
 
-import { getPlace } from "@/actions/place-actions";
-import Footer from "@/app/(web)/components/footer";
+import { getPlace } from '@/actions/place-actions';
 
-import { PlaceDetailClient } from "./details";
+import { PlaceDetailClient } from './details';
 
 export default function PlaceDetailPage({
   params,
@@ -31,7 +30,6 @@ export default function PlaceDetailPage({
   return (
     <>
       <PlaceDetailClient place={place} mediaItems={mediaItems} />
-      <Footer />
     </>
   );
 }

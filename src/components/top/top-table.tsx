@@ -1,33 +1,22 @@
 "use client";
 
-import { format } from "date-fns";
-import { Eye, Loader2, Pencil, Search, Trash2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { format } from 'date-fns';
+import { Eye, Loader2, Pencil, Search, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import { deleteTop } from "@/actions/top.actions";
+import { deleteTop } from '@/actions/top.actions';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
+    AlertDialogFooter, AlertDialogHeader, AlertDialogTitle
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
+    Table, TableBody, TableCell, TableHead, TableHeader, TableRow
+} from '@/components/ui/table';
+import { useToast } from '@/hooks/use-toast';
 
 interface TopTableProps {
   tops: any[];
@@ -87,7 +76,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search top lists..."
+            placeholder="Rechercher..."
             className="pl-8"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -100,7 +89,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
           <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>
-              <TableHead>Created</TableHead>
+              <TableHead>Date</TableHead>
               <TableHead>Top 1</TableHead>
               <TableHead>Top 2</TableHead>
               <TableHead>Top 3</TableHead>
@@ -111,7 +100,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
             {filteredTops.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center">
-                  No top lists found.
+                  Aucun résultat trouvé.
                 </TableCell>
               </TableRow>
             ) : (
@@ -133,7 +122,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
                           onClick={() => router.push(`/top/${top.id}`)}
                         >
                           <Eye className="h-4 w-4" />
-                          <span className="sr-only">View</span>
+                          <span className="sr-only">Voir</span>
                         </Button>
                       </Link>
                       <Link href={`/admin/top/${top.id}/edit`}>
@@ -143,7 +132,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
                           onClick={() => router.push(`/top/${top.id}/edit`)}
                         >
                           <Pencil className="h-4 w-4" />
-                          <span className="sr-only">Edit</span>
+                          <span className="sr-only">Modifier</span>
                         </Button>
                       </Link>
                       <Button
@@ -152,7 +141,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
                         onClick={() => setDeleteId(top.id)}
                       >
                         <Trash2 className="h-4 w-4" />
-                        <span className="sr-only">Delete</span>
+                        <span className="sr-only">Supprimer</span>
                       </Button>
                     </div>
                   </TableCell>
@@ -169,21 +158,21 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>Êtes-vous sûr?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the Top
-              list.
+              Cette action est irréversible. Cela supprimera définitivement la
+              liste Top.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Annuler</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
               className="bg-red-600 hover:bg-red-700"
             >
               {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Delete
+              Supprimer
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

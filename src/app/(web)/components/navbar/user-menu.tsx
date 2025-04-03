@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, LogOut, Shield } from 'lucide-react';
+import { LogOut, Settings, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -26,8 +26,12 @@ export function UserMenu(props: NavUserProps) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="size-10 rounded-full p-1 border-2 bg-[#ffe900] cursor-pointer">
-            <AvatarImage src={user.image} alt={user.username} />
+          <Avatar className="size-10 rounded-full p-1 border-1 bg-[#ffe900] cursor-pointer">
+            <AvatarImage
+              src={user.image}
+              alt={user.username}
+              className="rounded-full"
+            />
             <AvatarFallback className="rounded-lg">TK</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
@@ -40,7 +44,11 @@ export function UserMenu(props: NavUserProps) {
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.image} alt={user.username} />
+                <AvatarImage
+                  src={user.image}
+                  alt={user.username}
+                  className="rounded-full"
+                />
                 <AvatarFallback className="rounded-lg">NX</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -52,7 +60,7 @@ export function UserMenu(props: NavUserProps) {
           <DropdownMenuSeparator />
           {user.permissions.includes("ADMIN") && (
             <DropdownMenuGroup>
-              <Link href="/admin">
+              <Link href="/admin" className="cursor-pointer">
                 <DropdownMenuItem>
                   <Shield />
                   Admin
@@ -62,15 +70,20 @@ export function UserMenu(props: NavUserProps) {
           )}
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Compte
-            </DropdownMenuItem>
+            <Link href="/settings" className="cursor-pointer">
+              <DropdownMenuItem>
+                <Settings />
+                Paramètres
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={logOut}>
+          <DropdownMenuItem
+            onClick={logOut}
+            className="text-red-500 cursor-pointer"
+          >
             <LogOut />
-            Log out
+            Deconnexion
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

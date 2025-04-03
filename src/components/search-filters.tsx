@@ -1,7 +1,8 @@
 "use client";
 
 import { Check, DollarSign } from 'lucide-react';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 import { cn, fetcher } from '@/lib/utils';
-import { PlaceType } from '@prisma/client';
+
+import type { PlaceType } from "@prisma/client";
 
 interface SearchFiltersProps {
   priceRange: number[];
@@ -50,6 +52,20 @@ export function SearchFilters({
 }: SearchFiltersProps) {
   const [open, setOpen] = useState(false);
   const { data: placeTypes } = useSWR<PlaceType[]>("/api/place-types", fetcher);
+  const searchParams = useSearchParams();
+
+  // Récupérer les menus depuis les paramètres d'URL lors du chargement initial
+  useEffect(() => {
+    const menusParam = searchParams.get("menus");
+    if (menusParam) {
+      const menuIds = menusParam.split(",");
+      setSelectedMenus(menuIds);
+    }
+
+    // Vous pouvez également récupérer d'autres paramètres ici
+    // et les appliquer aux filtres correspondants
+  }, [searchParams, setSelectedMenus]);
+
   if (placeTypes) {
     return (
       <div className="grid gap-6 py-4">

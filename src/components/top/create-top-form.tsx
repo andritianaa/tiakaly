@@ -158,7 +158,8 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
     } catch (error) {
       console.error("Failed to fetch posts:", error);
       toast({
-        description: "Failed to fetch Instagram posts. Please try again.",
+        description:
+          "Échec du chargement des posts Instagram. Veuillez réessayer.",
         variant: "error",
         duration: 3000,
       });
@@ -177,7 +178,8 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
   const handlePostCreated = (post: PostInsta) => {
     setPosts((prevPosts) => [post, ...prevPosts]);
     toast({
-      description: "New Instagram post added and available for selection",
+      description:
+        "Nouveau post Instagram ajouté et disponible pour la sélection",
       variant: "success",
       duration: 3000,
     });
@@ -198,10 +200,10 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
     if (!values.mainMediaId) {
       form.setError("mainMediaId", {
         type: "manual",
-        message: "A main image is required.",
+        message: "Une image principale est requise.",
       });
       toast({
-        description: "Please select a main image.",
+        description: "Veuillez sélectionner une image principale.",
         variant: "error",
         duration: 3000,
       });
@@ -220,7 +222,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
         }
 
         toast({
-          description: "Top list updated successfully!",
+          description: "Top liste mise à jour avec succès !",
           variant: "success",
           duration: 3000,
         });
@@ -232,7 +234,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
         }
 
         toast({
-          description: "Top list created successfully!",
+          description: "Top liste créée avec succès !",
           variant: "success",
           duration: 3000,
         });
@@ -242,13 +244,13 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
       router.refresh();
     } catch (error) {
       console.error(
-        `Error ${isEditMode ? "updating" : "creating"} top:`,
+        `Erreur lors de la ${isEditMode ? "mise à jour" : "création"} du top:`,
         error
       );
       toast({
-        description: `Failed to ${
-          isEditMode ? "update" : "create"
-        } Top list. Please try again.`,
+        description: `Échec de la ${
+          isEditMode ? "mise à jour" : "création"
+        } de la Top liste. Veuillez réessayer.`,
         variant: "error",
         duration: 3000,
       });
@@ -266,15 +268,15 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title </FormLabel>
+                <FormLabel>Titre</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter a title for this Top list"
+                    placeholder="Entrez un titre pour cette liste Top"
                     {...field}
                   />
                 </FormControl>
                 <FormDescription>
-                  A descriptive title for your Top list.
+                  Un titre descriptif pour votre liste Top.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -289,13 +291,13 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter a description for this Top list"
+                    placeholder="Entrez une description pour cette liste Top"
                     className="min-h-[100px]"
                     {...field}
                   />
                 </FormControl>
                 <FormDescription>
-                  Describe what this Top list is about.
+                  Décrivez ce que cette liste Top représente.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -307,14 +309,14 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
             name="mainMediaId"
             render={() => (
               <FormItem>
-                <FormLabel>Main Image</FormLabel>
+                <FormLabel>Image Principale</FormLabel>
                 <MainMediaInput
                   value={mainMediaId}
                   onChange={handleMainMediaChange}
                   mediaUrl={initialData?.mainMedia?.url}
                 />
                 <FormDescription>
-                  Select a main image for this Top list.
+                  Sélectionnez une image principale pour cette liste Top.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -323,7 +325,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
         </div>
 
         <div className="flex justify-between items-center">
-          <h3 className="text-lg font-medium">Instagram Posts</h3>
+          <h3 className="text-lg font-medium">Posts Instagram</h3>
           <PostInstaDialog onPostCreated={handlePostCreated} />
         </div>
 
@@ -336,7 +338,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
               name="top1Id"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Instagram Post</FormLabel>
+                  <FormLabel>Post Instagram</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -350,8 +352,8 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                         >
                           {field.value
                             ? posts.find((post) => post.id === field.value)
-                                ?.title || "Select post..."
-                            : "Select post..."}
+                                ?.title || "Sélectionner un post..."
+                            : "Sélectionner un post..."}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -359,7 +361,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                     <PopoverContent className="w-[400px] p-0">
                       <Command>
                         <CommandInput
-                          placeholder="Search Instagram posts..."
+                          placeholder="Rechercher sur Instagram..."
                           onValueChange={searchPosts}
                         />
                         {isLoadingPosts && (
@@ -368,7 +370,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                           </div>
                         )}
                         <CommandList>
-                          <CommandEmpty>No posts found.</CommandEmpty>
+                          <CommandEmpty>Aucun post trouvé.</CommandEmpty>
                           <CommandGroup>
                             {posts.map((post) => (
                               <CommandItem
@@ -416,7 +418,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                   <FormLabel>Raison</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Why is this post #1?"
+                      placeholder="Pourquoi ce post est-il numéro 1 ?"
                       className="min-h-[80px]"
                       {...field}
                     />
@@ -435,7 +437,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
               name="top2Id"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Instagram Post (Optional)</FormLabel>
+                  <FormLabel>Post Instagram (Optionnel)</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -449,8 +451,8 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                         >
                           {field.value
                             ? posts.find((post) => post.id === field.value)
-                                ?.title || "Select post..."
-                            : "Select post..."}
+                                ?.title || "Sélectionner un post..."
+                            : "Sélectionner un post..."}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -458,7 +460,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                     <PopoverContent className="w-[400px] p-0">
                       <Command>
                         <CommandInput
-                          placeholder="Search Instagram posts..."
+                          placeholder="Rechercher sur Instagram..."
                           onValueChange={searchPosts}
                         />
                         {isLoadingPosts && (
@@ -467,7 +469,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                           </div>
                         )}
                         <CommandList>
-                          <CommandEmpty>No posts found.</CommandEmpty>
+                          <CommandEmpty>Aucun post trouvé.</CommandEmpty>
                           <CommandGroup>
                             {posts.map((post) => (
                               <CommandItem
@@ -515,7 +517,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                   <FormLabel>Raison</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Why is this post #2?"
+                      placeholder="Pourquoi ce post est-il numéro 2 ?"
                       className="min-h-[80px]"
                       {...field}
                     />
@@ -534,7 +536,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
               name="top3Id"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Instagram Post (Optional)</FormLabel>
+                  <FormLabel>Post Instagram (Optionnel)</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -548,8 +550,8 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                         >
                           {field.value
                             ? posts.find((post) => post.id === field.value)
-                                ?.title || "Select post..."
-                            : "Select post..."}
+                                ?.title || "Sélectionner un post..."
+                            : "Sélectionner un post..."}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -557,7 +559,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                     <PopoverContent className="w-[400px] p-0">
                       <Command>
                         <CommandInput
-                          placeholder="Search Instagram posts..."
+                          placeholder="Rechercher sur Instagram..."
                           onValueChange={searchPosts}
                         />
                         {isLoadingPosts && (
@@ -566,7 +568,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                           </div>
                         )}
                         <CommandList>
-                          <CommandEmpty>No posts found.</CommandEmpty>
+                          <CommandEmpty>Aucun post trouvé.</CommandEmpty>
                           <CommandGroup>
                             {posts.map((post) => (
                               <CommandItem
@@ -614,7 +616,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
                   <FormLabel>Raison</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Why is this post #3?"
+                      placeholder="Pourquoi ce post est-il numéro 3 ?"
                       className="min-h-[80px]"
                       {...field}
                     />
@@ -628,7 +630,7 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
 
         <Button type="submit" disabled={isSubmitting} className="w-full">
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isEditMode ? "Update Top List" : "Create Top List"}
+          {isEditMode ? "Mettre à jour la liste Top" : "Créer une liste Top"}
         </Button>
       </form>
     </Form>

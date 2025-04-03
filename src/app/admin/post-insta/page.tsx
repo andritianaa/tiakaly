@@ -1,9 +1,9 @@
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
+import { PlusCircle } from 'lucide-react';
+import Link from 'next/link';
 
-import { getPostInsta } from "@/actions/post-insta.actions";
-import { PostInstaTable } from "@/components/post-insta/post-insta-table";
-import { Button } from "@/components/ui/button";
+import { getPostInsta } from '@/actions/post-insta.actions';
+import { PostInstaTable } from '@/components/post-insta/post-insta-table';
+import { Button } from '@/components/ui/button';
 
 export default async function PostInstaPage() {
   const { data: posts, error } = await getPostInsta();
@@ -15,7 +15,7 @@ export default async function PostInstaPage() {
         <Button asChild>
           <Link href="/admin/post-insta/create">
             <PlusCircle className="mr-2 h-4 w-4" />
-            Create New Post
+            Ajouter
           </Link>
         </Button>
       </div>

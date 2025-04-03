@@ -1,19 +1,14 @@
 "use client";
 
-import { PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { PlusCircle } from 'lucide-react';
+import { useState } from 'react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+    Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger
+} from '@/components/ui/dialog';
 
-import { CreatePostInstaForm } from "./create-post-insta-form";
+import { CreatePostInstaForm } from './create-post-insta-form';
 
 interface PostInstaDialogProps {
   onPostCreated?: (post: any) => void;
@@ -34,12 +29,12 @@ export function PostInstaDialog({ onPostCreated }: PostInstaDialogProps) {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create New Post
+          Ajouter
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Create Instagram Post</DialogTitle>
+          <DialogTitle>Ajouter un post instagram</DialogTitle>
           <DialogDescription>
             Add a new Instagram post to use in your Top list.
           </DialogDescription>

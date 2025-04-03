@@ -1,8 +1,7 @@
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
-import { AppSidebar } from "@/components/navigation/main-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { currentUser } from "@/lib/current-user";
+import { Navbar } from '@/app/(web)/components/navbar';
+import { currentUser } from '@/lib/current-user';
 
 export default async function RouteLayout({
   children,
@@ -12,9 +11,9 @@ export default async function RouteLayout({
   const user = await currentUser();
   if (!user) return redirect("/auth/login");
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>{children}</SidebarInset>
-    </SidebarProvider>
+    <>
+      <Navbar />
+      {children}
+    </>
   );
 }

@@ -39,7 +39,7 @@ export default function PostInstasPage() {
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search Instagram posts..."
+            placeholder="Rechercher sur insta..."
             className="pl-8"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

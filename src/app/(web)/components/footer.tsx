@@ -4,14 +4,14 @@
 //   TwitchIcon,
 //   TwitterIcon,
 // } from "lucide-react";
-import Link from "next/link";
+import Link from 'next/link';
 
-import { Logo } from "@/components/logo";
-import { Separator } from "@/components/ui/separator";
+import { Logo } from '@/components/logo';
+import { Separator } from '@/components/ui/separator';
 
 const footerSections = [
   {
-    title: "Product",
+    title: "Produit",
     links: [
       {
         title: "Vue d'ensemble",

@@ -1,44 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import { CalendarIcon, Check, ChevronsUpDown, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { InstagramEmbed } from "react-social-media-embed";
-import { z } from "zod";
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { CalendarIcon, Check, ChevronsUpDown, Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { InstagramEmbed } from 'react-social-media-embed';
+import { z } from 'zod';
 
-import { checkUrlExists, createPostInsta } from "@/actions/post-insta.actions";
-import { MainMediaInput } from "@/components/place/inputs/main-media-input";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { checkUrlExists, createPostInsta } from '@/actions/post-insta.actions';
+import { MainMediaInput } from '@/components/place/inputs/main-media-input';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+    Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList
+} from '@/components/ui/command';
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
+    Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // Define the form schema with Zod
 const formSchema = z.object({
@@ -206,7 +191,7 @@ export function CreatePostInstaForm({
       }
 
       toast({
-        description: "Post Instagram créé avec succès !",
+        description: "Post Instagram ajouté avec succès !",
         variant: "success",
         duration: 3000,
       });
@@ -221,8 +206,7 @@ export function CreatePostInstaForm({
     } catch (error) {
       console.error("Error creating post:", error);
       toast({
-        description:
-          "Échec de la création du post Instagram. Veuillez réessayer.",
+        description: "Échec de l'ajout du post Instagram. Veuillez réessayer.",
         variant: "error",
         duration: 3000,
       });
@@ -446,7 +430,7 @@ export function CreatePostInstaForm({
 
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Créer le Post Instagram
+          Ajouter le Post Instagram
         </Button>
       </form>
     </Form>

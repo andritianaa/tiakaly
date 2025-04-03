@@ -1,12 +1,11 @@
-import { ExternalLink, MapPin } from "lucide-react";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { use } from "react";
+import { ExternalLink, MapPin } from 'lucide-react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { use } from 'react';
 
-import { getPostInstaById } from "@/actions/post-insta.actions";
-import Footer from "@/app/(web)/components/footer";
-import { InstagramEmbedWrapper } from "@/components/client-wrappers/instagram-embed-wrapper";
-import { Button } from "@/components/ui/button";
+import { getPostInstaById } from '@/actions/post-insta.actions';
+import { InstagramEmbedWrapper } from '@/components/client-wrappers/instagram-embed-wrapper';
+import { Button } from '@/components/ui/button';
 
 export default function PostInstaPage({
   params,
@@ -58,8 +57,6 @@ export default function PostInstaPage({
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 }
