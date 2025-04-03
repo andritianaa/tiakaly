@@ -1,12 +1,12 @@
 "use client";
 
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 
 // Type definitions for our props
 interface MapCoordinatesInputProps {
@@ -83,7 +83,7 @@ function MapComponent({
         zoom={defaultZoom}
         style={{ height: "100%", width: "100%" }}
       >
-        <TileLayer url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}" />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <LocationMarker position={position} setPosition={setPosition} />
       </MapContainer>
     </div>

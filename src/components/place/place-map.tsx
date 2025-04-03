@@ -1,9 +1,9 @@
 "use client";
 
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 
-import L from "leaflet";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import L from 'leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 // Fix pour les icônes Leaflet dans Next.js
 const icon = L.icon({
@@ -32,7 +32,7 @@ export default function PlaceMap({
       zoom={15}
       style={{ height: "100%", width: "100%" }}
     >
-      <TileLayer url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}" />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Marker position={position} icon={icon}>
         <Popup>{title}</Popup>
       </Marker>
