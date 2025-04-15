@@ -257,6 +257,7 @@ export async function getTopById(id: string) {
                         title: true,
                         url: true,
                         date: true,
+                        isFacebook: true,
                         place: {
                             select: {
                                 id: true,
@@ -271,6 +272,7 @@ export async function getTopById(id: string) {
                         id: true,
                         title: true,
                         url: true,
+                        isFacebook: true,
                         date: true,
                         place: {
                             select: {
@@ -286,6 +288,7 @@ export async function getTopById(id: string) {
                         id: true,
                         title: true,
                         url: true,
+                        isFacebook: true,
                         date: true,
                         place: {
                             select: {

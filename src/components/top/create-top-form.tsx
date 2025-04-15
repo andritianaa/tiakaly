@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import { createTop, updateTop } from '@/actions/top.actions';
 import { MainMediaInput } from '@/components/place/inputs/main-media-input';
-import { PostInstaDialog } from '@/components/post-insta/post-insta-dialog';
+import { PostFbDialog, PostInstaDialog } from '@/components/post-insta/post-insta-dialog';
 import { Button } from '@/components/ui/button';
 import {
     Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList
@@ -42,9 +42,7 @@ const formSchema = z.object({
     message: "La raison pour le Top 2 est requise.",
   }),
   top3Id: z.string().optional(),
-  top3Reason: z.string().min(1, {
-    message: "La raison pour le Top 3 est requise.",
-  }),
+  top3Reason: z.string().optional(),
   mainMediaId: z.string().min(1, {
     message: "L'image principale est requise.",
   }),
@@ -325,8 +323,11 @@ export function CreateTopForm({ initialData }: CreateTopFormProps) {
         </div>
 
         <div className="flex justify-between items-center">
-          <h3 className="text-lg font-medium">Posts Instagram</h3>
-          <PostInstaDialog onPostCreated={handlePostCreated} />
+          <h3 className="text-lg font-medium">Posts</h3>
+          <div className="flex gap-2">
+            <PostInstaDialog onPostCreated={handlePostCreated} />
+            <PostFbDialog onPostCreated={handlePostCreated} />
+          </div>
         </div>
 
         <div className="space-y-8">

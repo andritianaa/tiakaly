@@ -110,8 +110,8 @@ export default function RecentContent() {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="left-0 md:-left-5 h-12 w-12 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
-                  <CarouselNext className="right-0 md:-right-5 h-12 w-12 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
+                  <CarouselPrevious className="left-0 md:-left-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
+                  <CarouselNext className="right-0 md:-right-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
                 </Carousel>
               </div>
 
@@ -135,8 +135,8 @@ export default function RecentContent() {
         <div>
           <div className="flex items-center justify-center gap-4 mb-10">
             <div className="h-[1px] bg-border w-16"></div>
-            <div className="flex items-center bg-pink-50 px-6 py-3 rounded-full">
-              <Instagram className="text-pink-500 h-6 w-6 mr-3" />
+            <div className="flex items-center bg-yellow-50 px-6 py-3 rounded-full">
+              <Instagram className="text-yellow-500 h-6 w-6 mr-3" />
               <h3 className="text-3xl font-bold text-foreground">
                 Instagram Inspirations
               </h3>
@@ -185,8 +185,8 @@ export default function RecentContent() {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="left-0 md:-left-5 h-12 w-12 bg-pink-500 text-white border-2 border-white hover:bg-pink-600 hover:text-white shadow-md" />
-                  <CarouselNext className="right-0 md:-right-5 h-12 w-12 bg-pink-500 text-white border-2 border-white hover:bg-pink-600 hover:text-white shadow-md" />
+                  <CarouselPrevious className="left-0 md:-left-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
+                  <CarouselNext className="right-0 md:-right-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
                 </Carousel>
               </div>
 
@@ -194,7 +194,7 @@ export default function RecentContent() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 py-6 rounded-full transition-all hover:shadow-lg"
+                  className=" bg-yellow-500  hover:bg-yellow-600  text-white px-8 py-6 rounded-full transition-all hover:shadow-lg"
                 >
                   <Link
                     href="/post-instas"

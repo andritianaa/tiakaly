@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 import { PrismaClient } from '@prisma/client';
 
-import type { PostInstaFormValues } from "@/components/post-insta/create-post-insta-form";
+import type { PostFacebookFormValues, PostInstaFormValues } from "@/components/post-insta/create-post-insta-form";
 
 const prisma = new PrismaClient()
 
@@ -25,7 +25,7 @@ export async function createPostInsta(data: PostInstaFormValues) {
         // Check if URL already exists
         const urlExists = await checkUrlExists(data.url)
         if (urlExists) {
-            return { error: "Cette URL Instagram existe déjà" }
+            return { error: "Cette URL existe déjà" }
         }
 
         // Create the PostInsta record
@@ -50,6 +50,39 @@ export async function createPostInsta(data: PostInstaFormValues) {
         return { error: "Échec de la création du post Instagram" }
     }
 }
+export async function createPostFb(data: PostFacebookFormValues) {
+    try {
+        // Check if URL already exists
+        const urlExists = await checkUrlExists(data.url)
+        if (urlExists) {
+            return { error: "Cette URL existe déjà" }
+        }
+
+        const media = await prisma.media.findFirst()
+
+        // Create the PostInsta record
+        const post = await prisma.postInsta.create({
+            data: {
+                date: new Date(),
+                url: data.url,
+                title: data.title,
+                placeId: null,
+                mainMediaId: media!.id,
+                isFacebook: true
+            },
+            include: {
+                mainMedia: true,
+                place: true,
+            },
+        })
+
+        revalidatePath("/admin/post-insta")
+        return { data: post }
+    } catch (error) {
+        console.error("Error creating PostInsta:", error)
+        return { error: "Échec de la création du post Instagram" }
+    }
+}
 
 // Update an existing PostInsta
 export async function updatePostInsta(id: string, data: PostInstaFormValues) {
@@ -66,7 +99,7 @@ export async function updatePostInsta(id: string, data: PostInstaFormValues) {
             })
 
             if (existingPost) {
-                return { error: "Cette URL Instagram existe déjà" }
+                return { error: "Cette URL existe déjà" }
             }
         }
 

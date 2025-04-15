@@ -7,8 +7,8 @@ model PostInsta {
     place       Place?   @relation(fields: [placeId], references: [id], onDelete: Cascade)
     mainMediaId String
     mainMedia   Media    @relation(fields: [mainMediaId], references: [id])
-
-    TopTop1 Top[] @relation(name: "TopTop1")
-    TopTop2 Top[] @relation(name: "TopTop2")
-    TopTop3 Top[] @relation(name: "TopTop3")
+    isFacebook  Boolean  @default(false)
+    TopTop1     Top[]    @relation(name: "TopTop1")
+    TopTop2     Top[]    @relation(name: "TopTop2")
+    TopTop3     Top[]    @relation(name: "TopTop3")
 }

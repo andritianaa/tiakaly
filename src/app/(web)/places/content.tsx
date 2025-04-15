@@ -247,7 +247,7 @@ export default function SearchPageContent() {
             <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
           </div>
         ) : filteredPlaces.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3  gap-4">
             {filteredPlaces.map((place) => (
               <PlaceResume key={place.id} {...place} />
             ))}

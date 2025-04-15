@@ -51,6 +51,18 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
     }
   }, [placesData]);
 
+  // Automatically update results when selections change in the dialog
+  useEffect(() => {
+    if (dialogOpen) {
+      // No need to call handleSearch() as the SWR hook will handle the data fetching
+      // Just update the loading state for visual feedback
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
+  }, [selectedMenus, dialogOpen]);
+
   // Filtrer les lieux en fonction des menus sélectionnés
   const filteredPlaces = useMemo(() => {
     if (!places.length) return [];
@@ -206,13 +218,13 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="lg:min-w-[672px] lg:max-w-2xl max-h-[90vh] flex flex-col">
-          <DialogHeader className="flex flex-row items-center justify-between border-b pb-4">
-            <div>
+        <DialogContent className="lg:min-w-[672px] lg:max-w-2xl min-h-[90vh] max-h-[90vh] flex flex-col ">
+          <DialogHeader className="flex flex-col items-start justify-between border-b pb-4">
+            <div className="w-full items-center justify-center flex flex-col">
               <DialogTitle className="text-2xl font-bold">
                 Résultats de recherche
               </DialogTitle>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-center">
                 {selectedMenuNames.length > 0 ? (
                   <>
                     Lieux proposant :{" "}
@@ -225,42 +237,39 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                 )}
               </p>
             </div>
+
+            <div className="w-full mt-4">
+              <MultiSelect
+                value={selectedMenus}
+                onValueChange={(values) => setSelectedMenus(values)}
+              >
+                <MultiSelectTrigger className="w-full h-12 text-md border-2 bg-background/50 hover:bg-background/80 transition-colors">
+                  <MultiSelectValue placeholder="Vos envies culinaires" />
+                </MultiSelectTrigger>
+                <MultiSelectContent className="max-h-[300px]">
+                  <MultiSelectSearch placeholder="Rechercher un type de cuisine..." />
+                  <MultiSelectList>
+                    <MultiSelectGroup>
+                      {menus.map((menu) => (
+                        <MultiSelectItem
+                          key={menu.id}
+                          value={menu.id}
+                          className="py-2"
+                        >
+                          {menu.name}
+                        </MultiSelectItem>
+                      ))}
+                    </MultiSelectGroup>
+                  </MultiSelectList>
+                  <MultiSelectEmpty>Aucun menu trouvé</MultiSelectEmpty>
+                </MultiSelectContent>
+              </MultiSelect>
+            </div>
           </DialogHeader>
 
-          <div className="flex items-center gap-2 mt-4 flex-wrap">
-            {selectedMenus.map((menuId) => {
-              const menuName =
-                menus.find((m) => m.id === menuId)?.name || menuId;
-              return (
-                <div
-                  key={menuId}
-                  className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm flex items-center"
-                >
-                  {menuName}
-                  <button
-                    className="ml-2 text-muted-foreground hover:text-foreground"
-                    onClick={() =>
-                      setSelectedMenus(
-                        selectedMenus.filter((id) => id !== menuId)
-                      )
-                    }
-                  >
-                    ×
-                  </button>
-                </div>
-              );
-            })}
-            {selectedMenus.length > 0 && (
-              <button
-                className="text-sm text-primary hover:text-primary/80 underline"
-                onClick={() => setSelectedMenus([])}
-              >
-                Effacer tous les filtres
-              </button>
-            )}
-          </div>
+          {/* Filter chips removed as they're redundant with the MultiSelect above */}
 
-          <div className="flex-1 mt-6 pr-4 max-h-[70vh] overflow-y-auto">
+          <div className="flex-1 pr-4 max-h-[70vh]  overflow-y-auto">
             {isLoadingPlaces ? (
               <div className="flex flex-col items-center justify-center py-12 gap-4">
                 <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full"></div>
@@ -297,7 +306,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
             )}
           </div>
 
-          <div className="flex justify-between items-center mt-6 pt-4 border-t">
+          <div className="flex justify-between items-center border-t">
             <div className="text-sm text-muted-foreground">
               {filteredPlaces.length} résultat
               {filteredPlaces.length !== 1 ? "s" : ""} trouvé

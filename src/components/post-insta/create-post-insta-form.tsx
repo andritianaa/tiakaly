@@ -6,10 +6,10 @@ import { fr } from 'date-fns/locale';
 import { CalendarIcon, Check, ChevronsUpDown, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { InstagramEmbed } from 'react-social-media-embed';
+import { FacebookEmbed, InstagramEmbed } from 'react-social-media-embed';
 import { z } from 'zod';
 
-import { checkUrlExists, createPostInsta } from '@/actions/post-insta.actions';
+import { checkUrlExists, createPostFb, createPostInsta } from '@/actions/post-insta.actions';
 import { MainMediaInput } from '@/components/place/inputs/main-media-input';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -41,6 +41,14 @@ const formSchema = z.object({
     message: "Une image principale est requise.",
   }),
 });
+const formSchemaFb = z.object({
+  url: z.string().url({
+    message: "Veuillez entrer une URL valide.",
+  }),
+  title: z.string().min(1, {
+    message: "Le titre est requis.",
+  }),
+});
 
 export type PostInstaFormValues = z.infer<typeof formSchema>;
 
@@ -52,6 +60,7 @@ type Place = {
     url: string;
   };
 };
+export type PostFacebookFormValues = z.infer<typeof formSchemaFb>;
 
 interface CreatePostInstaFormProps {
   onSuccess?: (data: any) => void;
@@ -431,6 +440,148 @@ export function CreatePostInstaForm({
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Ajouter le Post Instagram
+        </Button>
+      </form>
+    </Form>
+  );
+}
+
+export function CreatePostFacebookForm({
+  onSuccess,
+  initialData,
+}: CreatePostInstaFormProps) {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validUrl, setValidUrl] = useState("");
+  const [mainMediaId, setMainMediaId] = useState(
+    initialData?.mainMedia?.id || ""
+  );
+
+  // Initialize the form
+  const form = useForm<PostFacebookFormValues>({
+    resolver: zodResolver(formSchemaFb),
+    defaultValues: {
+      url: "",
+      title: "",
+    },
+  });
+
+  // Update form when mainMediaId changes
+
+  // Form submission handler
+  async function onSubmit(values: PostFacebookFormValues) {
+    setIsSubmitting(true);
+    try {
+      // Check if URL already exists
+      const urlExists = await checkUrlExists(values.url);
+      if (urlExists) {
+        form.setError("url", {
+          type: "manual",
+          message: "Cette URL existe déjà dans la base de données",
+        });
+        toast({
+          description: "Cette URL existe déjà",
+          variant: "error",
+          duration: 3000,
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Create post
+      const result = await createPostFb(values);
+
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      toast({
+        description: "Post ajouté avec succès !",
+        variant: "success",
+        duration: 3000,
+      });
+
+      form.reset();
+      setMainMediaId("");
+      setValidUrl("");
+
+      if (onSuccess) {
+        onSuccess(result.data);
+      }
+    } catch (error) {
+      console.error("Error creating post:", error);
+      toast({
+        description: "Échec de l'ajout du post. Veuillez réessayer.",
+        variant: "error",
+        duration: 3000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  const handleUrlChange = (url: string) => {
+    form.setValue("url", url);
+    if (url) {
+      setValidUrl(url);
+    } else {
+      setValidUrl("");
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="url"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>URL facebook</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://www.instagram.com/..."
+                  {...field}
+                  onChange={(e) => handleUrlChange(e.target.value)}
+                />
+              </FormControl>
+              <FormDescription>
+                {`L'URL du post Instagram. Doit être unique.`}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {validUrl && (
+          <div className="mt-4">
+            <FacebookEmbed
+              url={validUrl}
+              className="w-full max-w-xl max-md:p-2"
+            />
+          </div>
+        )}
+
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Titre</FormLabel>
+              <FormControl>
+                <Input placeholder="Entrez un titre pour ce post" {...field} />
+              </FormControl>
+              <FormDescription>
+                Un titre descriptif pour le post.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Ajouter le Post facebook
         </Button>
       </form>
     </Form>
