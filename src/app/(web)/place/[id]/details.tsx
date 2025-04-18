@@ -1,28 +1,41 @@
 "use client";
 
-import Autoplay from 'embla-carousel-autoplay';
-import { Check, DollarSign, Mail, MapPin, Phone } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { InstagramEmbed } from 'react-social-media-embed';
+import Autoplay from "embla-carousel-autoplay";
+import { Check, DollarSign, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { InstagramEmbed } from "react-social-media-embed";
 
-import DynamicMap from '@/components/place/place-map';
-import { RichTextEditor } from '@/components/rich-text-editor';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import DynamicMap from "@/components/place/place-map";
+import { RichTextEditor } from "@/components/rich-text-editor";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
-} from '@/components/ui/carousel';
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import {
-    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
-} from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useToast } from '@/hooks/use-toast';
-import { PlaceWithRelations } from '@/types/place';
-import { Media } from '@prisma/client';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
+import { PlaceWithRelations } from "@/types/place";
+import { Media } from "@prisma/client";
 
 import type { CarouselApi } from "@/components/ui/carousel";
 export function PlaceDetailClient({
@@ -223,18 +236,35 @@ export function PlaceDetailClient({
                       <div className="flex items-center gap-2">
                         <div className="flex items-center justify-center">
                           {place.priceInDollars && (
-                            <>
-                              {[1, 2, 3].map((dollar) => (
-                                <DollarSign
-                                  key={dollar}
-                                  className={`size-4 ${
-                                    dollar <= place.priceInDollars!
-                                      ? ""
-                                      : "hidden"
-                                  }`}
-                                />
-                              ))}
-                            </>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex">
+                                  {" "}
+                                  {/* Single wrapper element */}
+                                  {[1, 2, 3].map((dollar) => (
+                                    <span
+                                      key={dollar}
+                                      className={
+                                        dollar <= place.priceInDollars!
+                                          ? ""
+                                          : "hidden"
+                                      }
+                                    >
+                                      <DollarSign className="size-4" />
+                                    </span>
+                                  ))}
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p className="p-0">
+                                  {place.priceInDollars === 1
+                                    ? "Petit budget"
+                                    : place.priceInDollars === 2
+                                    ? "Budget moyen"
+                                    : "Gros budget"}
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
                           )}
                         </div>
                         <div className="flex items-center justify-center">

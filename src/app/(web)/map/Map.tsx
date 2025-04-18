@@ -1,26 +1,58 @@
 "use client";
 
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 // Import Leaflet components only on client side
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import useSWR from 'swr';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import useSWR from "swr";
 
-import { PlaceResume } from '@/components/place-resume';
-import { Button } from '@/components/ui/button';
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { PlaceResume } from "@/components/place-resume";
+import { Button } from "@/components/ui/button";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-    Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger
-} from '@/components/ui/sheet';
-import { Skeleton } from '@/components/ui/skeleton';
-import { MARKER } from '@/lib/MarkerIcon';
-import { fetcher } from '@/lib/utils';
-import { PlaceSummary } from '@/types/place';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
+import { MARKER } from "@/lib/MarkerIcon";
+import { fetcher } from "@/lib/utils";
 
-import { PlacePopup } from './popup';
+import { PlacePopup } from "./popup";
+
+import type { PlaceSummary } from "@/types/place";
+
+// This component will be used to access the map instance
+function MapController({ selectedPlace }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (selectedPlace && selectedPlace.latitude && selectedPlace.longitude) {
+      // Fly to the selected place with animation
+      map.flyTo(
+        [selectedPlace.latitude, selectedPlace.longitude],
+        18, // Zoom level
+        {
+          animate: true,
+          duration: 1.5, // Animation duration in seconds
+        }
+      );
+
+      // Optional: Update URL hash without navigating
+      if (typeof window !== "undefined") {
+        window.history.replaceState(null, "", `/map#${selectedPlace.id}`);
+      }
+    }
+  }, [selectedPlace, map]);
+
+  return null;
+}
 
 function MapPlaceholder() {
   return (
@@ -38,6 +70,9 @@ function MapComponent() {
 
   const [places, setPlaces] = useState<PlaceSummary[]>([]);
   const [searchText, setSearchText] = useState("");
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (fetchedPlaces) {
@@ -53,6 +88,19 @@ function MapComponent() {
     }
   }, [searchText, fetchedPlaces]);
 
+  const handlePlaceClick = (place) => {
+    setSelectedPlace(place);
+
+    // Close the sheet/drawer after selecting a place
+    if (window.innerWidth >= 768) {
+      // For desktop (Sheet)
+      setSheetOpen(false);
+    } else {
+      // For mobile (Drawer)
+      setDrawerOpen(false);
+    }
+  };
+
   return (
     <>
       <div className="fixed h-screen w-screen big-map">
@@ -64,9 +112,11 @@ function MapComponent() {
           className="h-screen w-screen"
         >
           <TileLayer
-            url={"https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"}
+            url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
           />
-          {/* <MarkerClusterGroup chunkedLoading polygonOptions={{ opacity: 0 }}> */}
+          {/* Map controller to handle flying to locations */}
+          <MapController selectedPlace={selectedPlace} />
+
           {places?.map((place) =>
             place.longitude != 0 ? (
               <Marker
@@ -86,13 +136,12 @@ function MapComponent() {
                 </Popup>
               </Marker>
             ) : (
-              <></>
+              <React.Fragment key={place.id}></React.Fragment>
             )
           )}
-          {/* </MarkerClusterGroup> */}
         </MapContainer>
       </div>
-      <Sheet>
+      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetTrigger>
           <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 hidden md:flex">
             Rechercher
@@ -114,13 +163,18 @@ function MapComponent() {
                 <Skeleton className="rounded-lg shadow-sm h-20" key={index} />
               ))}
             {places.map((place) => (
-              <PlaceResume key={place.id} {...place} />
+              <PlaceResume
+                key={place.id}
+                place={place}
+                mapMode={true}
+                onMapClick={handlePlaceClick}
+              />
             ))}
           </div>
         </SheetContent>
       </Sheet>
 
-      <Drawer>
+      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
         <DrawerTrigger asChild>
           <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 flex md:hidden">
             Rechercher
@@ -145,7 +199,12 @@ function MapComponent() {
                   ))}
 
                 {places.map((place) => (
-                  <PlaceResume key={place.id} {...place} />
+                  <PlaceResume
+                    key={place.id}
+                    place={place}
+                    mapMode={true}
+                    onMapClick={handlePlaceClick}
+                  />
                 ))}
               </div>
             </ScrollArea>
