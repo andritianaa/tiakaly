@@ -23,6 +23,8 @@ export const PlaceResume = ({
   mapMode = false,
   onMapClick,
 }: PlaceResumeProps) => {
+  console.log("place", place);
+
   const handleClick = (e: React.MouseEvent) => {
     if (mapMode && onMapClick) {
       e.preventDefault();

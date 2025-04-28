@@ -1,19 +1,15 @@
 "use client";
 
-import { ArrowRight, Compass, Instagram, Star } from 'lucide-react';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Compass } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-import { PostInstaCard } from '@/components/post-insta/post-insta-card';
-import { TopCard } from '@/components/top/top-card';
-import { Button } from '@/components/ui/button';
-import {
-    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
-} from '@/components/ui/carousel';
-import { fetcher } from '@/lib/utils';
+import RecentPlaces from "@/app/(web)/components/recent-places";
+import TopsSection from "@/app/(web)/components/top-section";
+import { Button } from "@/components/ui/button";
+import { fetcher } from "@/lib/utils";
 
 import type { PostInstaWithMain, TopWithMain } from "@/types";
-
 export default function RecentContent() {
   const [tops, setTops] = useState<TopWithMain[]>([]);
   const [posts, setPosts] = useState<PostInstaWithMain[]>([]);
@@ -57,156 +53,9 @@ export default function RecentContent() {
         </div>
 
         {/* Section Tops */}
-        <div className="mb-24">
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <div className="h-[1px] bg-border w-16"></div>
-            <div className="flex items-center bg-yellow-50 px-6 py-3 rounded-full">
-              <Star className="text-yellow-500 h-6 w-6 mr-3" />
-              <h3 className="text-3xl font-bold text-foreground">
-                Tops Tendance
-              </h3>
-            </div>
-            <div className="h-[1px] bg-border w-16"></div>
-          </div>
-
-          <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-10 text-lg">
-            Nos sélections exclusives des meilleurs lieux et expériences, créées
-            par nos experts passionnés pour vous inspirer.
-          </p>
-
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-[45vh] bg-muted animate-pulse rounded-md"
-                ></div>
-              ))}
-            </div>
-          ) : tops.length === 0 ? (
-            <div className="text-center py-12 bg-secondary rounded-xl">
-              <p className="text-muted-foreground text-lg">
-                Nos tops sont en cours de création. Revenez bientôt pour
-                découvrir nos sélections exclusives !
-              </p>
-            </div>
-          ) : (
-            <>
-              <div className="relative px-4 md:px-10">
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  className="w-full"
-                >
-                  <CarouselContent>
-                    {tops.map((top) => (
-                      <CarouselItem
-                        key={top.id}
-                        className="basis-full md:basis-1/2 lg:basis-1/3 pl-4"
-                      >
-                        <TopCard top={top} />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-0 md:-left-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
-                  <CarouselNext className="right-0 md:-right-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
-                </Carousel>
-              </div>
-
-              <div className="text-center mt-12">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-primary hover:bg-yellow-500 text-primary-foreground px-8 py-6 rounded-full transition-all hover:shadow-lg"
-                >
-                  <Link href="/tops" className="flex items-center text-lg">
-                    Explorer tous nos tops
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* Section Posts Instagram */}
-        <div>
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <div className="h-[1px] bg-border w-16"></div>
-            <div className="flex items-center bg-yellow-50 px-6 py-3 rounded-full">
-              <Instagram className="text-yellow-500 h-6 w-6 mr-3" />
-              <h3 className="text-3xl font-bold text-foreground">
-                Instagram Inspirations
-              </h3>
-            </div>
-            <div className="h-[1px] bg-border w-16"></div>
-          </div>
-
-          <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-10 text-lg">
-            Découvrez notre sélection des plus beaux moments capturés sur
-            Instagram, pour vous donner envie de partir à l'aventure.
-          </p>
-
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-[45vh] bg-muted animate-pulse rounded-md"
-                ></div>
-              ))}
-            </div>
-          ) : posts.length === 0 ? (
-            <div className="text-center py-12 bg-secondary rounded-xl">
-              <p className="text-muted-foreground text-lg">
-                Nos posts Instagram sont en cours de préparation. Revenez
-                bientôt pour découvrir nos plus belles inspirations !
-              </p>
-            </div>
-          ) : (
-            <>
-              <div className="relative px-4 md:px-10">
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  className="w-full"
-                >
-                  <CarouselContent>
-                    {posts.map((post) => (
-                      <CarouselItem
-                        key={post.id}
-                        className="basis-full md:basis-1/2 lg:basis-1/3 pl-4"
-                      >
-                        <PostInstaCard post={post} />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-0 md:-left-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
-                  <CarouselNext className="right-0 md:-right-5 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
-                </Carousel>
-              </div>
-
-              <div className="text-center mt-12">
-                <Button
-                  asChild
-                  size="lg"
-                  className=" bg-yellow-500  hover:bg-yellow-600  text-white px-8 py-6 rounded-full transition-all hover:shadow-lg"
-                >
-                  <Link
-                    href="/post-instas"
-                    className="flex items-center text-lg"
-                  >
-                    Voir tous nos posts Instagram
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </>
-          )}
+        <div className=" grid grid-cols-1 lg:grid-cols-2  gap-6">
+          <TopsSection tops={tops} isLoading={false} />
+          <RecentPlaces />
         </div>
 
         {/* Call to Action */}

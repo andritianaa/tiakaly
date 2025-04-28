@@ -4,10 +4,10 @@
 //   TwitchIcon,
 //   TwitterIcon,
 // } from "lucide-react";
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Logo } from '@/components/logo';
-import { Separator } from '@/components/ui/separator';
+import { Logo } from "@/components/logo";
+import { Separator } from "@/components/ui/separator";
 
 const footerSections = [
   {
@@ -129,7 +129,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {footerSections.map(({ title, links }) => (
+        {/* {footerSections.map(({ title, links }) => (
           <div key={title} className="xl:justify-self-end">
             <h6 className="font-semibold text-foreground">{title}</h6>
             <ul className="mt-6 space-y-4">
@@ -145,7 +145,7 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-        ))}
+        ))} */}
       </div>
       <Separator />
       <div className="max-w-screen-xl mx-auto py-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-x-2 gap-y-5 px-6">

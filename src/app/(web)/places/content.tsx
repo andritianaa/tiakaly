@@ -2,21 +2,25 @@
 
 import type React from "react";
 
-import { Filter, Search, SearchIcon } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
-import useSWR from 'swr';
+import { Filter, Search, SearchIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
 
-import { PlaceResume } from '@/components/place-resume';
-import { SearchFilters } from '@/components/search-filters';
-import { Button } from '@/components/ui/button';
+import { PlaceResume } from "@/components/place-resume";
+import { SearchFilters } from "@/components/search-filters";
+import { Button } from "@/components/ui/button";
 import {
-    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
-} from '@/components/ui/dialog';
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
-import { fetcher } from '@/lib/utils';
-import { PlaceType } from '@prisma/client';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { fetcher } from "@/lib/utils";
+import { PlaceType } from "@prisma/client";
 
 import type { PlaceSummary } from "@/types/place";
 // Liste des types de lieux (à remplacer par des données réelles)
@@ -249,7 +253,7 @@ export default function SearchPageContent() {
         ) : filteredPlaces.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3  gap-4">
             {filteredPlaces.map((place) => (
-              <PlaceResume key={place.id} {...place} />
+              <PlaceResume key={place.id} place={place} />
             ))}
           </div>
         ) : (
