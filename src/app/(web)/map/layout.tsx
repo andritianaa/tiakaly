@@ -1,5 +1,7 @@
+import { Metadata } from "next";
+
 // app/(web)/map/layout.tsx
-import { Metadata } from 'next';
+import { Navbar } from "@/app/(web)/components/navbar";
 
 export const metadata: Metadata = {
   title: "Carte interactive des meilleurs lieux à Madagascar | Tiakaly",
@@ -79,5 +81,10 @@ export const metadata: Metadata = {
 };
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 }
