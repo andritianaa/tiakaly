@@ -15,14 +15,14 @@ export function TopCard({ top }: TopCardProps) {
       <Link
         href={`/top/${top.id}`}
         key={top.title}
-        className="relative  rounded-lg max-h-[35vh] min-h-[35vh] bg-muted hover:scale-105 transition-transform duration-300"
+        className="relative  rounded-lg max-h-[40vh] min-h-[40vh] bg-muted hover:scale-105 transition-transform duration-300"
       >
         <Image
           src={top.mainMedia!.url}
           width={500}
           height={500}
           alt=""
-          className="  h-full w-full object-cover max-h-[35vh] min-h-[35vh] overflow-hidden hover:scale-105 transition-transform duration-300"
+          className="  h-full w-full object-cover max-h-[40vh] min-h-[40vh] overflow-hidden hover:scale-105 transition-transform duration-300"
         />
         <div className=" bg-gradient-to-t  from-black to-transparent absolute bottom-0 left-0 w-full h-40"></div>
 
