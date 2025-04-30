@@ -13,19 +13,16 @@ export default function NotFound() {
         <Logo withName />
       </Link>
 
-      <h1 className="mt-4 text-2xl font-semibold text-gray-900 dark:text-gray-50">
+      <h1 className="mt-4 text-2xl font-semibold text-slate-700">
         Page indisponnible
       </h1>
-      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-        {`Désolé, cette page n'est pas encore prête`}
+      <p className="mt-2 text-sm text-gray-600">
+        {`Désolé, cette page n'est pas disponnible.`}
       </p>
       <Button asChild className="group mt-8">
         <Link href={"/"}>
           {`Retourner à l'accueil`}
-          <RiArrowRightLine
-            className="ml-1.5 size-5 text-gray-900 dark:text-gray-50"
-            aria-hidden="true"
-          />
+          <RiArrowRightLine className="ml-1.5 size-5" aria-hidden="true" />
         </Link>
       </Button>
     </div>

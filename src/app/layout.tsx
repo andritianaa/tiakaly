@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import './globals.css';
+import "./globals.css";
 
-import Script from 'next/script';
-import TopLoader from 'nextjs-toploader';
+import Script from "next/script";
+import TopLoader from "nextjs-toploader";
 
-import { Providers } from '@/context/providers';
+import { Providers } from "@/context/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     "découverte",
     "tiakaly",
   ],
+
   authors: [
     {
       name: "Tiakaly",
@@ -94,7 +95,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-slate-100 selection:text-slate-500`}
       >
-        <TopLoader showSpinner={false} color="#2e3746" />
+        <TopLoader showSpinner={false} color="#fdc050" />
         <Providers>{children}</Providers>
       </body>
     </html>

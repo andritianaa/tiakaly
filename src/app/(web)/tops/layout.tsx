@@ -1,5 +1,5 @@
 // app/(web)/tops/layout.tsx
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Découvrez les classements de resto à Madagascar | Tiakaly",
@@ -75,6 +75,10 @@ export const metadata: Metadata = {
         ],
       },
     }),
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

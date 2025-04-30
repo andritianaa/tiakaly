@@ -4,15 +4,14 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/current-user";
 
 export const metadata: Metadata = {
-  title: "Authentification | Tiakaly - Une histoire sans faim",
-  description:
-    "Connectez-vous ou créez un compte pour accéder à toutes les fonctionnalités de Tiakaly.",
+  title: "Réinitialisation du mot de passe | Tiakaly - Une histoire sans faim",
+  description: "Définissez un nouveau mot de passe pour votre compte Tiakaly.",
   robots: {
-    index: false,
+    index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://www.tiakaly.com/auth/login",
+    canonical: "https://www.tiakaly.com/auth/reset-password",
   },
 };
 

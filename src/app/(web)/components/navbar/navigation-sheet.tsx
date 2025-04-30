@@ -24,7 +24,7 @@ export const NavigationSheet = () => {
         </Button>
       </SheetTrigger>
       <SheetContent>
-        <Logo />
+        <Logo icon />
         <NavMenu orientation="vertical" className="mt-12" />
 
         <div className="mt-8 space-y-4">

@@ -1,6 +1,13 @@
 "use client";
 
-import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
+import {
+  Bookmark,
+  ChevronsUpDown,
+  LogOut,
+  Settings,
+  Shield,
+} from "lucide-react";
+import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -20,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/use-user";
+import { logOut } from "@/lib/utils";
 
 export type NavUserProps = {
   avatarOnly?: boolean;
@@ -76,18 +84,40 @@ export function NavUser(props: NavUserProps) {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuGroup></DropdownMenuGroup>
+              {user.permissions.includes("ADMIN") && (
+                <DropdownMenuGroup>
+                  <Link href="/admin" className="cursor-pointer">
+                    <DropdownMenuItem>
+                      <Shield />
+                      Admin
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <BadgeCheck />
-                  Compte
-                </DropdownMenuItem>
+                <Link href="/bookmarks" className="cursor-pointer">
+                  <DropdownMenuItem>
+                    <Bookmark />
+                    Mes enregistrements
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <Link href="/settings" className="cursor-pointer">
+                  <DropdownMenuItem>
+                    <Settings />
+                    Paramètres
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={logOut}
+                className="text-red-500 cursor-pointer"
+              >
                 <LogOut />
-                Log out
+                Deconnexion
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

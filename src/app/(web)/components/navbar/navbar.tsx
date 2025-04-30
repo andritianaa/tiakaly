@@ -109,11 +109,6 @@ const Navbar = async () => {
           <span className="sr-only">Actualités</span>
         </Link>
       </nav>
-
-      {/* Ajout d'un espace pour compenser la hauteur fixe de la navbar */}
-      <div className="h-16"></div>
-      {/* Ajout d'un espace en bas pour compenser la navigation mobile */}
-      <div className="h-14 md:h-0"></div>
     </>
   );
 };

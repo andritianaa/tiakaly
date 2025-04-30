@@ -1,5 +1,5 @@
 // app/(web)/post-instas/layout.tsx
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Posts Instagram à ne pas manquer à Madagascar | Tiakaly",
@@ -74,6 +74,10 @@ export const metadata: Metadata = {
         ],
       },
     }),
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { Search } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import useSWR from 'swr';
+import { Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import useSWR from "swr";
 
-import { TopCard } from '@/components/top/top-card';
-import { Input } from '@/components/ui/input';
-import { fetcher } from '@/lib/utils';
+import { TopCard } from "@/components/top/top-card";
+import { Input } from "@/components/ui/input";
+import { fetcher } from "@/lib/utils";
 
 import type { TopWithMain } from "@/types";
 

@@ -57,6 +57,12 @@ export default async function RoutePage() {
                 "name": "Posts Instagram",
                 "url": "https://www.tiakaly.com/post-instas"
               }
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "S'inscrire",
+                "url": "https://www.tiakaly.com/auth/register"
+              }
             ]
           }
         `}

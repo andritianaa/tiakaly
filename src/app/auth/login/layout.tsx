@@ -4,11 +4,11 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/current-user";
 
 export const metadata: Metadata = {
-  title: "Authentification | Tiakaly - Une histoire sans faim",
+  title: "Connexion | Tiakaly - Une histoire sans faim",
   description:
-    "Connectez-vous ou créez un compte pour accéder à toutes les fonctionnalités de Tiakaly.",
+    "Connectez-vous à votre compte Tiakaly pour découvrir les meilleurs plans bouffe de Madagascar.",
   robots: {
-    index: false,
+    index: true,
     follow: true,
   },
   alternates: {
