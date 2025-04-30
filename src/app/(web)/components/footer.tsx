@@ -31,7 +31,7 @@ const TikTok = ({ className }: { className?: string }) => (
 
 const Footer = () => {
   return (
-    <div className="p-4 pt-0 w-full flex items-center justify-center container  mx-auto">
+    <div className="p-4 pt-0 w-full flex items-center justify-center container  mx-auto mt-16">
       <Bounce className=" xs:mt-20 bg-gradient-to-r  w-full from-[#47556c] to-[#2e3746] text-white border-t border-slate-400 p-8 rounded-xl shadow-md ">
         <div className="  px-4 max-lg:px-4 max-lg:pb-12 my-4">
           <div className="flex justify-between items-center mb-4">

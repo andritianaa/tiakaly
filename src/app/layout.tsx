@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import './globals.css';
 
 import { Geist, Geist_Mono } from 'next/font/google';
+import Script from 'next/script';
 import TopLoader from 'nextjs-toploader';
 
 import { Providers } from '@/context/providers';
@@ -40,6 +41,22 @@ export default function RootLayout({
         <TopLoader showSpinner={false} color="#2e3746" />
         <Providers>{children}</Providers>
       </body>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-RS36C2M0ML"
+      ></Script>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-RS36C2M0ML"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RS36C2M0ML');
+        `}
+      </Script>
     </html>
   );
 }

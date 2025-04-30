@@ -192,7 +192,7 @@ export default function ProfileSettingsPage() {
 
   return (
     <>
-      <div className="flex w-full justify-center">
+      <div className="flex w-full justify-center mb-24">
         <div className="container max-w-5xl mt-24">
           <Card className="max-lg:shadow-none max-lg:border-none">
             <CardHeader>
