@@ -18,8 +18,59 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tiakaly",
-  description: "Les meilleurs plans bouffe de Madagascar",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://www.tiakaly.com"
+  ),
+  title: {
+    default: "Tiakaly - Une histoire sans faim",
+    template: "%s | Tiakaly",
+  },
+  description:
+    "Tiakaly vous fait découvrir les meilleurs restaurants, hôtels et lieux à visiter à Madagascar.",
+  keywords: [
+    "Madagascar",
+    "voyage",
+    "tourisme",
+    "restaurant",
+    "hôtel",
+    "lieu",
+    "découverte",
+    "tiakaly",
+  ],
+  authors: [
+    {
+      name: "Tiakaly",
+      url: "https://www.tiakaly.com",
+    },
+  ],
+  creator: "Tiakaly",
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "https://www.tiakaly.com",
+    title: "Tiakaly - Une histoire sans faim",
+    description:
+      "Tiakaly vous fait découvrir les meilleurs restaurants, hôtels et lieux à visiter à Madagascar.",
+    siteName: "Tiakaly",
+    images: [
+      {
+        url: "og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Tiakaly - Découvrez Madagascar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tiakaly - Une histoire sans faim",
+    description:
+      "Tiakaly vous fait découvrir les meilleurs restaurants, hôtels et lieux à visiter à Madagascar.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

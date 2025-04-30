@@ -4,7 +4,7 @@ import { MetadataRoute } from 'next';
 import { prisma } from '@/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://tiakaly.com';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.tiakaly.com';
 
     // 1. Récupérer tous les lieux publiés
     const places = await prisma.place.findMany({
