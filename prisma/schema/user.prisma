@@ -23,6 +23,9 @@ model User {
   TasksModerated  Task[]        @relation(name: "TaskModerator")
   TasksAssignated Task[]        @relation(name: "TaskUserAssignation")
   TaskHistory     TaskHistory[]
+  BookmarkPost    String[]      @default([])
+  BookmarkPlace   String[]      @default([])
+  BookmarkTop     String[]      @default([])
 }
 
 model Session {

@@ -86,7 +86,7 @@ export const TaskDetailDialog: React.FC<TaskDetailDialogProps> = ({
                     href={attachment.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-slate-100 p-2 rounded flex items-center gap-1 text-sm hover:bg-slate-200"
+                    className="bg-slate-100 p-2 rounded-lgflex items-center gap-1 text-sm hover:bg-slate-200"
                   >
                     <span>{attachment.filename}</span>
                   </a>

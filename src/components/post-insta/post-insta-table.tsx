@@ -1,42 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import {
-  ExternalLink,
-  Eye,
-  Loader2,
-  Pencil,
-  Search,
-  Trash2,
-} from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { ExternalLink, Eye, Loader2, Pencil, Search, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import { deletePostInsta } from "@/actions/post-insta.actions";
+import { deletePostInsta } from '@/actions/post-insta.actions';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
+    AlertDialogFooter, AlertDialogHeader, AlertDialogTitle
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
+    Table, TableBody, TableCell, TableHead, TableHeader, TableRow
+} from '@/components/ui/table';
+import { useToast } from '@/hooks/use-toast';
 
 interface PostInstaTableProps {
   posts: any[];
@@ -194,7 +176,7 @@ export function PostInstaTable({ posts: initialPosts }: PostInstaTableProps) {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+            <AlertDialogTitle>Es-tu sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
               Cette action ne peut pas être annulée. Cela supprimera
               définitivement le post Instagram.

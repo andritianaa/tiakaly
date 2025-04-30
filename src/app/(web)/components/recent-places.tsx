@@ -18,7 +18,7 @@ export default function RecentPlaces() {
   );
 
   return (
-    <div className="mb-24 max-lg:mb-0">
+    <div className="mb-24 max-lg:mb-8">
       {isLoading ? (
         <Bounce>
           <div className="grid grid-cols-1 gap-4">
@@ -46,7 +46,7 @@ export default function RecentPlaces() {
               </h2>
             </Bounce>
             <Bounce>
-              <p className="mb-6 max-lg:hidden">Nos nouveautés</p>
+              <p className="mb-6 max-lg:hidden">Les nouveautés</p>
             </Bounce>
             <Bounce>
               <div className="space-y-3">

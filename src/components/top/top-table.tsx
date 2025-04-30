@@ -158,7 +158,7 @@ export function TopTable({ tops: initialTops }: TopTableProps) {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Êtes-vous sûr?</AlertDialogTitle>
+            <AlertDialogTitle>Es-tu sûr?</AlertDialogTitle>
             <AlertDialogDescription>
               Cette action est irréversible. Cela supprimera définitivement la
               liste Top.

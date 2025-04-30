@@ -136,9 +136,7 @@ body {
   font-style: normal;
 }
 .fancyText {
-  font-family: "Great Vibes", cursive !important;
-  font-weight: 500;
-  font-style: normal;
+  font-weight: 700;
 }
 
 @layer components {

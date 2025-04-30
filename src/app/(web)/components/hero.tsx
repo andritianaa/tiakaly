@@ -32,7 +32,7 @@ export default function Hero() {
                 <path d="M100 200V.5M.5 .5H200" fill="none" />
               </pattern>
             </defs>
-            <svg x="50%" y={-1} className="overflow-visible fill-yellow-50">
+            <svg x="50%" y={-1} className="overflow-visible fill-yellow-50/10">
               <path
                 d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
                 strokeWidth={0}
@@ -47,21 +47,19 @@ export default function Hero() {
           </svg>
         </div>
       </Bounce>
-      <Bounce>
-        {/* Cercle décoratif */}
-        <div className="absolute -top-52 right-1/2 -z-10 transform translate-x-1/3 blur-3xl">
-          <div
-            className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-br from-amber-200 to-yellow-400 opacity-20"
-            style={{
-              clipPath: "circle(50% at 50% 50%)",
-            }}
-          />
-        </div>
-      </Bounce>
-      <div className="mx-auto max-w-7xl px-6 lg:px-8  mt-32">
+      {/* Cercle décoratif */}
+      <div className="absolute -top-52 right-1/2 -z-10 transform translate-x-1/3 blur-3xl">
+        <div
+          className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-br from-amber-200 to-yellow-400 opacity-20"
+          style={{
+            clipPath: "circle(50% at 50% 50%)",
+          }}
+        />
+      </div>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8  mt-32 relative">
         {/* Titre principal et description */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-semibold tracking-tight text-primary sm:text-6xl md:text-7xl fancyText">
+          <h1 className="text-5xl font-semibold tracking-tight text-primary sm:text-6xl md:text-7xl ">
             Bienvenue les tiakaly
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">

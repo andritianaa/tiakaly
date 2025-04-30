@@ -1,16 +1,12 @@
 // Tremor Toast [v0.0.4]
 
-import React from "react";
+import React from 'react';
 
-import { cn } from "@/lib/utils";
-import * as ToastPrimitives from "@radix-ui/react-toast";
+import { cn } from '@/lib/utils';
+import * as ToastPrimitives from '@radix-ui/react-toast';
 import {
-  RiCheckboxCircleFill,
-  RiCloseCircleFill,
-  RiErrorWarningFill,
-  RiInformationFill,
-  RiLoader2Fill,
-} from "@remixicon/react";
+    RiCheckboxCircleFill, RiCloseCircleFill, RiErrorWarningFill, RiInformationFill, RiLoader2Fill
+} from '@remixicon/react';
 
 const ToastProvider = ToastPrimitives.Provider;
 ToastProvider.displayName = "ToastProvider";
@@ -195,7 +191,7 @@ const Toast = React.forwardRef<
               )}
               aria-label="Close"
             >
-              Close
+              Fermer
             </ToastPrimitives.Close>
           )}
         </div>

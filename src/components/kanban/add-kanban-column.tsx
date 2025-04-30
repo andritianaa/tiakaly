@@ -10,7 +10,7 @@ export const AddKanbanColumn = () => {
         <Plus size={24} className="cursor-pointer" />
       </div>
 
-      <div className="flex-1 bg-sidebar rounded p-2 min-h-[500px]"></div>
+      <div className="flex-1 bg-sidebar rounded-lgp-2 min-h-[500px]"></div>
     </div>
   );
 };

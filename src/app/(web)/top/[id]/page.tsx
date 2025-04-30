@@ -5,6 +5,7 @@ import { ExternalLink, Trophy } from 'lucide-react';
 import { use } from 'react';
 
 import { getTopById } from '@/actions/top.actions';
+import { TopBookmark } from '@/components/bookmark/top-bookmark';
 import {
     FacebookEmbedWrapper, InstagramEmbedWrapper
 } from '@/components/client-wrappers/instagram-embed-wrapper';
@@ -90,15 +91,19 @@ export default function TopPage({
       <div className="flex w-full justify-center mt-20">
         <div className="flex flex-col space-y-6 max-w-7xl p-4 w-full">
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <Trophy className="h-8 w-8 text-yellow-500" />
-              <div>
-                <h1 className="text-3xl font-bold">{top.title}</h1>
-                <p className="text-muted-foreground mt-1">
-                  Créé le{" "}
-                  {format(new Date(top.createdAt), "PPP", { locale: fr })}
-                </p>
+            <div className="flex justify-between">
+              <div className="flex items-center gap-3">
+                <Trophy className="h-8 w-8 text-yellow-500" />
+                <div>
+                  <h1 className="text-3xl font-bold">{top.title}</h1>
+                  <p className="text-muted-foreground mt-1">
+                    Créé le{" "}
+                    {format(new Date(top.createdAt), "PPP", { locale: fr })}
+                  </p>
+                </div>
               </div>
+
+              <TopBookmark variant="button" topId={top.id} />
             </div>
             <RichTextEditor
               content={top.description}
@@ -108,9 +113,9 @@ export default function TopPage({
 
             {/* Option de visualisation responsive - Grille pour les écrans moyens et grands, Carousel pour les petits */}
             <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {renderPostCard(top.top1, 1, top.top1Reason)}
-              {renderPostCard(top.top2, 2, top.top2Reason)}
               {renderPostCard(top.top3, 3, top.top3Reason)}
+              {renderPostCard(top.top2, 2, top.top2Reason)}
+              {renderPostCard(top.top1, 1, top.top1Reason)}
             </div>
 
             {/* Carousel seulement pour les écrans mobiles */}
@@ -123,13 +128,13 @@ export default function TopPage({
               >
                 <CarouselContent>
                   <CarouselItem className="basis-full">
-                    {renderPostCard(top.top1, 1, top.top1Reason)}
+                    {renderPostCard(top.top3, 3, top.top3Reason)}
                   </CarouselItem>
                   <CarouselItem className="basis-full">
                     {renderPostCard(top.top2, 2, top.top2Reason)}
                   </CarouselItem>
                   <CarouselItem className="basis-full">
-                    {renderPostCard(top.top3, 3, top.top3Reason)}
+                    {renderPostCard(top.top1, 1, top.top1Reason)}
                   </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-slate-600 hover:text-white shadow-md" />

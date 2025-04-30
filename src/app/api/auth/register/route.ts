@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { generateToken, hashPassword } from "@/lib/auth";
-import { getDeviceInfo } from "@/lib/device";
-import { prisma } from "@/prisma";
+import { generateToken, hashPassword } from '@/lib/auth';
+import { getDeviceInfo } from '@/lib/device';
+import { prisma } from '@/prisma';
 
 export async function POST(req: NextRequest) {
   try {
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
         email,
         username,
         password: hashedPassword,
-        image: `https://api.dicebear.com/9.x/adventurer/svg?seed=${email}&backgroundColor=ffe900`,
+        image: `https://api.dicebear.com/9.x/glass/svg?seed=${email}`,
       },
     });
 

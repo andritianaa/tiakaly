@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Settings, Shield } from 'lucide-react';
+import { Bookmark, LogOut, Settings, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -26,7 +26,7 @@ export function UserMenu(props: NavUserProps) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="size-10 rounded-full p-1 border-1 bg-[#ffe900] cursor-pointer">
+          <Avatar className="size-8 rounded-lg  cursor-pointer">
             <AvatarImage
               src={user.image}
               alt={user.username}
@@ -69,6 +69,14 @@ export function UserMenu(props: NavUserProps) {
             </DropdownMenuGroup>
           )}
           <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <Link href="/bookmarks" className="cursor-pointer">
+              <DropdownMenuItem>
+                <Bookmark />
+                Mes enregistrements
+              </DropdownMenuItem>
+            </Link>
+          </DropdownMenuGroup>
           <DropdownMenuGroup>
             <Link href="/settings" className="cursor-pointer">
               <DropdownMenuItem>

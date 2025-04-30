@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { InstagramEmbed } from 'react-social-media-embed';
 
+import { PlaceBookmark } from '@/components/bookmark/place-bookmark';
 import DynamicMap from '@/components/place/place-map';
 import { RichTextEditor } from '@/components/rich-text-editor';
 import { Badge } from '@/components/ui/badge';
@@ -103,7 +104,8 @@ export function PlaceDetailClient({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-md:p-2 mt-12">
           {/* Carousel */}
-          <div className="h-full max-md:h-[60vh] rounded-lg overflow-hidden">
+          <div className="h-full max-md:h-[60vh] rounded-lg overflow-hidden relative">
+            <PlaceBookmark placeId={place.id} />
             {allMedia.length > 0 ? (
               <Dialog>
                 <DialogTrigger asChild>

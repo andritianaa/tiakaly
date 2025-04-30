@@ -94,8 +94,8 @@ export function TaskForm(props: TaskFormProps) {
         <DialogHeader>
           <DialogTitle>Task</DialogTitle>
           <DialogDescription>
-            Nous valorisons vos retours pour nous améliorer et pour corriger ce
-            qui ne va pas pour vous !
+            Nous valorisons tes retours pour nous améliorer et pour corriger ce
+            qui ne va pas pour toi !
           </DialogDescription>
         </DialogHeader>
 

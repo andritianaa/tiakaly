@@ -2,25 +2,21 @@
 
 import type React from "react";
 
-import { Filter, Search, SearchIcon } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import { Filter, Search, SearchIcon } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
 
-import { PlaceResume } from "@/components/place-resume";
-import { SearchFilters } from "@/components/search-filters";
-import { Button } from "@/components/ui/button";
+import { PlaceResume } from '@/components/place-resume';
+import { SearchFilters } from '@/components/search-filters';
+import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { fetcher } from "@/lib/utils";
-import { PlaceType } from "@prisma/client";
+    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from '@/components/ui/dialog';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
+import { Input } from '@/components/ui/input';
+import { fetcher } from '@/lib/utils';
+import { PlaceType } from '@prisma/client';
 
 import type { PlaceSummary } from "@/types/place";
 // Liste des types de lieux (à remplacer par des données réelles)
@@ -165,6 +161,8 @@ export default function SearchPageContent() {
   return (
     <div className="py-8 mt-14 px-4">
       <div className="flex flex-col gap-6 max-w-7xl mx-auto">
+        <p className="text-2xl font-bold -mb-4">Les meilleurs spots</p>
+
         <div className="flex items-center gap-4">
           <form onSubmit={handleSearch} className="flex-1 flex gap-2">
             <div className="relative flex-1">

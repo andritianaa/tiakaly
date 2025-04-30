@@ -30,11 +30,12 @@ export default function TopsPage() {
   return (
     <div className="mt-20 w-full flex justify-center items-center flex-col px-4">
       <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full">
+        <p className="text-2xl font-bold -mb-4">Classement des meilleurs</p>
         <div className="relative">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search top lists..."
+            placeholder="Rechercher une top list..."
             className="pl-8"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -49,8 +50,8 @@ export default function TopsPage() {
           <div className="text-center py-12">
             <p className="text-muted-foreground">
               {tops?.length === 0
-                ? "No top lists found."
-                : "No results match your search."}
+                ? "Aucune top liste trouvée."
+                : "Aucun résultat ne correspond à ta recherche."}
             </p>
           </div>
         ) : (

@@ -116,7 +116,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                   <div className="bg-primary/10 p-2 rounded-full">
                     <UtensilsCrossed className="h-6 w-6 text-primary" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground fancyText">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                     J'ai envie de...
                   </h2>
                 </div>
@@ -158,8 +158,8 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                 </div>
 
                 <p className="text-muted-foreground text-sm">
-                  Sélectionnez vos envies culinaires et découvrez les meilleurs
-                  restaurants qui correspondent à vos goûts.
+                  Sélectionnez tes envies culinaires et découvrez les meilleurs
+                  restaurants qui correspondent à tes goûts.
                 </p>
                 <div className="mt-4 flex  gap-2 flex-wrap items-center pb-4">
                   <span className="text-sm text-muted-foreground">
@@ -299,7 +299,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                 <h3 className="text-xl font-medium">Aucun résultat trouvé</h3>
                 <p className="text-muted-foreground max-w-md mx-auto">
                   Nous n'avons pas trouvé de restaurants correspondant à tous
-                  vos critères. Essayez de modifier vos filtres.
+                  tes critères. Essayez de modifier les filtres.
                 </p>
                 {selectedMenus.length > 0 && (
                   <Button

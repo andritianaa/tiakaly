@@ -61,7 +61,7 @@ export default function LoginPage() {
 
         toast({
           title: "Connexion réussie",
-          description: "Vous êtes maintenant connecté.",
+          description: "Tu es maintenant connecté.",
         });
 
         router.push("/");
@@ -83,7 +83,7 @@ export default function LoginPage() {
   return (
     <AuthLayout
       title="Bon retour parmis nous!"
-      description="Entrez vos identifiants pour vous connecter"
+      description="Entres tes identifiants pour te connecter"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -150,7 +150,7 @@ export default function LoginPage() {
         </form>
       </Form>
       <div className="mt-4 text-sm">
-        {"Vous n'avez pas encore de compte ?"}
+        {"Tu n'as pas encore de compte ?"}
         <Link
           href="/auth/register"
           className="text-primary hover:underline"

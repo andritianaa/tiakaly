@@ -35,6 +35,7 @@ export default function PostInstasPage() {
   return (
     <div className="mt-20 w-full flex justify-center items-center flex-col px-4">
       <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full">
+        <p className="text-2xl font-bold -mb-4">Mes posts insta</p>
         <div className="relative">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -54,8 +55,8 @@ export default function PostInstasPage() {
           <div className="text-center py-12">
             <p className="text-muted-foreground">
               {posts?.length === 0
-                ? "No Instagram posts found."
-                : "No results match your search."}
+                ? "Aucun post Instagram trouvé."
+                : "Aucun résultat ne correspond à ta recherche, essayez autre chose !"}
             </p>
           </div>
         ) : (

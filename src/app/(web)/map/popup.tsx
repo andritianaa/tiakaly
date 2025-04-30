@@ -1,17 +1,12 @@
 "use client";
-import { Check, DollarSign, Mail, Phone } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
+import { Check, DollarSign, Mail, Phone } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { PlaceSummary } from "@/types/place";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { PlaceSummary } from '@/types/place';
 
 export const PlacePopup = (place: PlaceSummary) => {
   const [copiedText, setCopiedText] = useState("");
@@ -37,7 +32,7 @@ export const PlacePopup = (place: PlaceSummary) => {
               height={500}
               src={place.mainMedia?.url || "/placeholder.svg"}
               alt=""
-              className="rounded max-h-[30vh]  object-cover"
+              className="rounded-lgmax-h-[30vh]  object-cover"
             />
             <Card>
               <CardContent className="p-4">

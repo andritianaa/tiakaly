@@ -31,8 +31,8 @@ const TikTok = ({ className }: { className?: string }) => (
 
 const Footer = () => {
   return (
-    <div className="p-4 w-full flex items-center justify-center container  mx-auto">
-      <Bounce className="mt-12 xs:mt-20 bg-gradient-to-r  w-full from-[#47556c] to-[#2e3746] text-white border-t border-slate-400 p-8 rounded-xl shadow-md ">
+    <div className="p-4 pt-0 w-full flex items-center justify-center container  mx-auto">
+      <Bounce className=" xs:mt-20 bg-gradient-to-r  w-full from-[#47556c] to-[#2e3746] text-white border-t border-slate-400 p-8 rounded-xl shadow-md ">
         <div className="  px-4 max-lg:px-4 max-lg:pb-12 my-4">
           <div className="flex justify-between items-center mb-4">
             <Logo icon />
@@ -60,7 +60,7 @@ const Footer = () => {
           </div>
 
           <div className="flex justify-between items-center max-lg:flex-col max-lg:justify-center ">
-            <p className=" text-slate-200">
+            <p className=" text-slate-200 text-center max-lg:mb-4">
               Les meilleurs plans bouffe de Madagascar
             </p>
             <span className="text-slate-200 text-center xs:text-start">

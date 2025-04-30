@@ -85,7 +85,7 @@ export default function ProfileSettingsPage() {
       } catch (error) {
         toast({
           title: "Erreur",
-          description: "Impossible de charger vos informations de profil.",
+          description: "Impossible de charger tes informations de profil.",
           variant: "error",
         });
       } finally {
@@ -198,7 +198,7 @@ export default function ProfileSettingsPage() {
             <CardHeader>
               <CardTitle>Informations personnelles</CardTitle>
               <CardDescription>
-                Mettez à jour vos informations personnelles et votre photo de
+                Mets à jour tes informations personnelles et votre photo de
                 profil.
               </CardDescription>
             </CardHeader>

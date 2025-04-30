@@ -37,7 +37,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="flex-1 bg-sidebar rounded p-2 min-h-[500px]"
+            className="flex-1 bg-sidebar rounded-lgp-2 min-h-[500px]"
           >
             {tasks.map((task, index) => (
               <Draggable key={task.id} draggableId={task.id} index={index}>

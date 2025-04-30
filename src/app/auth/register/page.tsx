@@ -92,7 +92,7 @@ export default function RegisterPage() {
   return (
     <AuthLayout
       title="Welcome, create your account"
-      description="Entrez vos informations pour créer un compte"
+      description="Entres tes informations pour créer un compte"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
