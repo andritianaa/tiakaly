@@ -1,17 +1,21 @@
 "use client";
 
-import { ArrowRight, Compass, Instagram } from 'lucide-react';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { ArrowRight, Compass, Instagram } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-import RecentPlaces from '@/app/(web)/components/recent-places';
-import TopsSection from '@/app/(web)/components/top-section';
-import { PostInstaCard } from '@/components/post-insta/post-insta-card';
-import { Button } from '@/components/ui/button';
+import RecentPlaces from "@/app/(web)/components/recent-places";
+import TopsSection from "@/app/(web)/components/top-section";
+import { PostInstaCard } from "@/components/post-insta/post-insta-card";
+import { Button } from "@/components/ui/button";
 import {
-    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
-} from '@/components/ui/carousel';
-import { fetcher } from '@/lib/utils';
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { fetcher } from "@/lib/utils";
 
 import type { PostInstaWithMain, TopWithMain } from "@/types";
 export default function RecentContent() {
@@ -126,7 +130,7 @@ export default function RecentContent() {
           </h2>
           <p className="text-foreground max-w-2xl mx-auto text-lg">
             Plongez dans un univers d'inspiration et d'aventures à travers nos
-            tops soigneusement élaborés et nos posts Instagram captivants.
+            tops soigneusement élaborés et des posts Instagram captivants.
           </p>
         </div>
 
