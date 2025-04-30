@@ -77,7 +77,7 @@ export default async function BookmarksPage() {
           </TabsList>
 
           <TabsContent value="all">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {bookmarkedPlaces.map((place) => (
                 <PlaceResume key={`place-${place.id}`} place={place} />
               ))}
@@ -99,7 +99,7 @@ export default async function BookmarksPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {bookmarkedPlaces.map((place) => (
                   <PlaceResume key={place.id} place={place} />
                 ))}
@@ -116,7 +116,7 @@ export default async function BookmarksPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {bookmarkedPosts.map((post) => (
                   <PostInstaCard key={post.id} post={post} />
                 ))}
@@ -133,7 +133,7 @@ export default async function BookmarksPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {bookmarkedTops.map((top) => (
                   <TopCard key={top.id} top={top} />
                 ))}
