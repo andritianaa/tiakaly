@@ -1,9 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { ExternalLink, Trophy } from 'lucide-react';
+import { Metadata, ResolvingMetadata } from 'next';
 import { use } from 'react';
 
+/* eslint-disable @next/next/no-img-element */
 import { getTopById } from '@/actions/top.actions';
 import { TopBookmark } from '@/components/bookmark/top-bookmark';
 import {
@@ -15,6 +16,75 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import {
     Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 } from '@/components/ui/carousel';
+
+type PageParams = {
+  params: Promise<{ id: string }>;
+};
+
+// Pour satisfaire les contraintes de type de Next.js, nous devons utiliser
+// exactement le même type pour generateMetadata et le composant de page
+export async function generateMetadata(
+  { params }: PageParams,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // Attendre la résolution de params
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+
+  // Obtenir les données du lieu
+  const top = await getTopById(id);
+
+  // Si le lieu n'est pas trouvé, retourner des métadonnées basiques
+  if (!top) {
+    return {
+      title: "Top non trouvé",
+    };
+  }
+
+  // Obtenir les métadonnées par défaut des pages parentes
+  const previousImages = (await parent).openGraph?.images || [];
+
+  // Construire des métadonnées riches basées sur les données du lieu
+  return {
+    title: top.title,
+    description: `Découvrez ${top.title} sur Tiakaly`,
+    keywords: ["Tiakaly", "Instagram", "top", top.title],
+    openGraph: {
+      title: top.title,
+      description: `Découvrez ${top.title} sur Tiakaly`,
+      type: "article",
+      url: `${process.env.NEXT_PUBLIC_APP_URL}/tops/${top.id}`,
+      images: [
+        // Ajouter l'image principale si elle existe
+        top.mainMedia?.url,
+      ],
+      locale: "fr_FR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: top.title,
+      description: `Découvrez ${top.title} sur Tiakaly`,
+      images: top.mainMedia?.url ? [top.mainMedia.url] : [],
+    },
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_APP_URL}/top/${top.id}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    // Ajouter des données structurées pour les rich results
+    other: {
+      "application/ld+json": JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: top.title,
+        description: `Découvrez ${top.title} sur Tiakaly`,
+        image: top.mainMedia?.url,
+      }),
+    },
+  };
+}
 
 export default function TopPage({
   params,
