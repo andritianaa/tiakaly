@@ -1,41 +1,28 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
-import { Check, DollarSign, Mail, MapPin, Phone } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { InstagramEmbed } from "react-social-media-embed";
+import Autoplay from 'embla-carousel-autoplay';
+import { Check, DollarSign, Mail, MapPin, Phone } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { InstagramEmbed } from 'react-social-media-embed';
 
-import DynamicMap from "@/components/place/place-map";
-import { RichTextEditor } from "@/components/rich-text-editor";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import DynamicMap from '@/components/place/place-map';
+import { RichTextEditor } from '@/components/rich-text-editor';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
+} from '@/components/ui/carousel';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/use-toast";
-import { PlaceWithRelations } from "@/types/place";
-import { Media } from "@prisma/client";
+    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useToast } from '@/hooks/use-toast';
+import { PlaceWithRelations } from '@/types/place';
+import { Media } from '@prisma/client';
 
 import type { CarouselApi } from "@/components/ui/carousel";
 export function PlaceDetailClient({
@@ -230,9 +217,9 @@ export function PlaceDetailClient({
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-full">
                     <div className="flex justify-between w-full items-center">
-                      <h1 className="text-2xl font-bold flex items-center">
+                      <p className="text-2xl font-bold flex items-center">
                         {place.title}
-                      </h1>
+                      </p>
                       <div className="flex items-center gap-2">
                         <div className="flex items-center justify-center">
                           {place.priceInDollars && (
@@ -356,7 +343,7 @@ export function PlaceDetailClient({
 
               {/* Menus */}
               <div>
-                <h2 className="text-lg font-medium mb-2">Menus</h2>
+                <p className="text-lg font-medium mb-2">Menus</p>
                 {place.MenuPlace && place.MenuPlace.length > 0 ? (
                   <div className="flex flex-wrap gap-1">
                     {place.MenuPlace.map((mp) => (

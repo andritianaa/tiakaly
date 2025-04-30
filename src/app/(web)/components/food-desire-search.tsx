@@ -147,7 +147,14 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                       <MultiSelectEmpty>Aucun menu trouvé</MultiSelectEmpty>
                     </MultiSelectContent>
                   </MultiSelect>
-                  <Search className="absolute right-10 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+                  {typeof window !== "undefined" && (
+                    <div
+                      onClick={handleSearch}
+                      className="absolute right-10 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-primary transition-colors "
+                    >
+                      <Search className="h-5 w-5 text-muted-foreground hover:text-primary" />
+                    </div>
+                  )}
                 </div>
 
                 <p className="text-muted-foreground text-sm">
@@ -166,6 +173,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                         setSelectedMenus([menu.id]);
                         handleSearch();
                       }}
+                      className=" -sm -fast"
                     >
                       {menu.name}
                     </Badge>
@@ -173,12 +181,12 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-primary to-amber-500 flex items-center justify-center p-6 md:p-8">
+              <div className="bg-gradient-to-r from-[#47556c] to-[#2e3746] flex items-center justify-center p-6 md:p-8 ">
                 <Button
                   onClick={handleSearch}
                   size="lg"
                   variant="secondary"
-                  className="h-14 px-6 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 bg-white text-primary hover:bg-white/90 mb-8"
+                  className="h-14 px-6 text-slate-600 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 bg-white hover:bg-white/90 mb-8 max-lg:mb-0  -shadow-dark"
                 >
                   {isLoading ? (
                     <span className="flex items-center">
@@ -278,9 +286,9 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                 </p>
               </div>
             ) : filteredPlaces.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2  gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {filteredPlaces.map((place) => (
-                  <PlaceResume key={place.id} {...place} />
+                  <PlaceResume key={place.id} place={place} />
                 ))}
               </div>
             ) : (
@@ -297,7 +305,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                   <Button
                     variant="outline"
                     onClick={() => setSelectedMenus([])}
-                    className="mt-2"
+                    className="mt-2 "
                   >
                     Essayer sans filtres
                   </Button>
@@ -312,7 +320,10 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
               {filteredPlaces.length !== 1 ? "s" : ""} trouvé
               {filteredPlaces.length !== 1 ? "s" : ""}
             </div>
-            <Button asChild className="bg-primary hover:bg-primary/90">
+            <Button
+              asChild
+              className="bg-primary hover:bg-primary/90  -shadow-dark"
+            >
               <a
                 href={`/places?menus=${selectedMenus.join(",")}`}
                 className="flex items-center"

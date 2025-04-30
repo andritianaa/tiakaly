@@ -1,7 +1,7 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
 interface Top {
   id: string;
@@ -37,7 +37,7 @@ export default function TopsSection({ tops, isLoading }: TopsSectionProps) {
         </div>
       ) : (
         <>
-          <div className="bg-gradient-to-r from-primary to-amber-500 rounded-xl p-6 md:p-8 max-w-4xl mx-auto">
+          <div className="bg-gradient-to-r from-[#47556c] to-[#2e3746] rounded-xl p-6 md:p-8 max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
               Les meilleurs du moments
             </h2>
@@ -48,7 +48,7 @@ export default function TopsSection({ tops, isLoading }: TopsSectionProps) {
                 <Link
                   href={`/top/${top.id}`}
                   key={top.id}
-                  className="bg-white rounded-lg p-2 flex items-center hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50 transform hover:-translate-x-1 hover:scale-[1.02] transition-all duration-300 group cursor-pointer"
+                  className="bg-white rounded-lg p-2 flex items-center transition-all duration-300 group cursor-pointer hover-lift"
                 >
                   <div
                     className={`
@@ -62,11 +62,11 @@ export default function TopsSection({ tops, isLoading }: TopsSectionProps) {
                   >
                     {index + 1}
                   </div>
-                  <div className="ml-4 py-3 font-medium group-hover:text-amber-700 group-hover:font-bold transition-all duration-300">
+                  <div className="ml-4 py-3 font-medium group-hover:text-slate-700 group-hover:font-bold transition-all duration-300">
                     {top.title}
                   </div>
                   <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ArrowRight className="h-5 w-5 text-amber-500 group-hover:animate-pulse" />
+                    <ArrowRight className="h-5 w-5 text-slate-500 group-hover:animate-pulse" />
                   </div>
                 </Link>
               ))}
@@ -77,7 +77,7 @@ export default function TopsSection({ tops, isLoading }: TopsSectionProps) {
             <Button
               asChild
               size="lg"
-              className="bg-primary hover:bg-yellow-500 text-primary-foreground px-8 py-6 rounded-full transition-all hover:shadow-lg hover:scale-105"
+              className="bg-[#47556c] hover:bg-[#2e3746] text-white px-8 py-6 rounded-full transition-all hover:shadow-lg hover:scale-105"
             >
               <Link href="/tops" className="flex items-center text-lg">
                 Explorer tous nos tops

@@ -1,16 +1,11 @@
 "use client";
 
-import { Check, DollarSign, MapPin } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Check, DollarSign, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { PlaceSummary } from "@/types/place";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { PlaceSummary } from '@/types/place';
 
 export type PlaceResumeProps = {
   place: PlaceSummary;
@@ -54,9 +49,9 @@ export const PlaceResume = ({
             <div className="flex items-center justify-between mb-2">
               <div className="w-full">
                 <div className="flex w-full flex-col items-start justify-start">
-                  <h1 className="text-2xl font-bold flex items-center max-md:text-lg text-start">
+                  <p className="text-2xl font-bold flex items-center max-md:text-lg text-start">
                     {place.title}
-                  </h1>
+                  </p>
                   <div className="flex items-center gap-2">
                     <div className="flex items-center justify-center">
                       {place.priceInDollars && (

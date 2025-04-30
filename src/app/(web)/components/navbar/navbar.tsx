@@ -1,5 +1,5 @@
 "use client";
-import { House, Map, MapPin, Medal, Newspaper } from 'lucide-react';
+import { House, Map, Medal, Newspaper, Search } from 'lucide-react';
 import Link from 'next/link';
 
 import { UserMenu } from '@/app/(web)/components/navbar/user-menu';
@@ -60,7 +60,7 @@ const Navbar = () => {
           href={"/places"}
           className="w-full flex items-center justify-center hover:bg-muted rounded-md"
         >
-          <MapPin size={28} />
+          <Search size={28} />
         </Link>
         <Link
           href={"/map"}

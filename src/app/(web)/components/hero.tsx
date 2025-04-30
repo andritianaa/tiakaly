@@ -58,7 +58,7 @@ export default function Hero() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8  mt-32">
         {/* Titre principal et description */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl md:text-7xl">
+          <h1 className="text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl md:text-7xl fancyText">
             Bienvenue les tiakaly
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">

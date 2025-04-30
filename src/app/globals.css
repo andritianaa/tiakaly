@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Great+Vibes&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -128,4 +128,59 @@ body {
 
 body {
   overflow-x: hidden;
+}
+
+* {
+  font-family: "Funnel Display", sans-serif !important;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.fancyText {
+  font-family: "Great Vibes", cursive !important;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@layer components {
+  .hover-lift {
+    @apply relative transition-all transform duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2 scale-105;
+  }
+
+  .hover-lift::after {
+    content: "";
+    @apply absolute bottom-0 left-0 right-0 h-[6px] rounded-b-lg opacity-0 shadow-black/40 blur-md transition-all;
+  }
+
+  .hover-lift:hover::after {
+    @apply opacity-100;
+  }
+
+  /* Variantes */
+  .hover-lift-sm:hover {
+    @apply -translate-y-1;
+  }
+
+  .hover-lift-lg:hover {
+    @apply -translate-y-3;
+  }
+
+  .hover-lift-shadow-light::after {
+    @apply shadow-black/20;
+  }
+
+  .hover-lift-shadow-dark::after {
+    @apply shadow-black/70;
+  }
+
+  .hover-lift-fast {
+    @apply duration-150;
+  }
+
+  .hover-lift-slow {
+    @apply duration-500;
+  }
 }

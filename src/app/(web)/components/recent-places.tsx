@@ -1,11 +1,11 @@
 "use client";
-import { ArrowRight, MapPin } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import useSWR from "swr";
+import { ArrowRight, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import useSWR from 'swr';
 
-import { Button } from "@/components/ui/button";
-import { fetcher } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { fetcher } from '@/lib/utils';
 
 import type { PlaceSummary } from "@/types/place";
 
@@ -17,7 +17,7 @@ export default function RecentPlaces() {
   );
 
   return (
-    <div className="mb-24 ">
+    <div className="mb-24 max-lg:mb-0">
       {isLoading ? (
         <div className="grid grid-cols-1 gap-4">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -36,16 +36,20 @@ export default function RecentPlaces() {
         </div>
       ) : (
         <>
-          <div className="rounded-xl p-6 md:p-8 max-w-4xl mx-auto max-lg:pt-0  max-lg:bg-gradient-to-r from-yellow-100 to-yellow-200">
-            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-amber-600 mb-2">
+          <div className="rounded-xl p-6 md:p-8 max-w-4xl mx-auto max-lg:p-0  ">
+            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#47556c] to-[#2e3746] mb-2 max-lg:text-center">
               À découvrir maintenant
             </h2>
-            <p className="mb-6">Nos nouveautés</p>
+            <p className="mb-6 max-lg:hidden">Nos nouveautés</p>
 
             <div className="space-y-3">
               {places.slice(0, 5).map((place, index) => (
-                <Link href={`/place/${place.id}`} key={place.id}>
-                  <div className="bg-white rounded-lg p-3 flex items-center    transform hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 group max-lg:border-border max-lg:border">
+                <Link
+                  href={`/place/${place.id}`}
+                  key={place.id}
+                  className="mb-2"
+                >
+                  <div className="bg-white rounded-lg p-3 flex items-center transform hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 group max-lg:border-border max-lg:border">
                     <div className="flex-shrink-0 w-12 h-12 rounded-md overflow-hidden mr-4 group-hover:shadow-md transition-all duration-300">
                       {place.mainMedia && (
                         <Image
@@ -61,9 +65,13 @@ export default function RecentPlaces() {
                       <h3 className="font-semibold text-lg  transition-colors duration-300">
                         {place.title}
                       </h3>
-                      <div className="flex items-center text-sm text-gray-500  transition-colors duration-300">
+                      <div className="flex items-center text-sm text-gray-500  transition-colors duration-300 w-full">
                         <MapPin className="h-3 w-3 mr-1 group-hover:animate-pulse" />
-                        <span className="truncate">{place.localisation}</span>
+                        <span className="truncate w-full">
+                          {place.localisation.length > 30
+                            ? `${place.localisation.slice(0, 30)}...`
+                            : place.localisation}
+                        </span>
                       </div>
                     </div>
                   </div>
