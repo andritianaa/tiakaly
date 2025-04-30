@@ -37,23 +37,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const placeUrls = places.map((place) => ({
         url: `${baseUrl}/place/${place.id}`,
         lastModified: place.updatedAt,
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
+        changeFrequency: 'daily' as const,
+        priority: 0.9,
     }));
 
     // Créer les URLs pour les posts Instagram
     const postInstaUrls = postInstas.map((post) => ({
         url: `${baseUrl}/post/${post.id}`,
         lastModified: post.date,
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
+        changeFrequency: 'daily' as const,
+        priority: 0.6,
     }));
 
     // Créer les URLs pour les tops
     const topUrls = tops.map((top) => ({
         url: `${baseUrl}/top/${top.id}`,
         lastModified: top.createdAt,
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'daily' as const,
         priority: 0.8,
     }));
 
