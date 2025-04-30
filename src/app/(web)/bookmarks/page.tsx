@@ -1,12 +1,12 @@
-import { BookmarkIcon, ImageIcon, ListIcon, MapPinIcon } from 'lucide-react';
-import { redirect } from 'next/navigation';
+import { BookmarkIcon, ImageIcon, ListIcon, MapPinIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
-import { getUserBookmarks } from '@/actions/bookmark-actions';
-import { PlaceResume } from '@/components/place-resume';
-import { PostInstaCard } from '@/components/post-insta/post-insta-card';
-import { TopCard } from '@/components/top/top-card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { currentSession } from '@/lib/current-user';
+import { getUserBookmarks } from "@/actions/bookmark-actions";
+import { PlaceResume } from "@/components/place-resume";
+import { PostInstaCard } from "@/components/post-insta/post-insta-card";
+import { TopCard } from "@/components/top/top-card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { currentSession } from "@/lib/current-user";
 
 export default async function BookmarksPage() {
   const session = await currentSession();
@@ -77,7 +77,7 @@ export default async function BookmarksPage() {
           </TabsList>
 
           <TabsContent value="all">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {bookmarkedPlaces.map((place) => (
                 <PlaceResume key={`place-${place.id}`} place={place} />
               ))}
@@ -99,7 +99,7 @@ export default async function BookmarksPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {bookmarkedPlaces.map((place) => (
                   <PlaceResume key={place.id} place={place} />
                 ))}
@@ -116,7 +116,7 @@ export default async function BookmarksPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {bookmarkedPosts.map((post) => (
                   <PostInstaCard key={post.id} post={post} />
                 ))}
@@ -133,7 +133,7 @@ export default async function BookmarksPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {bookmarkedTops.map((top) => (
                   <TopCard key={top.id} top={top} />
                 ))}

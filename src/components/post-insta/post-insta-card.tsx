@@ -1,8 +1,8 @@
-import { MapPin } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { MapPin } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { PostBookmark } from '@/components/bookmark/post-bookmark';
+import { PostBookmark } from "@/components/bookmark/post-bookmark";
 
 import type { PostInstaWithMain } from "@/types";
 
@@ -18,14 +18,14 @@ export function PostInstaCard({ post }: PostInstaCardProps) {
       <Link
         href={`/post-insta/${post.id}`}
         key={post.id}
-        className="relative  max-h-[45vh] min-h-[45vh] bg-muted transition-transform duration-300 hover:scale-105 "
+        className="relative  max-h-[35vh] min-h-[35vh] bg-muted transition-transform duration-300 hover:scale-105 "
       >
         <Image
           src={post.mainMedia.url || "/placeholder.svg"}
           width={500}
           height={500}
           alt={post.title}
-          className="h-full w-full object-cover max-h-[45vh] min-h-[45vh] overflow-hidden rounded"
+          className="h-full w-full object-cover max-h-[35vh] min-h-[35vh] overflow-hidden rounded"
         />
         <div className=" bg-gradient-to-t  from-black to-transparent absolute bottom-0 left-0 w-full h-32"></div>
         <div className="absolute bottom-0 p-2 w-full">
