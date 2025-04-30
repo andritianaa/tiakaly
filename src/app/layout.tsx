@@ -33,14 +33,6 @@ export default function RootLayout({
         <meta name="googlebot" content="notranslate" />
         <meta name="google" content="notranslate" />
       </head>
-      <body
-        translate="no"
-        suppressHydrationWarning
-        className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-slate-100 selection:text-slate-500`}
-      >
-        <TopLoader showSpinner={false} color="#2e3746" />
-        <Providers>{children}</Providers>
-      </body>
       <Script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-RS36C2M0ML"
@@ -57,6 +49,14 @@ export default function RootLayout({
           gtag('config', 'G-RS36C2M0ML');
         `}
       </Script>
+      <body
+        translate="no"
+        suppressHydrationWarning
+        className={`min-h-screen overflow-y-scroll scroll-auto bg-background antialiased selection:bg-slate-100 selection:text-slate-500`}
+      >
+        <TopLoader showSpinner={false} color="#2e3746" />
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
