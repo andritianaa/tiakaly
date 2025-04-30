@@ -460,7 +460,7 @@ export function PlaceDetailClient({
                 <Badge
                   key={index}
                   variant="outline"
-                  className="text-sm text-yellow-500 border-yellow-500 bg-yellow-200/60"
+                  className="text-sm text-yellow-500 border-yellow-500 bg-slate-200/60"
                 >
                   {keyword}
                 </Badge>

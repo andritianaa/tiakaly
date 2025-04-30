@@ -2,30 +2,20 @@
 
 import type React from "react";
 
-import "./rich-text-editor.css";
+import './rich-text-editor.css';
 
 import {
-  Bold,
-  Heading1,
-  Heading2,
-  ImageIcon,
-  Italic,
-  LinkIcon,
-  List,
-  ListOrdered,
-  Quote,
-  Redo,
-  UnderlineIcon,
-  Undo,
-} from "lucide-react";
-import { useState } from "react";
+    Bold, Heading1, Heading2, ImageIcon, Italic, LinkIcon, List, ListOrdered, Quote, Redo,
+    UnderlineIcon, Undo
+} from 'lucide-react';
+import { useState } from 'react';
 
-import { cn } from "@/lib/utils";
-import Image from "@tiptap/extension-image";
-import Link from "@tiptap/extension-link";
-import Underline from "@tiptap/extension-underline";
-import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { cn } from '@/lib/utils';
+import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
+import Underline from '@tiptap/extension-underline';
+import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 
 interface RichTextEditorProps {
   content?: string;
@@ -67,7 +57,7 @@ export function RichTextEditor({
       attributes: {
         class: cn(
           "prose prose-sm sm:prose-base dark:prose-invert focus:outline-none max-w-full",
-          "min-h-[150px] p-4 rounded-md border border-input bg-background",
+          "min-h-[30px] p-4 rounded-md border border-input bg-background",
           readOnly ? "cursor-default" : "cursor-text"
         ),
       },

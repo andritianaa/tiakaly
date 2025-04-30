@@ -33,14 +33,14 @@ const Navbar = () => {
                     <Link href="/auth/login">
                       <Button
                         variant="outline"
-                        className="hidden sm:inline-flex"
+                        className="hidden sm:inline-flex hover-lift transition-all"
                       >
                         Connexion
                       </Button>
                     </Link>
 
                     <Link href="/auth/register">
-                      <Button className="xs:inline-flex">{`Let's go`}</Button>
+                      <Button className="xs:inline-flex hover-lift transition-all">{`Let's go`}</Button>
                     </Link>
                   </>
                 )}
@@ -52,31 +52,31 @@ const Navbar = () => {
       <div className="fixed bottom-0 w-full md:hidden h-14 border-t grid grid-cols-5 bg-white z-50 p-2">
         <Link
           href={"/"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
         >
           <House size={28} />
         </Link>
         <Link
           href={"/places"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
         >
           <Search size={28} />
         </Link>
         <Link
           href={"/map"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
         >
           <Map size={28} />
         </Link>
         <Link
           href={"/tops"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
         >
           <Medal size={28} />
         </Link>
         <Link
           href={"/post-instas"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
         >
           <Newspaper size={28} />
         </Link>

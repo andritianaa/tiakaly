@@ -39,11 +39,11 @@ export default function RecentContent() {
   return (
     <section className="py-24 relative">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <div className="inline-block bg-slate-100 text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold mb-4">
+        <div className="text-center mb-8">
+          <div className="inline-block bg-slate-100 text-slate-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
             INSPIREZ-VOUS
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#47556c] to-[#2e3746]">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#47556c] to-[#2e3746] fancyText pt-2 pb-2">
             Découvrez nos meilleures sélections
           </h2>
           <p className="text-foreground max-w-2xl mx-auto text-lg">
@@ -59,7 +59,7 @@ export default function RecentContent() {
         </div>
 
         {/* Call to Action */}
-        <div className="max-lg:mt-12 mt-24 bg-gradient-to-r from-[#47556c] to-[#2e3746] rounded-2xl p-10 text-primary-foreground text-center">
+        <div className="max-lg:mt-16 mt-24 bg-gradient-to-r from-[#47556c] to-[#2e3746] rounded-2xl p-10 text-primary-foreground text-center">
           <Compass className="h-16 w-16 mx-auto mb-6 text-white opacity-90" />
           <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white fancyText">
             Prêt à explorer ?
@@ -72,14 +72,14 @@ export default function RecentContent() {
             <Button
               asChild
               size="lg"
-              className="bg-white text-slate-600 hover:bg-gray-100 px-8"
+              className="bg-white text-slate-600 hover:bg-white hover-lift transition-all duration-300 px-8"
             >
               <Link href="/tops">Explorer les tops</Link>
             </Button>
             <Button
               asChild
               size="lg"
-              className="bg-transparent border-2 border-white hover:bg-white/10 px-8 text-white"
+              className="bg-transparent border-2 border-white hover:bg-white/10  hover-lift transition-all duration-300 px-8 text-white"
             >
               <Link href="/post-instas">Voir les posts Instagram</Link>
             </Button>

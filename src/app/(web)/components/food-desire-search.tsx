@@ -116,7 +116,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                   <div className="bg-primary/10 p-2 rounded-full">
                     <UtensilsCrossed className="h-6 w-6 text-primary" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground fancyText">
                     J'ai envie de...
                   </h2>
                 </div>
@@ -186,7 +186,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                   onClick={handleSearch}
                   size="lg"
                   variant="secondary"
-                  className="h-14 px-6 text-slate-600 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 bg-white hover:bg-white/90 mb-8 max-lg:mb-0  -shadow-dark"
+                  className=" hover-lift h-14 px-6 text-slate-600 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 bg-white hover:bg-white mb-8 max-lg:mb-0  -shadow-dark"
                 >
                   {isLoading ? (
                     <span className="flex items-center">

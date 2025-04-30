@@ -19,7 +19,7 @@ export const MouseAnimation = () => {
     <div
       className="pointer-events-none fixed inset-0 transition-opacity duration-300 max-md:hidden"
       style={{
-        background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 204, 21, 0.15), transparent 80%)`,
+        background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 204, 21, 0.1), transparent 80%)`,
       }}
     />
   );

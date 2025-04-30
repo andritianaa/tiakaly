@@ -34,7 +34,7 @@ export default function TopPage({
     return (
       <Card className="overflow-hidden h-full">
         <div className="relative">
-          <div className="absolute top-2 right-2 bg-yellow-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-md">
+          <div className="absolute top-2 right-2 bg-slate-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-md">
             #{position}
           </div>
           {post.mainMedia && (
@@ -103,7 +103,7 @@ export default function TopPage({
             <RichTextEditor
               content={top.description}
               readOnly
-              className="p-0 border-none max-h-fit"
+              className="p-0 border-none min-h-[30px]"
             />
 
             {/* Option de visualisation responsive - Grille pour les écrans moyens et grands, Carousel pour les petits */}
@@ -132,8 +132,8 @@ export default function TopPage({
                     {renderPostCard(top.top3, 3, top.top3Reason)}
                   </CarouselItem>
                 </CarouselContent>
-                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
-                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-yellow-600 hover:text-white shadow-md" />
+                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-slate-600 hover:text-white shadow-md" />
+                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10 size-8 bg-primary text-primary-foreground border-2 border-primary-foreground hover:bg-slate-600 hover:text-white shadow-md" />
               </Carousel>
             </div>
           </div>

@@ -1,24 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import Link from 'next/link';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
+    Form, FormControl, FormField, FormItem, FormLabel, FormMessage
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { toast } from '@/hooks/use-toast';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { AuthLayout } from "../components/auth-layout";
+import { AuthLayout } from '../components/auth-layout';
 
 const forgotPasswordSchema = z.object({
   email: z
@@ -91,7 +86,11 @@ export default function ForgotPasswordPage() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full hover-lift transition-all"
+            disabled={isLoading}
+          >
             {isLoading ? "Envoi..." : "Envoyer le lien de réinitialisation"}
           </Button>
         </form>

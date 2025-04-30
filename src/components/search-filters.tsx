@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/multi-select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn, fetcher } from '@/lib/utils';
 
 import type { PlaceType } from "@prisma/client";
@@ -34,6 +35,12 @@ interface SearchFiltersProps {
   formatPrice: (value: number) => string;
   resetFilters: () => void;
 }
+
+const ratingTexts = {
+  1: "Je recommande",
+  2: "Il faut y aller",
+  3: "Vaut vraiment le detour",
+};
 
 export function SearchFilters({
   priceRange,
@@ -164,20 +171,28 @@ export function SearchFilters({
           <div className="space-y-4">
             <h3 className="font-medium">Recommandation</h3>
             <div className="flex items-center gap-2">
-              {[1, 2, 3].map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setRating(value)}
-                  className={`flex items-center justify-center h-10 w-10 rounded-full border ${
-                    rating >= value
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-background"
-                  }`}
-                >
-                  <Check className={cn("size-5", rating >= value)} />
-                </button>
-              ))}
+              <TooltipProvider>
+                {[1, 2, 3].map((value) => (
+                  <Tooltip key={value}>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={() => setRating(value)}
+                        className={`flex items-center justify-center h-10 w-10 rounded-full border hover-lift ${
+                          rating >= value
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-background"
+                        }`}
+                      >
+                        <Check className={cn("size-5", rating >= value)} />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{ratingTexts[value as keyof typeof ratingTexts]}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </TooltipProvider>
             </div>
           </div>
         </div>
