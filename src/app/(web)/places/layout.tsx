@@ -1,5 +1,5 @@
 // app/(web)/places/layout.tsx
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Découvrir les meilleurs lieux à Madagascar | Tiakaly",
@@ -75,6 +75,10 @@ export const metadata: Metadata = {
         ],
       },
     }),
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

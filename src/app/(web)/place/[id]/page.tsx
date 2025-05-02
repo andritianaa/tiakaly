@@ -1,10 +1,10 @@
-import { Metadata, ResolvingMetadata } from 'next';
-import { notFound } from 'next/navigation';
-import { use } from 'react';
+import { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
+import { use } from "react";
 
-import { getPlace } from '@/actions/place-actions';
+import { getPlace } from "@/actions/place-actions";
 
-import { PlaceDetailClient } from './details';
+import { PlaceDetailClient } from "./details";
 
 // Type pour les paramètres de la page
 type PageParams = {
@@ -41,8 +41,7 @@ export async function generateMetadata(
     keywords: place.keywords,
     openGraph: {
       title: place.title,
-      description:
-        place.bio || `Découvrez ${place.title} à ${place.localisation}`,
+      description: place.bio || `${place.title} - ${place.localisation}`,
       type: "article",
       url: `${process.env.NEXT_PUBLIC_APP_URL}/places/${place.id}`,
       images: [

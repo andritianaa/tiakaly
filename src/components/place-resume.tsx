@@ -1,12 +1,17 @@
 "use client";
 
-import { Check, DollarSign, MapPin } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Check, DollarSign, MapPin } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { PlaceBookmark } from '@/components/bookmark/place-bookmark';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { PlaceSummary } from '@/types/place';
+import { PlaceBookmark } from "@/components/bookmark/place-bookmark";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { PlaceSummary } from "@/types/place";
 
 export type PlaceResumeProps = {
   place: PlaceSummary;
@@ -35,7 +40,7 @@ export const PlaceResume = ({
         <Link
           href={mapMode ? `/map` : `/place/${place.id}`}
           key={place.title}
-          className="relative overflow-hidden rounded-lgmax-h-[45vh] min-h-[45vh] bg-muted"
+          className="relative overflow-hidden rounded-lg max-h-[40vh] min-h-[40vh] bg-muted"
           onClick={handleClick}
         >
           <Image
@@ -43,7 +48,7 @@ export const PlaceResume = ({
             width={500}
             height={500}
             alt=""
-            className="transition-transform duration-300 hover:scale-105 h-full w-full object-cover max-h-[45vh] min-h-[45vh]"
+            className="transition-transform duration-300 hover:scale-105 h-full w-full object-cover max-h-[40vh] min-h-[40vh]"
           />
 
           <div className=" bg-gradient-to-t from-black to-transparent absolute bottom-0 left-0 w-full h-[60%]"></div>

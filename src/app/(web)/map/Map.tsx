@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 // Import Leaflet components only on client side
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
@@ -106,7 +105,7 @@ function MapComponent() {
       <div className="fixed h-screen w-screen big-map">
         <MapContainer
           center={[-18.902379, 47.533765]}
-          zoom={15}
+          zoom={13}
           scrollWheelZoom={true}
           minZoom={9}
           className="h-screen w-screen"
@@ -125,14 +124,10 @@ function MapComponent() {
                 interactive
                 icon={MARKER}
               >
-                <Popup closeButton={false} closeOnClick={false}>
-                  <Link
-                    prefetch={true}
-                    href={`/place/${place.id}`}
-                    className="flex flex-col items-start justify-start overflow-hidden w-fit bg-transparent text-black rounded-lg"
-                  >
+                <Popup closeButton={false} closeOnClick={true}>
+                  <div className="flex flex-col items-start justify-start overflow-hidden w-fit bg-transparent text-black rounded-lg">
                     <PlacePopup {...place} />
-                  </Link>{" "}
+                  </div>{" "}
                 </Popup>
               </Marker>
             ) : (

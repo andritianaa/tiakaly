@@ -2,21 +2,25 @@
 
 import type React from "react";
 
-import { Filter, Search, SearchIcon } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
-import useSWR from 'swr';
+import { Filter, Search, SearchIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
 
-import { PlaceResume } from '@/components/place-resume';
-import { SearchFilters } from '@/components/search-filters';
-import { Button } from '@/components/ui/button';
+import { PlaceResume } from "@/components/place-resume";
+import { SearchFilters } from "@/components/search-filters";
+import { Button } from "@/components/ui/button";
 import {
-    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
-} from '@/components/ui/dialog';
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
-import { fetcher } from '@/lib/utils';
-import { PlaceType } from '@prisma/client';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { fetcher } from "@/lib/utils";
+import { PlaceType } from "@prisma/client";
 
 import type { PlaceSummary } from "@/types/place";
 // Liste des types de lieux (à remplacer par des données réelles)
@@ -163,7 +167,7 @@ export default function SearchPageContent() {
       <div className="flex flex-col gap-6 max-w-7xl mx-auto">
         <p className="text-2xl font-bold -mb-4">Les meilleurs spots</p>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <form onSubmit={handleSearch} className="flex-1 flex gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -245,8 +249,8 @@ export default function SearchPageContent() {
         </div>
 
         {isLoading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
           </div>
         ) : filteredPlaces.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3  gap-4">

@@ -1,36 +1,42 @@
-"use client";
-import { House, Map, Medal, Newspaper, Search } from 'lucide-react';
-import Link from 'next/link';
+import { House, Map, Medal, Newspaper, Search } from "lucide-react";
+import Link from "next/link";
 
-import { UserMenu } from '@/app/(web)/components/navbar/user-menu';
-import { Logo } from '@/components/logo';
-import { Button } from '@/components/ui/button';
-import { useUser } from '@/hooks/use-user';
+import { UserMenu } from "@/app/(web)/components/navbar/user-menu";
+import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/button";
+import { currentUser } from "@/lib/current-user";
 
-import { NavMenu } from './nav-menu';
+import { NavMenu } from "./nav-menu";
 
-const Navbar = () => {
-  const { user, isLoading } = useUser();
+const Navbar = async () => {
+  const user = await currentUser();
 
   return (
     <>
-      <nav className="h-16 bg-background border-b border-accent fixed top-0 w-full z-40">
-        <div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6">
-          <div className="flex-1">
-            <Logo withName />
-          </div>
+      <header className="fixed top-0 w-full z-40">
+        <nav
+          className="h-16 bg-background border-b border-accent"
+          aria-label="Navigation principale"
+        >
+          <div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6">
+            <div className="flex-1">
+              <Link href="/" aria-label="Accueil Tiakaly">
+                <Logo withName />
+              </Link>
+            </div>
 
-          <NavMenu className="hidden md:block flex-1" />
+            <NavMenu className="hidden md:block flex-1" />
 
-          <div className="flex justify-end flex-1 items-center gap-3">
-            {/* <ThemeToggle /> */}
-            {!isLoading && (
+            <div className="flex justify-end flex-1 items-center gap-3">
               <>
                 {user ? (
                   <UserMenu />
                 ) : (
                   <>
-                    <Link href="/auth/login">
+                    <Link
+                      href="/auth/login"
+                      aria-label="Se connecter à votre compte"
+                    >
                       <Button
                         variant="outline"
                         className="hidden sm:inline-flex hover-lift transition-all"
@@ -39,48 +45,70 @@ const Navbar = () => {
                       </Button>
                     </Link>
 
-                    <Link href="/auth/register">
+                    <Link
+                      href="/auth/register"
+                      aria-label="Créer un nouveau compte"
+                    >
                       <Button className="xs:inline-flex hover-lift transition-all">{`Let's go`}</Button>
                     </Link>
                   </>
                 )}
               </>
-            )}
+            </div>
           </div>
-        </div>
-      </nav>
-      <div className="fixed bottom-0 w-full md:hidden h-14 border-t grid grid-cols-5 bg-white z-50 p-2">
+        </nav>
+      </header>
+
+      <nav
+        className="fixed bottom-0 w-full md:hidden h-14 border-t grid grid-cols-5 bg-white z-50 p-2"
+        aria-label="Navigation mobile"
+      >
         <Link
           href={"/"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          aria-label="Accueil"
+          title="Accueil"
         >
-          <House size={28} />
+          <House size={28} aria-hidden="true" />
+          <span className="sr-only">Accueil</span>
         </Link>
         <Link
           href={"/places"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          aria-label="Rechercher des lieux"
+          title="Rechercher"
         >
-          <Search size={28} />
+          <Search size={28} aria-hidden="true" />
+          <span className="sr-only">Rechercher</span>
         </Link>
         <Link
           href={"/map"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          aria-label="Voir la carte"
+          title="Carte"
         >
-          <Map size={28} />
+          <Map size={28} aria-hidden="true" />
+          <span className="sr-only">Carte</span>
         </Link>
         <Link
           href={"/tops"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          aria-label="Voir les meilleurs endroits"
+          title="Top destinations"
         >
-          <Medal size={28} />
+          <Medal size={28} aria-hidden="true" />
+          <span className="sr-only">Top destinations</span>
         </Link>
         <Link
           href={"/post-instas"}
-          className="w-full flex items-center justify-center hover:bg-muted rounded-md "
+          className="w-full flex items-center justify-center hover:bg-muted rounded-md"
+          aria-label="Actualités et posts Instagram"
+          title="Actualités"
         >
-          <Newspaper size={28} />
+          <Newspaper size={28} aria-hidden="true" />
+          <span className="sr-only">Actualités</span>
         </Link>
-      </div>
+      </nav>
     </>
   );
 };

@@ -84,13 +84,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.9,
         },
         {
-            url: `${baseUrl}/map`,
+            url: `${baseUrl}/auth/forgot-password`,
             lastModified: new Date(),
             changeFrequency: 'monthly' as const,
-            priority: 0.5,
+            priority: 0.2,
+        },
+        {
+            url: `${baseUrl}/auth/login`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.2,
+        },
+        {
+            url: `${baseUrl}/auth/register`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.2,
+        },
+        {
+            url: `${baseUrl}/auth/reset-password`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.2,
         },
 
-        // Ajoutez d'autres pages statiques importantes ici
     ];
 
     // Combiner toutes les URLs

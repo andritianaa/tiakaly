@@ -1,18 +1,30 @@
 "use client";
 
-import { Frame, Instagram, Map, MapPinned, Medal, PieChart } from 'lucide-react';
-import Link from 'next/link';
-import * as React from 'react';
-
-import { Logo } from '@/components/logo';
 import {
-    Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton,
-    SidebarMenuItem
-} from '@/components/ui/sidebar';
+  Frame,
+  Instagram,
+  Map,
+  MapPinned,
+  Medal,
+  PieChart,
+} from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
-import { NavFooter } from './nav-footer';
-import { NavMain } from './nav-main';
-import { NavUser } from './nav-user';
+import { Logo } from "@/components/logo";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+
+import { NavFooter } from "./nav-footer";
+import { NavMain } from "./nav-main";
+import { NavUser } from "./nav-user";
 
 const data = {
   navMain: [
@@ -40,6 +52,7 @@ const data = {
       title: "Post insta",
       url: "/admin/post-insta",
       icon: Instagram,
+      isActive: true,
       items: [
         {
           title: "Liste",
@@ -55,6 +68,7 @@ const data = {
       title: "Top",
       url: "/admin/top",
       icon: Medal,
+      isActive: true,
       items: [
         {
           title: "Liste",

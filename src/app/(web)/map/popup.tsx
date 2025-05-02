@@ -1,12 +1,24 @@
 "use client";
-import { Check, DollarSign, Mail, Phone } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
+import {
+  Check,
+  DollarSign,
+  Mail,
+  Phone,
+  SquareArrowOutUpRight,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { PlaceSummary } from '@/types/place';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { PlaceSummary } from "@/types/place";
 
 export const PlacePopup = (place: PlaceSummary) => {
   const [copiedText, setCopiedText] = useState("");
@@ -26,13 +38,13 @@ export const PlacePopup = (place: PlaceSummary) => {
     <TooltipProvider>
       <Card className="">
         <CardContent className="p-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 min-w-[300px] max-md:max-w-[60vw]">
+          <div className="grid grid-cols-1  gap-2 min-w-[300px] max-md:max-w-[60vw]">
             <Image
               width={500}
               height={500}
               src={place.mainMedia?.url || "/placeholder.svg"}
               alt=""
-              className="rounded-lgmax-h-[30vh]  object-cover"
+              className="rounded-lg h-[20vh] object-cover"
             />
             <Card>
               <CardContent className="p-4">
@@ -114,15 +126,15 @@ export const PlacePopup = (place: PlaceSummary) => {
                 </div>
 
                 {place.Contact && place.Contact.length > 0 ? (
-                  <div className="grid grid-cols-3">
+                  <div className="flex gap-2 flex-wrap">
                     {place.Contact.map((contact) => (
                       <div key={contact.id} className="flex items-center">
                         {contact.type === "mobile" ||
                         contact.type === "fixe" ? (
                           <Button
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
-                            className="h-8 px-2 text-sm hover:bg-transparent pl-0"
+                            className="h-8 px-2 text-sm hover:bg-transparent"
                             onClick={() => handlePhoneCall(contact.value)}
                           >
                             <Phone className="size-4 text-muted-foreground" />
@@ -130,9 +142,9 @@ export const PlacePopup = (place: PlaceSummary) => {
                           </Button>
                         ) : (
                           <Button
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
-                            className="h-8 px-2 text-sm hover:bg-transparent pl-0"
+                            className="h-8 px-2 text-sm hover:bg-transparent"
                             onClick={() => handleCopyContact(contact.value)}
                           >
                             <Mail className="size-4 text-muted-foreground" />
@@ -141,6 +153,16 @@ export const PlacePopup = (place: PlaceSummary) => {
                         )}
                       </div>
                     ))}
+                    <Link href={`/place/${place.id}`}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-8 px-2 text-sm hover:bg-transparent"
+                      >
+                        <SquareArrowOutUpRight className="size-4 text-muted-foreground" />
+                        <span className="text-sm text-foreground">Visiter</span>
+                      </Button>
+                    </Link>
                   </div>
                 ) : (
                   <p className="text-xs text-muted-foreground">
