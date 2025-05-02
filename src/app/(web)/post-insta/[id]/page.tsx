@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import { use } from 'react';
 
 import { getPostInstaById } from '@/actions/post-insta.actions';
-import { PostBookmark } from '@/components/bookmark/post-bookmark';
 import { InstagramEmbedWrapper } from '@/components/client-wrappers/instagram-embed-wrapper';
 import { Button } from '@/components/ui/button';
 
@@ -101,7 +100,6 @@ export default function PostInstaPage({
         <div className="space-y-4 max-w-7xl w-full">
           <div className="flex flex-col items-center justify-center bg-gray-50  rounded-lg">
             <div className="grid grid-cols-2 lg:grid-cols-3 justify-center gap-2 max-w-xl mb-4">
-              <PostBookmark postId={post.id} variant="button" />
               <Button variant="outline" asChild>
                 <a
                   href={post.url}

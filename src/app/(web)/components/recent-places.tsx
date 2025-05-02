@@ -1,15 +1,14 @@
 "use client";
-import { ArrowRight, MapPin } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import useSWR from 'swr';
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import useSWR from "swr";
 
-import Bounce from '@/components/bounce';
-import { Button } from '@/components/ui/button';
-import { fetcher } from '@/lib/utils';
+import Bounce from "@/components/bounce";
+import { PlaceCard } from "@/components/place-card";
+import { Button } from "@/components/ui/button";
+import { fetcher } from "@/lib/utils";
 
 import type { PlaceSummary } from "@/types/place";
-
 export default function RecentPlaces() {
   // Récupération des données directement dans le composant
   const { data: places, isLoading } = useSWR<PlaceSummary[]>(
@@ -51,37 +50,7 @@ export default function RecentPlaces() {
             <Bounce>
               <div className="space-y-3">
                 {places.slice(0, 5).map((place, index) => (
-                  <Bounce key={place.id}>
-                    <Link href={`/place/${place.id}`} className="mb-2">
-                      {" "}
-                      <div className="bg-white rounded-lg p-3 flex items-center  hover-lift group max-lg:border-border max-lg:border">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-md overflow-hidden mr-4 group-hover:shadow-md transition-all duration-300">
-                          {place.mainMedia && (
-                            <Image
-                              src={place.mainMedia.url || "/placeholder.svg"}
-                              width={64}
-                              height={64}
-                              alt={place.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          )}
-                        </div>
-                        <div className="flex-grow">
-                          <h3 className="font-semibold text-lg  transition-colors duration-300">
-                            {place.title}
-                          </h3>
-                          <div className="flex items-center text-sm text-gray-500  transition-colors duration-300 w-full">
-                            <MapPin className="h-3 w-3 mr-1 group-hover:animate-pulse" />
-                            <span className="truncate w-full">
-                              {place.localisation.length > 30
-                                ? `${place.localisation.slice(0, 30)}...`
-                                : place.localisation}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </Bounce>
+                  <PlaceCard place={place} key={index} />
                 ))}
               </div>
             </Bounce>

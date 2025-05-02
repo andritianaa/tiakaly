@@ -1,29 +1,42 @@
 "use client";
 
-import Autoplay from 'embla-carousel-autoplay';
-import { Check, DollarSign, Mail, MapPin, Phone } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { InstagramEmbed } from 'react-social-media-embed';
+import Autoplay from "embla-carousel-autoplay";
+import { Check, DollarSign, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { InstagramEmbed } from "react-social-media-embed";
 
-import { PlaceBookmark } from '@/components/bookmark/place-bookmark';
-import DynamicMap from '@/components/place/place-map';
-import { RichTextEditor } from '@/components/rich-text-editor';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { PlaceBookmark } from "@/components/bookmark/place-bookmark";
+import DynamicMap from "@/components/place/place-map";
+import { RichTextEditor } from "@/components/rich-text-editor";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
-} from '@/components/ui/carousel';
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import {
-    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
-} from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useToast } from '@/hooks/use-toast';
-import { PlaceWithRelations } from '@/types/place';
-import { Media } from '@prisma/client';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
+import { PlaceWithRelations } from "@/types/place";
+import { Media } from "@prisma/client";
 
 import type { CarouselApi } from "@/components/ui/carousel";
 export function PlaceDetailClient({
@@ -256,17 +269,30 @@ export function PlaceDetailClient({
                             </Tooltip>
                           )}
                         </div>
-                        <div className="flex items-center justify-center">
-                          {[1, 2, 3].map((star) => (
-                            <Check
-                              key={star}
-                              color={`${
-                                star <= place.rating ? "#3df50a" : "#9e958e"
-                              }`}
-                              className="size-6"
-                            />
-                          ))}
-                        </div>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center justify-center">
+                              {[1, 2, 3].map((star) => (
+                                <Check
+                                  key={star}
+                                  color={`${
+                                    star <= place.rating ? "#3df50a" : "#9e958e"
+                                  }`}
+                                  className="size-6"
+                                />
+                              ))}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="p-0">
+                              {place.rating === 1
+                                ? "Je recommande"
+                                : place.rating === 2
+                                ? "Il faut y aller"
+                                : "Vaut vraiment le detour"}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                     <div className="flex items-center text-muted-foreground text-sm">

@@ -52,8 +52,7 @@ export function PWAInstallPrompt() {
   if (!showInstallPrompt) return null;
 
   return (
-    // TODO : regler le pwa et afficher ca apres
-    <div className="hidden fixed bottom-4 left-4 right-4 bg-background p-4 rounded-lg shadow-lg border z-50 md:left-auto md:right-4 md:w-80">
+    <div className=" fixed bottom-4 left-4 right-4 bg-background p-4 rounded-lg shadow-lg border z-50 md:left-auto md:right-4 md:w-80">
       <h3 className="font-semibold mb-2">{"Installer l'application"}</h3>
       <p className="text-sm mb-4">
         Installez Tiakaly sur votre appareil pour un accès rapide.

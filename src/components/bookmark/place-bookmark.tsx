@@ -1,13 +1,19 @@
 "use client";
 
-import { Bookmark } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Bookmark } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { toggleBookmarkPlace } from '@/actions/bookmark-actions';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { useUser } from '@/hooks/use-user';
-import { cn } from '@/lib/utils';
+import { toggleBookmarkPlace } from "@/actions/bookmark-actions";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
+import { useUser } from "@/hooks/use-user";
+import { cn } from "@/lib/utils";
 
 export type PlaceBookmarkProps = {
   placeId: string;
@@ -78,28 +84,39 @@ export const PlaceBookmark = ({
   // Version icône (absolute)
   if (variant === "icon") {
     return (
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleBookmarkClick}
-        disabled={isLoading}
-        aria-label={
-          isBookmarked ? "Retirer des favoris" : "Ajouter aux favoris"
-        }
-        className={cn(
-          "absolute right-2 top-2 bg-slate-500/50 hover:bg-slate-500/70 size-10 rounded-full z-10 flex items-center justify-center transition-all duration-200",
-          isLoading && "opacity-70 cursor-not-allowed",
-          className
-        )}
-      >
-        <Bookmark
-          className={cn(
-            "transition-all duration-200",
-            isBookmarked ? "text-[#fdbf43] fill-[#fdbf43]" : "text-white"
-          )}
-          size={20}
-        />
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleBookmarkClick}
+              disabled={isLoading}
+              aria-label={
+                isBookmarked ? "Retirer des favoris" : "Ajouter aux favoris"
+              }
+              className={cn(
+                "absolute right-2 top-2 bg-slate-500/50 hover:bg-slate-500/70 size-10 rounded-full z-10 flex items-center justify-center transition-all duration-200",
+                isLoading && "opacity-70 cursor-not-allowed",
+                className
+              )}
+            >
+              <Bookmark
+                className={cn(
+                  "transition-all duration-200",
+                  isBookmarked ? "text-[#fdbf43] fill-[#fdbf43]" : "text-white"
+                )}
+                size={20}
+              />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>
+              {isBookmarked ? "Retirer des favoris" : "Ajouter aux favoris"}
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     );
   }
 

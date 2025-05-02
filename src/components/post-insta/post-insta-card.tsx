@@ -1,8 +1,6 @@
-import { MapPin } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-
-import { PostBookmark } from '@/components/bookmark/post-bookmark';
+import { MapPin } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 import type { PostInstaWithMain } from "@/types";
 
@@ -13,8 +11,6 @@ interface PostInstaCardProps {
 export function PostInstaCard({ post }: PostInstaCardProps) {
   return (
     <div className="relative">
-      <PostBookmark postId={post.id} />
-
       <Link
         href={`/post-insta/${post.id}`}
         key={post.id}

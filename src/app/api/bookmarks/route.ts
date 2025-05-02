@@ -1,32 +1,36 @@
-"use server"
+import { NextResponse } from 'next/server';
 
-import { SA } from '@/lib/safe-ation';
+import { currentSession } from '@/lib/current-user';
 import { prisma } from '@/prisma';
-import { PlaceSummary } from '@/types/place';
 
-export const getUserBookmarks = SA(async (session) => {
+export async function GET() {
     try {
+        const session = await currentSession()
+
+        if (!session?.user?.id) {
+            return NextResponse.json(
+                { error: "Vous devez être connecté pour voir vos favoris" },
+                { status: 401 }
+            )
+        }
+
         const userId = session.user.id
+
         // Récupérer l'utilisateur avec ses bookmarks
         const user = await prisma.user.findUnique({
             where: { id: userId },
             select: {
-                TestedPlace: true,
                 BookmarkPlace: true,
+                TestedPlace: true,
             },
         })
 
         if (!user) {
-            return {
-                error: "Utilisateur non trouvé",
-                TestedPlace: [],
-                bookmarkedPlaces: [],
-            }
+            return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 })
         }
 
-
         // Récupérer les places bookmarkées
-        const bookmarkedPlaces: PlaceSummary[] = await prisma.place.findMany({
+        const bookmarkedPlaces = await prisma.place.findMany({
             where: {
                 id: { in: user.BookmarkPlace },
                 status: "published",
@@ -62,7 +66,9 @@ export const getUserBookmarks = SA(async (session) => {
                 createdAt: "desc",
             },
         })
-        const testedPlaces: PlaceSummary[] = await prisma.place.findMany({
+
+        // Récupérer les places testées
+        const testedPlaces = await prisma.place.findMany({
             where: {
                 id: { in: user.TestedPlace },
                 status: "published",
@@ -98,72 +104,16 @@ export const getUserBookmarks = SA(async (session) => {
                 createdAt: "desc",
             },
         })
-        return {
-            testedPlaces,
+
+        return NextResponse.json({
             bookmarkedPlaces,
-        }
+            testedPlaces,
+        })
     } catch (error) {
         console.error("Erreur lors de la récupération des favoris:", error)
-        return {
-            error: "Échec de la récupération des favoris",
-            testedPlaces: [],
-            bookmarkedPlaces: [],
-        }
+        return NextResponse.json(
+            { error: "Échec de la récupération des favoris" },
+            { status: 500 }
+        )
     }
-})
-
-export const toggleBookmarkPlace = SA(async (session, PlaceId: string): Promise<null> => {
-    const user = session.user
-    if (user.BookmarkPlace.includes(PlaceId)) {
-        await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                BookmarkPlace: {
-                    set: user.BookmarkPlace.filter((id) => id !== PlaceId)
-                }
-            }
-        })
-    } else {
-        await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                BookmarkPlace: {
-                    set: [...user.BookmarkPlace, PlaceId]
-                }
-            }
-        })
-    }
-    return null
-})
-
-export const toggleTestedPlace = SA(async (session, placeId: string): Promise<null> => {
-    const user = session.user
-    if (user.TestedPlace.includes(placeId)) {
-        // Remove from TestedPlace and add back to BookmarkPlace
-        await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                TestedPlace: {
-                    set: user.TestedPlace.filter((id) => id !== placeId)
-                },
-                BookmarkPlace: {
-                    set: [...user.BookmarkPlace, placeId]
-                }
-            }
-        })
-    } else {
-        // Add to TestedPlace and remove from BookmarkPlace
-        await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                TestedPlace: {
-                    set: [...user.TestedPlace, placeId]
-                },
-                BookmarkPlace: {
-                    set: user.BookmarkPlace.filter((id) => id !== placeId)
-                }
-            }
-        })
-    }
-    return null
-})
+}
