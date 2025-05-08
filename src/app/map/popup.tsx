@@ -3,6 +3,7 @@ import {
   Check,
   DollarSign,
   Mail,
+  Navigation,
   Phone,
   SquareArrowOutUpRight,
 } from "lucide-react";
@@ -22,13 +23,18 @@ import { PlaceSummary } from "@/types/place";
 
 export const PlacePopup = ({
   distance,
+  onShowDirections,
   ...place
-}: PlaceSummary & { distance?: string }) => {
+}: PlaceSummary & {
+  distance?: string;
+  onShowDirections?: (place: PlaceSummary) => void;
+}) => {
   const [copiedText, setCopiedText] = useState("");
 
   const handlePhoneCall = (phoneNumber: string) => {
     window.location.href = `tel:${phoneNumber}`;
   };
+
   const handleCopyContact = (value: string) => {
     navigator.clipboard.writeText(value);
     setCopiedText(value);
@@ -37,11 +43,18 @@ export const PlacePopup = ({
       setCopiedText("");
     }, 2000);
   };
+
+  const handleShowDirections = () => {
+    if (onShowDirections) {
+      onShowDirections(place);
+    }
+  };
+
   return (
     <TooltipProvider>
       <Card className="">
         <CardContent className="p-2">
-          <div className="grid grid-cols-1  gap-2 min-w-[300px] max-md:max-w-[60vw]">
+          <div className="grid grid-cols-1 gap-2 min-w-[300px] max-md:max-w-[60vw]">
             <Image
               width={500}
               height={500}
@@ -64,8 +77,6 @@ export const PlacePopup = ({
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <div className="flex">
-                                    {" "}
-                                    {/* Single wrapper element */}
                                     {[1, 2, 3].map((dollar) => (
                                       <span
                                         key={dollar}
@@ -128,9 +139,9 @@ export const PlacePopup = ({
                   </div>
                 </div>
 
-                {place.Contact && place.Contact.length > 0 ? (
-                  <div className="flex gap-2 flex-wrap">
-                    {place.Contact.map((contact) => (
+                <div className="flex gap-2 flex-wrap">
+                  {place.Contact && place.Contact.length > 0 ? (
+                    place.Contact.map((contact) => (
                       <div key={contact.id} className="flex items-center">
                         {contact.type === "mobile" ||
                         contact.type === "fixe" ? (
@@ -155,23 +166,35 @@ export const PlacePopup = ({
                           </Button>
                         )}
                       </div>
-                    ))}
-                    <Link href={`/place/${place.id}`}>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 px-2 text-sm hover:bg-transparent"
-                      >
-                        <SquareArrowOutUpRight className="size-4 text-muted-foreground" />
-                        <span className="text-sm text-foreground">Visiter</span>
-                      </Button>
-                    </Link>
-                  </div>
-                ) : (
-                  <p className="text-xs text-muted-foreground">
-                    Aucun contact disponible
-                  </p>
-                )}
+                    ))
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      Aucun contact disponible
+                    </p>
+                  )}
+
+                  <Link href={`/place/${place.id}`}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-2 text-sm hover:bg-transparent"
+                    >
+                      <SquareArrowOutUpRight className="size-4 text-muted-foreground" />
+                      <span className="text-sm text-foreground">Visiter</span>
+                    </Button>
+                  </Link>
+                  {/* Bouton Itinéraire */}
+                  {place.latitude && place.longitude && (
+                    <Button
+                      size="sm"
+                      className="h-8 px-2 text-sm"
+                      onClick={handleShowDirections}
+                    >
+                      <Navigation className="size-4 " />
+                      <span className="text-sm  ml-1">Itinéraire</span>
+                    </Button>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>

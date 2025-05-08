@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 
 import dynamic from "next/dynamic";
 
-const Map = dynamic(() => import("@/app/(web)/map/Map"), {
+const Map = dynamic(() => import("@/app/map/Map"), {
   ssr: false,
 });
 

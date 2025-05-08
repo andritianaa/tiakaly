@@ -65,6 +65,7 @@
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.7",
     "next": "15.2.0",
