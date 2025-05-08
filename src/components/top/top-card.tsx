@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { TopBookmark } from "@/components/bookmark/top-bookmark";
 
 import type { TopWithMain } from "@/types";
 interface TopCardProps {
@@ -11,7 +10,6 @@ interface TopCardProps {
 export function TopCard({ top }: TopCardProps) {
   return (
     <div className="relative overflow-hidden rounded-lg">
-      <TopBookmark topId={top.id} />
       <Link
         href={`/top/${top.id}`}
         key={top.title}

@@ -1,21 +1,31 @@
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { ExternalLink, Trophy } from 'lucide-react';
-import { Metadata, ResolvingMetadata } from 'next';
-import { use } from 'react';
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { ExternalLink, Trophy } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
+import { use } from "react";
 
 /* eslint-disable @next/next/no-img-element */
-import { getTopById } from '@/actions/top.actions';
-import { TopBookmark } from '@/components/bookmark/top-bookmark';
+import { getTopById } from "@/actions/top.actions";
 import {
-    FacebookEmbedWrapper, InstagramEmbedWrapper
-} from '@/components/client-wrappers/instagram-embed-wrapper';
-import { RichTextEditor } from '@/components/rich-text-editor';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+  FacebookEmbedWrapper,
+  InstagramEmbedWrapper,
+} from "@/components/client-wrappers/instagram-embed-wrapper";
+import { RichTextEditor } from "@/components/rich-text-editor";
+import { Button } from "@/components/ui/button";
 import {
-    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
-} from '@/components/ui/carousel';
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type PageParams = {
   params: Promise<{ id: string }>;
@@ -172,8 +182,6 @@ export default function TopPage({
                   </p>
                 </div>
               </div>
-
-              <TopBookmark variant="button" topId={top.id} />
             </div>
             <RichTextEditor
               content={top.description}

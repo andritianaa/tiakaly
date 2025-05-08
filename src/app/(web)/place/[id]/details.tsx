@@ -269,17 +269,30 @@ export function PlaceDetailClient({
                             </Tooltip>
                           )}
                         </div>
-                        <div className="flex items-center justify-center">
-                          {[1, 2, 3].map((star) => (
-                            <Check
-                              key={star}
-                              color={`${
-                                star <= place.rating ? "#3df50a" : "#9e958e"
-                              }`}
-                              className="size-6"
-                            />
-                          ))}
-                        </div>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center justify-center">
+                              {[1, 2, 3].map((star) => (
+                                <Check
+                                  key={star}
+                                  color={`${
+                                    star <= place.rating ? "#3df50a" : "#9e958e"
+                                  }`}
+                                  className="size-6"
+                                />
+                              ))}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="p-0">
+                              {place.rating === 1
+                                ? "Je recommande"
+                                : place.rating === 2
+                                ? "Il faut y aller"
+                                : "Vaut vraiment le detour"}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                     <div className="flex items-center text-muted-foreground text-sm">
