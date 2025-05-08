@@ -1,8 +1,11 @@
 "use client";
 
+import type React from "react";
+
 import { Check, DollarSign, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { PlaceBookmark } from "@/components/bookmark/place-bookmark";
 import {
@@ -11,20 +14,83 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { PlaceSummary } from "@/types/place";
 
-export type PlaceResumeProps = {
+import type { PlaceSummary } from "@/types/place";
+
+export type PlaceCardProps = {
   place: PlaceSummary;
   mapMode?: boolean;
   onMapClick?: (place: PlaceSummary) => void;
 };
 
+// Function to calculate distance between two coordinates in kilometers
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  if (!lat1 || !lon1 || !lat2 || !lon2) return Number.POSITIVE_INFINITY;
+
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
 export const PlaceResume = ({
   place,
   mapMode = false,
   onMapClick,
-}: PlaceResumeProps) => {
-  console.log("place", place);
+}: PlaceCardProps) => {
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+  const [distance, setDistance] = useState<string | null>(null);
+
+  // Get user location when component mounts
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userCoords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+          setUserLocation(userCoords);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        }
+      );
+    }
+  }, []);
+
+  // Calculate distance when user location is available
+  useEffect(() => {
+    if (userLocation && place.latitude && place.longitude) {
+      const dist = calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        place.latitude,
+        place.longitude
+      );
+      setDistance(dist.toFixed(1) + " km");
+    }
+  }, [userLocation, place]);
 
   const handleClick = (e: React.MouseEvent) => {
     if (mapMode && onMapClick) {
@@ -44,7 +110,7 @@ export const PlaceResume = ({
           onClick={handleClick}
         >
           <Image
-            src={place.mainMedia!.url}
+            src={place.mainMedia!.url || "/placeholder.svg"}
             width={500}
             height={500}
             alt=""
@@ -107,9 +173,18 @@ export const PlaceResume = ({
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center text-sm">
-                    <MapPin className="size-4 mr-1 max-md:hidden" />
-                    <span className=" line-clamp-1">{place.localisation}</span>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center">
+                      <MapPin className="size-4 mr-1 max-md:hidden" />
+                      <span className="line-clamp-1">{place.localisation}</span>
+                      {distance && (
+                        <div className="flex items-center bg-black/40 px-2 py-0.5 rounded-full ml-2">
+                          <span className="text-sm font-medium">
+                            {distance}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

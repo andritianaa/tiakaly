@@ -20,7 +20,10 @@ import {
 } from "@/components/ui/tooltip";
 import { PlaceSummary } from "@/types/place";
 
-export const PlacePopup = (place: PlaceSummary) => {
+export const PlacePopup = ({
+  distance,
+  ...place
+}: PlaceSummary & { distance?: string }) => {
   const [copiedText, setCopiedText] = useState("");
 
   const handlePhoneCall = (phoneNumber: string) => {
@@ -53,7 +56,7 @@ export const PlacePopup = (place: PlaceSummary) => {
                     <div className="w-full">
                       <div className="flex flex-col justify-center w-full">
                         <h1 className="text-2xl font-bold flex items-center">
-                          {place.title}
+                          {place.title} {distance ? `(${distance})` : ""}
                         </h1>
                         <div className="flex items-center gap-2">
                           <div className="flex items-center justify-center">
