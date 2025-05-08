@@ -1,6 +1,7 @@
 "use client";
 
 import L from "leaflet";
+import { Route } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
 // Import Leaflet components only on client side
@@ -34,7 +35,6 @@ import { fetcher } from "@/lib/utils";
 import { PlacePopup } from "./popup";
 
 import type { PlaceSummary } from "@/types/place";
-
 // Types pour les informations de l'itinéraire
 interface RouteInfo {
   distance: string;
@@ -779,201 +779,195 @@ function MapComponent() {
             </div>
           </DrawerContent>
         </Drawer>
-
-        {/* Floating button to toggle route drawer when route exists but drawer is closed */}
+      </div>
+      <div className=" fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 hidden md:flex gap-2">
         {routeInfo && routeDestination && !routeDrawerOpen && (
-          <Button
-            className="fixed md:bottom-[4.5rem] bottom-[8rem] right-4 z-[999] shadow-lg"
-            onClick={toggleRouteDrawer}
-            size="sm"
-            variant="default"
-          >
-            <span className="flex items-center gap-2">
-              <span>🗺️</span> Voir l'itinéraire
-            </span>
+          <Button className=" w-fit  shadow-lg" onClick={toggleRouteDrawer}>
+            <Route size={24} />
           </Button>
         )}
-      </div>
-
-      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetTrigger>
-          <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 hidden md:flex">
-            Rechercher
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="h-full overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Carte</SheetTitle>
-          </SheetHeader>
-          <div className="flex flex-col gap-2">
-            <Input
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              placeholder="Rechercher..."
-            />
-
-            {/* Distance filter buttons - only show if we have user location */}
-            {hasUserLocation && (
-              <div className="flex flex-wrap gap-2 my-2">
-                <Button
-                  variant={distanceFilter === null ? "default" : "outline"}
-                  size="sm"
-                  onClick={resetDistanceFilter}
-                >
-                  Tous
-                </Button>
-                <Button
-                  variant={distanceFilter === 2 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(2)}
-                >
-                  2km
-                </Button>
-                <Button
-                  variant={distanceFilter === 5 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(5)}
-                >
-                  5km
-                </Button>
-                <Button
-                  variant={distanceFilter === 10 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(10)}
-                >
-                  10km
-                </Button>
-                <Button
-                  variant={distanceFilter === 15 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(15)}
-                >
-                  15km
-                </Button>
-              </div>
-            )}
-
-            {/* Show message when no places match the distance filter */}
-            {distanceFilter && filteredPlaces.length === 0 && !isLoading && (
-              <p className="text-center text-muted-foreground py-4">
-                Aucun lieu trouvé dans un rayon de {distanceFilter}km
-              </p>
-            )}
-
-            {isLoading &&
-              Array.from({ length: 10 }).map((_, index) => (
-                <Skeleton className="rounded-lg shadow-sm h-20" key={index} />
-              ))}
-
-            {displayedPlaces.map((place) => (
-              <PlaceResume
-                key={place.id}
-                place={place}
-                mapMode={true}
-                onMapClick={handlePlaceClick}
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <SheetTrigger>
+            <Button>Rechercher</Button>
+          </SheetTrigger>
+          <SheetContent className="h-full overflow-y-auto">
+            <SheetHeader>
+              <SheetTitle>Carte</SheetTitle>
+            </SheetHeader>
+            <div className="flex flex-col gap-2">
+              <Input
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder="Rechercher..."
               />
-            ))}
-          </div>
-        </SheetContent>
-      </Sheet>
 
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <DrawerTrigger asChild>
-          <Button className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 flex md:hidden">
-            Rechercher
+              {/* Distance filter buttons - only show if we have user location */}
+              {hasUserLocation && (
+                <div className="flex flex-wrap gap-2 my-2">
+                  <Button
+                    variant={distanceFilter === null ? "default" : "outline"}
+                    size="sm"
+                    onClick={resetDistanceFilter}
+                  >
+                    Tous
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 2 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(2)}
+                  >
+                    2km
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 5 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(5)}
+                  >
+                    5km
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 10 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(10)}
+                  >
+                    10km
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 15 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(15)}
+                  >
+                    15km
+                  </Button>
+                </div>
+              )}
+
+              {/* Show message when no places match the distance filter */}
+              {distanceFilter && filteredPlaces.length === 0 && !isLoading && (
+                <p className="text-center text-muted-foreground py-4">
+                  Aucun lieu trouvé dans un rayon de {distanceFilter}km
+                </p>
+              )}
+
+              {isLoading &&
+                Array.from({ length: 10 }).map((_, index) => (
+                  <Skeleton className="rounded-lg shadow-sm h-20" key={index} />
+                ))}
+
+              {displayedPlaces.map((place) => (
+                <PlaceResume
+                  key={place.id}
+                  place={place}
+                  mapMode={true}
+                  onMapClick={handlePlaceClick}
+                />
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+      <div className="fixed bottom-[4.5rem] right-4 z-50 md:bottom-4 flex md:hidden gap-2">
+        {routeInfo && routeDestination && !routeDrawerOpen && (
+          <Button className=" w-fit  shadow-lg" onClick={toggleRouteDrawer}>
+            <Route size={24} />
           </Button>
-        </DrawerTrigger>
-        <DrawerContent className="h-[80vh]">
-          <div className="mx-auto w-full px-4">
-            <Input
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              className="mb-2"
-              placeholder="Rechercher..."
-            />
+        )}
+        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+          <DrawerTrigger asChild>
+            <Button className="">Rechercher</Button>
+          </DrawerTrigger>
+          <DrawerContent className="h-[80vh]">
+            <div className="mx-auto w-full px-4">
+              <Input
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="mb-2"
+                placeholder="Rechercher..."
+              />
 
-            {/* Location status message */}
-            {locationError ? (
-              <p className="text-sm text-red-500 mb-2">{locationError}</p>
-            ) : !hasUserLocation ? (
-              <p className="text-sm text-muted-foreground mb-2">
-                Recherche de votre position...
-              </p>
-            ) : null}
+              {/* Location status message */}
+              {locationError ? (
+                <p className="text-sm text-red-500 mb-2">{locationError}</p>
+              ) : !hasUserLocation ? (
+                <p className="text-sm text-muted-foreground mb-2">
+                  Recherche de votre position...
+                </p>
+              ) : null}
 
-            {/* Distance filter buttons for mobile - only show if we have user location */}
-            {hasUserLocation && (
-              <div className="flex flex-wrap gap-2 my-2">
-                <Button
-                  variant={distanceFilter === null ? "default" : "outline"}
-                  size="sm"
-                  onClick={resetDistanceFilter}
-                >
-                  Tous
-                </Button>
-                <Button
-                  variant={distanceFilter === 1 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(1)}
-                >
-                  1km
-                </Button>
-                <Button
-                  variant={distanceFilter === 2 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(2)}
-                >
-                  2km
-                </Button>
-                <Button
-                  variant={distanceFilter === 5 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(5)}
-                >
-                  5km
-                </Button>
-                <Button
-                  variant={distanceFilter === 10 ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => filterByDistance(10)}
-                >
-                  10km
-                </Button>
-              </div>
-            )}
+              {/* Distance filter buttons for mobile - only show if we have user location */}
+              {hasUserLocation && (
+                <div className="flex flex-wrap gap-2 my-2">
+                  <Button
+                    variant={distanceFilter === null ? "default" : "outline"}
+                    size="sm"
+                    onClick={resetDistanceFilter}
+                  >
+                    Tous
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 1 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(1)}
+                  >
+                    1km
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 2 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(2)}
+                  >
+                    2km
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 5 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(5)}
+                  >
+                    5km
+                  </Button>
+                  <Button
+                    variant={distanceFilter === 10 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => filterByDistance(10)}
+                  >
+                    10km
+                  </Button>
+                </div>
+              )}
 
-            <ScrollArea className="h-[calc(80vh-8rem)] pb-2 w-full">
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                {isLoading &&
-                  Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      className="rounded-lg shadow-sm h-20"
-                      key={index}
+              <ScrollArea className="h-[calc(80vh-8rem)] pb-2 w-full">
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  {isLoading &&
+                    Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        className="rounded-lg shadow-sm h-20"
+                        key={index}
+                      />
+                    ))}
+
+                  {/* Show message when no places match the distance filter */}
+                  {distanceFilter &&
+                    filteredPlaces.length === 0 &&
+                    !isLoading && (
+                      <p className="text-center text-muted-foreground py-4 col-span-2">
+                        Aucun lieu trouvé dans un rayon de {distanceFilter}km
+                      </p>
+                    )}
+
+                  {displayedPlaces.map((place) => (
+                    <PlaceResume
+                      key={place.id}
+                      place={place}
+                      mapMode={true}
+                      onMapClick={handlePlaceClick}
                     />
                   ))}
-
-                {/* Show message when no places match the distance filter */}
-                {distanceFilter &&
-                  filteredPlaces.length === 0 &&
-                  !isLoading && (
-                    <p className="text-center text-muted-foreground py-4 col-span-2">
-                      Aucun lieu trouvé dans un rayon de {distanceFilter}km
-                    </p>
-                  )}
-
-                {displayedPlaces.map((place) => (
-                  <PlaceResume
-                    key={place.id}
-                    place={place}
-                    mapMode={true}
-                    onMapClick={handlePlaceClick}
-                  />
-                ))}
-              </div>
-            </ScrollArea>
-          </div>
-        </DrawerContent>
-      </Drawer>
+                </div>
+              </ScrollArea>
+            </div>
+          </DrawerContent>
+        </Drawer>
+      </div>
     </>
   );
 }

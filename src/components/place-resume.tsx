@@ -125,6 +125,13 @@ export const PlaceResume = ({
                   <div className="flex w-full flex-col items-start justify-start">
                     <p className="text-2xl font-bold flex items-center max-md:text-lg text-start">
                       {place.title}
+                      {distance && (
+                        <span className="flex items-center bg-black/40 px-2 py-0.5 rounded-full ml-2">
+                          <span className="text-sm font-medium">
+                            {distance}
+                          </span>
+                        </span>
+                      )}
                     </p>
                     <div className="flex items-center gap-2">
                       <div className="flex items-center justify-center">
@@ -171,14 +178,6 @@ export const PlaceResume = ({
                           />
                         ))}
                       </div>
-
-                      {distance && (
-                        <div className="flex items-center bg-black/40 px-2 py-0.5 rounded-full">
-                          <span className="text-sm font-medium">
-                            {distance}
-                          </span>
-                        </div>
-                      )}
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-sm">
