@@ -171,19 +171,20 @@ export const PlaceResume = ({
                           />
                         ))}
                       </div>
+
+                      {distance && (
+                        <div className="flex items-center bg-black/40 px-2 py-0.5 rounded-full">
+                          <span className="text-sm font-medium">
+                            {distance}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center">
                       <MapPin className="size-4 mr-1 max-md:hidden" />
                       <span className="line-clamp-1">{place.localisation}</span>
-                      {distance && (
-                        <div className="flex items-center bg-black/40 px-2 py-0.5 rounded-full ml-2">
-                          <span className="text-sm font-medium">
-                            {distance}
-                          </span>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
