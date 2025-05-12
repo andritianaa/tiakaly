@@ -87,14 +87,31 @@ export default function SearchPageContent() {
       // Text search filter
       const matchesSearch =
         !searchTerm ||
-        place.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        place.localisation.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (place.bio &&
-          place.bio.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (place.keywords &&
-          place.keywords.some((keyword) =>
-            keyword.toLowerCase().includes(searchTerm.toLowerCase())
-          ));
+        (() => {
+          // Split search terms and filter out empty strings
+          const searchTerms = searchTerm
+            .toLowerCase()
+            .split(/\s+/)
+            .filter((term) => term.length > 0);
+
+          // If no valid search terms, return true (no filtering)
+          if (searchTerms.length === 0) return true;
+
+          // Check if all search terms match somewhere in the place data
+          return searchTerms.every((term) => {
+            return (
+              place.title.toLowerCase().includes(term) ||
+              place.type.toLowerCase().includes(term) ||
+              place.localisation.toLowerCase().includes(term) ||
+              place.content.toLowerCase().includes(term) ||
+              (place.bio && place.bio.toLowerCase().includes(term)) ||
+              (place.keywords &&
+                place.keywords.some((keyword) =>
+                  keyword.toLowerCase().includes(term)
+                ))
+            );
+          });
+        })();
 
       // Price range filter
       const matchesPriceRange =

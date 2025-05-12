@@ -99,4 +99,5 @@ export type PlaceSummary = {
   }[];
   keywords: string[];
   type: string;
+  content: string;
 };
