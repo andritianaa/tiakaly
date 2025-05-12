@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
         id: true,
         bio: true,
         title: true,
+        content: true,
         localisation: true,
         longitude: true,
         latitude: true,
