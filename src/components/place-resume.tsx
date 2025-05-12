@@ -205,7 +205,7 @@ export const PlaceResume = ({
             </div>
             {distance && (
               <span className="flex items-center py-0.5 rounded-full max-lg:ml-0">
-                <span className="text-sm font-medium">A {distance} de toi</span>
+                <span className="text-sm font-medium">A {distance}</span>
               </span>
             )}
           </div>
