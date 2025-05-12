@@ -88,7 +88,12 @@ export const PlaceResume = ({
         place.latitude,
         place.longitude
       );
-      setDistance(dist.toFixed(1) + " km");
+
+      if (dist < 1) {
+        setDistance(Math.round(dist * 1000) + " m");
+      } else {
+        setDistance(parseFloat(dist.toFixed(1)).toString() + " km");
+      }
     }
   }, [userLocation, place]);
 
@@ -101,7 +106,7 @@ export const PlaceResume = ({
 
   return (
     <TooltipProvider>
-      <div className="relative rounded-lg overflow-hidden">
+      <div className="relative rounded-lg overflow-hidden bg-muted">
         <PlaceBookmark placeId={place.id} />
         <Link
           href={mapMode ? `/map` : `/place/${place.id}`}
@@ -123,15 +128,8 @@ export const PlaceResume = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="w-full">
                   <div className="flex w-full flex-col items-start justify-start">
-                    <p className="text-2xl font-bold flex items-center max-md:text-lg text-start max-lg:flex-col max-lg:items-start">
+                    <p className="text-2xl font-bold  max-md:text-lg text-startflex-colitems-start">
                       {place.title}
-                      {distance && (
-                        <span className="flex items-center bg-black/40 px-2 py-0.5 rounded-full ml-2  max-lg:ml-0">
-                          <span className="text-sm font-medium">
-                            {distance}
-                          </span>
-                        </span>
-                      )}
                     </p>
                     <div className="flex items-center gap-2">
                       <div className="flex items-center justify-center">
@@ -188,7 +186,7 @@ export const PlaceResume = ({
                   </div>
                 </div>
               </div>
-              <p className="mb-2 line-clamp-2 max-md:hidden">{place.bio}</p>
+              <p className="line-clamp-2 max-md:hidden">{place.bio}</p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="items-center hidden">
                   <span>
@@ -205,6 +203,11 @@ export const PlaceResume = ({
                 </div>
               </div>
             </div>
+            {distance && (
+              <span className="flex items-center py-0.5 rounded-full max-lg:ml-0">
+                <span className="text-sm font-medium">A {distance} de toi</span>
+              </span>
+            )}
           </div>
         </Link>
       </div>
