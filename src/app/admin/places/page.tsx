@@ -1,10 +1,9 @@
-import { Plus, Settings } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 
 import {
   deletePlace,
   getPlaces,
-  migrateAllIdsToSlugs,
   updatePlaceStatus,
 } from "@/actions/place-actions";
 import { PlaceList } from "@/components/place/place-list";
@@ -27,18 +26,13 @@ export default async function PlacesPage() {
     <div className="container p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Gestion des lieux</h1>
-        <div className="flex">
-          <Button onClick={migrateAllIdsToSlugs}>
-            <Settings className="h-4 w-4 mr-2" />
-            ID to Slug
-          </Button>
-          <Button asChild>
-            <Link href="/admin/places/new">
-              <Plus className="h-4 w-4 mr-2" />
-              Nouveau lieu
-            </Link>
-          </Button>
-        </div>
+
+        <Button asChild>
+          <Link href="/admin/places/new">
+            <Plus className="h-4 w-4 mr-2" />
+            Nouveau lieu
+          </Link>
+        </Button>
       </div>
 
       {success && places ? (
