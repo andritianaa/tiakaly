@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
+import { ActiveFilters } from "@/components/active-filters";
 import { PlaceResume } from "@/components/place-resume";
 import { SearchFilters } from "@/components/search-filters";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,8 @@ import {
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { fetcher } from "@/lib/utils";
-import { PlaceType } from "@prisma/client";
+
+import type { PlaceType } from "@prisma/client";
 
 import type { PlaceSummary } from "@/types/place";
 // Liste des types de lieux (à remplacer par des données réelles)
@@ -39,6 +41,7 @@ export default function SearchPageContent() {
   const [menus, setMenus] = useState<{ id: string; name: string }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data: placeTypes } = useSWR<PlaceType[]>("/api/place-types", fetcher);
+
   // Fetch all places once
   useEffect(() => {
     const fetchAllPlaces = async () => {
@@ -100,7 +103,7 @@ export default function SearchPageContent() {
       // Price in dollars filter
       const matchesPriceInDollars =
         priceInDollars === 0 ||
-        (place.priceInDollars && place.priceInDollars >= priceInDollars);
+        (place.priceInDollars && place.priceInDollars == priceInDollars);
 
       // Menu filter - Logique ET (tous les menus sélectionnés doivent être présents)
       const matchesMenus =
@@ -160,6 +163,30 @@ export default function SearchPageContent() {
     setRating(0);
     setSelectedMenus([]);
     setPlaceType("");
+  };
+
+  // Handler functions for removing individual filters
+  const handleRemoveMenu = (menuId: string) => {
+    setSelectedMenus(selectedMenus.filter((id) => id !== menuId));
+  };
+
+  const handleRemovePlaceType = () => {
+    setPlaceType("");
+  };
+
+  const handleRemoveRating = () => {
+    setRating(0);
+  };
+
+  const handleRemovePrice = () => {
+    setPriceInDollars(0);
+  };
+
+  const handleRemoveSearch = () => {
+    setSearchTerm("");
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("q");
+    router.push(`/places?${params.toString()}`);
   };
 
   return (
@@ -247,6 +274,21 @@ export default function SearchPageContent() {
             </DrawerContent>
           </Drawer>
         </div>
+
+        {/* Active Filters Component */}
+        <ActiveFilters
+          selectedMenus={selectedMenus}
+          placeType={placeType}
+          rating={rating}
+          priceInDollars={priceInDollars}
+          searchTerm={searchTerm}
+          menus={menus}
+          onRemoveMenu={handleRemoveMenu}
+          onRemovePlaceType={handleRemovePlaceType}
+          onRemoveRating={handleRemoveRating}
+          onRemovePrice={handleRemovePrice}
+          onRemoveSearch={handleRemoveSearch}
+        />
 
         {isLoading ? (
           <div className="flex justify-center items-center py-12">

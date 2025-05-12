@@ -1,12 +1,15 @@
 "use client";
 
-import 'leaflet/dist/leaflet.css';
+import type React from "react";
 
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import "leaflet/dist/leaflet.css";
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 // Type definitions for our props
 interface MapCoordinatesInputProps {
@@ -102,6 +105,43 @@ export function MapCoordinatesInput({
   latitude,
   onChange,
 }: MapCoordinatesInputProps) {
+  const [localLatitude, setLocalLatitude] = useState<string>(
+    latitude ? latitude.toString() : ""
+  );
+  const [localLongitude, setLocalLongitude] = useState<string>(
+    longitude ? longitude.toString() : ""
+  );
+
+  // Update local state when props change (e.g., when map is clicked)
+  useEffect(() => {
+    if (latitude !== undefined && !isNaN(latitude)) {
+      setLocalLatitude(latitude.toFixed(6));
+    }
+    if (longitude !== undefined && !isNaN(longitude)) {
+      setLocalLongitude(longitude.toFixed(6));
+    }
+  }, [latitude, longitude]);
+
+  const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setLocalLatitude(value);
+
+    const numValue = Number.parseFloat(value);
+    if (!isNaN(numValue) && numValue >= -90 && numValue <= 90) {
+      onChange(longitude, numValue);
+    }
+  };
+
+  const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setLocalLongitude(value);
+
+    const numValue = Number.parseFloat(value);
+    if (!isNaN(numValue) && numValue >= -180 && numValue <= 180) {
+      onChange(numValue, latitude);
+    }
+  };
+
   return (
     <div className="space-y-2">
       <Label>Coordonnées géographiques</Label>
@@ -115,9 +155,43 @@ export function MapCoordinatesInput({
           <p className="text-xs text-muted-foreground mt-2">
             Cliquez sur la carte pour définir la position du lieu
           </p>
-          <p className="text-xs font-medium mt-1">
+          <p className="text-xs font-medium mt-1 mb-4">
             Coordonnées actuelles: {latitude ? latitude.toFixed(6) : "-"},{" "}
             {longitude ? longitude.toFixed(6) : "-"}
+          </p>
+
+          <div className="grid grid-cols-2 gap-4 mt-2">
+            <div>
+              <Label htmlFor="latitude" className="text-sm">
+                Latitude
+              </Label>
+              <Input
+                id="latitude"
+                type="text"
+                inputMode="decimal"
+                placeholder="-90 à 90"
+                value={localLatitude}
+                onChange={handleLatitudeChange}
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label htmlFor="longitude" className="text-sm">
+                Longitude
+              </Label>
+              <Input
+                id="longitude"
+                type="text"
+                inputMode="decimal"
+                placeholder="-180 à 180"
+                value={localLongitude}
+                onChange={handleLongitudeChange}
+                className="mt-1"
+              />
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Vous pouvez également saisir directement les coordonnées
           </p>
         </CardContent>
       </Card>

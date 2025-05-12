@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
+import { buildSlug } from '@/lib/utils';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
@@ -27,9 +28,26 @@ export async function createTop(data: any) {
         // Validate data
         topSchema.parse(data)
 
+        let generatedId = buildSlug(data.title);
+        let isUnique = false;
+
+        while (!isUnique) {
+            const existingPlace = await prisma.top.findUnique({
+                where: { id: generatedId },
+            });
+
+            if (!existingPlace) {
+                isUnique = true;
+            } else {
+                const randomNumbers = Math.floor(1000 + Math.random() * 9000); // Generate 4 random digits
+                generatedId = `${buildSlug(data.title)}-${randomNumbers}`;
+            }
+        }
+
         // Create the Top record
         const top = await prisma.top.create({
             data: {
+                id: generatedId,
                 title: data.title,
                 description: data.description,
                 top1Id: data.top1Id,

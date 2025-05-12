@@ -123,10 +123,10 @@ export const PlaceResume = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="w-full">
                   <div className="flex w-full flex-col items-start justify-start">
-                    <p className="text-2xl font-bold flex items-center max-md:text-lg text-start">
+                    <p className="text-2xl font-bold flex items-center max-md:text-lg text-start max-lg:flex-col max-lg:items-start">
                       {place.title}
                       {distance && (
-                        <span className="flex items-center bg-black/40 px-2 py-0.5 rounded-full ml-2">
+                        <span className="flex items-center bg-black/40 px-2 py-0.5 rounded-full ml-2  max-lg:ml-0">
                           <span className="text-sm font-medium">
                             {distance}
                           </span>

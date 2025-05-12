@@ -1,19 +1,36 @@
 "use client";
 
-import { ArrowRight, ChevronRight, Search, UtensilsCrossed } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-import useSWR from 'swr';
-
-import { PlaceResume } from '@/components/place-resume';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
-    MultiSelect, MultiSelectContent, MultiSelectEmpty, MultiSelectGroup, MultiSelectItem,
-    MultiSelectList, MultiSelectSearch, MultiSelectTrigger, MultiSelectValue
-} from '@/components/ui/multi-select';
-import { cn, fetcher } from '@/lib/utils';
+  ArrowRight,
+  ChevronRight,
+  Search,
+  UtensilsCrossed,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
+
+import { PlaceResume } from "@/components/place-resume";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  MultiSelect,
+  MultiSelectContent,
+  MultiSelectEmpty,
+  MultiSelectGroup,
+  MultiSelectItem,
+  MultiSelectList,
+  MultiSelectSearch,
+  MultiSelectTrigger,
+  MultiSelectValue,
+} from "@/components/ui/multi-select-name";
+import { cn, fetcher } from "@/lib/utils";
 
 interface FoodDesireSearchProps {
   className?: string;
@@ -44,6 +61,12 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
       setMenus(menusData);
     }
   }, [menusData]);
+
+  useEffect(() => {
+    if (selectedMenus.length) {
+      handleSearch();
+    }
+  }, [selectedMenus]);
 
   useEffect(() => {
     if (placesData) {
@@ -137,6 +160,7 @@ export function FoodDesireSearch({ className }: FoodDesireSearchProps) {
                             <MultiSelectItem
                               key={menu.id}
                               value={menu.id}
+                              name={menu.name}
                               className="py-2"
                             >
                               {menu.name}

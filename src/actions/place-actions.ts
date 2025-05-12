@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { buildSlug } from '@/lib/utils';
 import { prisma } from '@/prisma';
 import { Status } from '@prisma/client';
 
@@ -32,8 +33,25 @@ export async function createPlace(data: PlaceInput) {
     } = data;
 
     // Créer le lieu
+    let generatedId = buildSlug(title);
+    let isUnique = false;
+
+    while (!isUnique) {
+      const existingPlace = await prisma.place.findUnique({
+        where: { id: generatedId },
+      });
+
+      if (!existingPlace) {
+        isUnique = true;
+      } else {
+        const randomNumbers = Math.floor(1000 + Math.random() * 9000); // Generate 4 random digits
+        generatedId = `${buildSlug(title)}-${randomNumbers}`;
+      }
+    }
+
     const place = await prisma.place.create({
       data: {
+        id: generatedId,
         title,
         localisation,
         content,
@@ -393,4 +411,112 @@ export async function createMenu(name: string) {
       data: { name },
     });
   else return menu;
+}
+
+
+export async function migrateAllIdsToSlugs() {
+  console.log('Début de la migration des slugs...');
+
+  const existingSlugs = new Set<string>();
+
+  // 1. D'abord créer un mapping des anciens IDs vers les nouveaux slugs pour les Places
+  const places = await prisma.place.findMany();
+  const placeSlugMap = new Map<string, string>();
+
+  for (const place of places) {
+    const slug = await buildUniqueSlug(place.title, existingSlugs);
+    placeSlugMap.set(place.id, slug);
+  }
+
+  // Ensuite Places (en mettant à jour aussi les Users)
+  for (const [oldId, newSlug] of placeSlugMap) {
+    await prisma.$transaction([
+      // Mettre à jour la Place elle-même
+      prisma.place.update({
+        where: { id: oldId },
+        data: { id: newSlug },
+      }),
+      // Mettre à jour les références dans User
+      ...(await updateUserPlaceReferences(oldId, newSlug)),
+    ]);
+  }
+
+  // Enfin les Tops
+  await migrateTopIdsToSlugs();
+
+  console.log('Migration complète terminée');
+}
+
+async function updateUserPlaceReferences(oldPlaceId: string, newPlaceSlug: string) {
+  // Trouver tous les users qui référencent cet ancien ID
+  const users = await prisma.user.findMany({
+    where: {
+      OR: [
+        { TestedPlace: { has: oldPlaceId } },
+        { BookmarkPlace: { has: oldPlaceId } },
+      ],
+    },
+  });
+
+  // Préparer les requêtes de mise à jour
+  const updateQueries = users.map(user => {
+    const updatedTested = user.TestedPlace.map(id => id === oldPlaceId ? newPlaceSlug : id);
+    const updatedBookmark = user.BookmarkPlace.map(id => id === oldPlaceId ? newPlaceSlug : id);
+
+    return prisma.user.update({
+      where: { id: user.id },
+      data: {
+        TestedPlace: { set: updatedTested },
+        BookmarkPlace: { set: updatedBookmark },
+      },
+    });
+  });
+
+  return updateQueries;
+}
+
+// Fonction buildUniqueSlug avec gestion des doublons
+async function buildUniqueSlug(base: string, existingSlugs: Set<string>): Promise<string> {
+  const slug = base
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+    .substring(0, 50);
+
+  let uniqueSlug = slug;
+  let counter = 1;
+
+  while (existingSlugs.has(uniqueSlug)) {
+    uniqueSlug = `${slug}-${counter}`;
+    counter++;
+  }
+
+  existingSlugs.add(uniqueSlug);
+  return uniqueSlug;
+}
+
+async function migrateTopIdsToSlugs() {
+  // 1. Récupérer tous les tops existants
+  const tops = await prisma.top.findMany();
+
+  // 2. Pour chaque top, créer un slug et mettre à jour
+  for (const top of tops) {
+    const slug = await buildUniqueSlug(top.title, new Set<string>());
+
+    try {
+      // 3. Mettre à jour le top avec le nouveau slug comme ID
+      await prisma.top.update({
+        where: { id: top.id },
+        data: { id: slug },
+      });
+
+      console.log(`Migré ${top.title} (${top.id}) vers slug: ${slug}`);
+    } catch (error) {
+      console.error(`Erreur lors de la migration de ${top.title}:`, error);
+    }
+  }
+
+  console.log('Migration des tops terminée');
 }

@@ -2,10 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { buildSlug } from '@/lib/utils';
 import { PrismaClient } from '@prisma/client';
 
 import type { PostFacebookFormValues, PostInstaFormValues } from "@/components/post-insta/create-post-insta-form";
-
 const prisma = new PrismaClient()
 
 // Check if URL already exists
@@ -21,6 +21,7 @@ export async function checkUrlExists(url: string): Promise<boolean> {
 
 // Create a new PostInsta
 export async function createPostInsta(data: PostInstaFormValues) {
+
     try {
         // Check if URL already exists
         const urlExists = await checkUrlExists(data.url)
@@ -28,9 +29,26 @@ export async function createPostInsta(data: PostInstaFormValues) {
             return { error: "Cette URL existe déjà" }
         }
 
+        let generatedId = buildSlug(data.title);
+        let isUnique = false;
+
+        while (!isUnique) {
+            const existingPlace = await prisma.postInsta.findUnique({
+                where: { id: generatedId },
+            });
+
+            if (!existingPlace) {
+                isUnique = true;
+            } else {
+                const randomNumbers = Math.floor(1000 + Math.random() * 9000); // Generate 4 random digits
+                generatedId = `${buildSlug(data.title)}-${randomNumbers}`;
+            }
+        }
+
         // Create the PostInsta record
         const postInsta = await prisma.postInsta.create({
             data: {
+                id: generatedId,
                 date: data.date,
                 url: data.url,
                 title: data.title,
@@ -59,7 +77,21 @@ export async function createPostFb(data: PostFacebookFormValues) {
         }
 
         const media = await prisma.media.findFirst()
+        let generatedId = buildSlug(data.title);
+        let isUnique = false;
 
+        while (!isUnique) {
+            const existingPlace = await prisma.postInsta.findUnique({
+                where: { id: generatedId },
+            });
+
+            if (!existingPlace) {
+                isUnique = true;
+            } else {
+                const randomNumbers = Math.floor(1000 + Math.random() * 9000); // Generate 4 random digits
+                generatedId = `${buildSlug(data.title)}-${randomNumbers}`;
+            }
+        }
         // Create the PostInsta record
         const post = await prisma.postInsta.create({
             data: {

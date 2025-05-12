@@ -1,22 +1,42 @@
 "use client";
 
-import { Check, DollarSign } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
+import { Check, DollarSign } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
-    Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList
-} from '@/components/ui/command';
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import {
-    MultiSelect, MultiSelectContent, MultiSelectEmpty, MultiSelectGroup, MultiSelectItem,
-    MultiSelectList, MultiSelectSearch, MultiSelectTrigger, MultiSelectValue
-} from '@/components/ui/multi-select';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Slider } from '@/components/ui/slider';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { cn, fetcher } from '@/lib/utils';
+  MultiSelect,
+  MultiSelectContent,
+  MultiSelectEmpty,
+  MultiSelectGroup,
+  MultiSelectItem,
+  MultiSelectList,
+  MultiSelectSearch,
+  MultiSelectTrigger,
+  MultiSelectValue,
+} from "@/components/ui/multi-select-name";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn, fetcher } from "@/lib/utils";
 
 import type { PlaceType } from "@prisma/client";
 
@@ -40,6 +60,12 @@ const ratingTexts = {
   1: "Je recommande",
   2: "Il faut y aller",
   3: "Vaut vraiment le detour",
+};
+const pricingText = {
+  1: "C'est très bon marché",
+  2: "Super rapport qualité-prix",
+  3: "Assez cher",
+  4: "Très cher",
 };
 
 export function SearchFilters({
@@ -90,7 +116,11 @@ export function SearchFilters({
               <MultiSelectList>
                 <MultiSelectGroup>
                   {menus.map((menu) => (
-                    <MultiSelectItem key={menu.id} value={menu.id}>
+                    <MultiSelectItem
+                      key={menu.id}
+                      value={menu.id}
+                      name={menu.name}
+                    >
                       {menu.name}
                     </MultiSelectItem>
                   ))}
@@ -150,19 +180,34 @@ export function SearchFilters({
           </Popover>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="font-medium">Fourchette de prix</h3>
-          <div className="px-2">
-            <Slider
-              min={0}
-              max={200000}
-              step={1000}
-              value={priceRange}
-              onValueChange={setPriceRange}
-            />
-            <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-              <span>{formatPrice(priceRange[0])}</span>
-              <span>{formatPrice(priceRange[1])}</span>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
+            <h3 className="font-medium">Prix</h3>
+            <div className="flex items-center gap-2">
+              <TooltipProvider>
+                {[1, 2, 3, 4].map((value) => (
+                  <Tooltip key={value}>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={() => setPriceInDollars(value)}
+                        className={`flex items-center justify-center h-10 w-10 rounded-full border hover-lift ${
+                          priceInDollars >= value
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-background"
+                        }`}
+                      >
+                        <DollarSign
+                          className={cn("size-5", priceInDollars >= value)}
+                        />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{pricingText[value as keyof typeof pricingText]}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </TooltipProvider>
             </div>
           </div>
         </div>
