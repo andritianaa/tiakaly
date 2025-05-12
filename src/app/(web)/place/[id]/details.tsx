@@ -1,42 +1,29 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
-import { Check, DollarSign, Mail, MapPin, Phone } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { InstagramEmbed } from "react-social-media-embed";
+import Autoplay from 'embla-carousel-autoplay';
+import { Check, DollarSign, Mail, MapPin, Phone } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { InstagramEmbed } from 'react-social-media-embed';
 
-import { PlaceBookmark } from "@/components/bookmark/place-bookmark";
-import DynamicMap from "@/components/place/place-map";
-import { RichTextEditor } from "@/components/rich-text-editor";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { PlaceBookmark } from '@/components/bookmark/place-bookmark';
+import DynamicMap from '@/components/place/place-map';
+import { RichTextEditor } from '@/components/rich-text-editor';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+  Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
+} from '@/components/ui/carousel';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/use-toast";
-import { PlaceWithRelations } from "@/types/place";
-import { Media } from "@prisma/client";
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useToast } from '@/hooks/use-toast';
+import { PlaceWithRelations } from '@/types/place';
+import { Media } from '@prisma/client';
 
 import type { CarouselApi } from "@/components/ui/carousel";
 export function PlaceDetailClient({
@@ -362,7 +349,7 @@ export function PlaceDetailClient({
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground hidden">
                   Aucun contact disponible
                 </p>
               )}

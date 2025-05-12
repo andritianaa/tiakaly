@@ -168,7 +168,7 @@ export const PlacePopup = ({
                       </div>
                     ))
                   ) : (
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground hidden">
                       Aucun contact disponible
                     </p>
                   )}

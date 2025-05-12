@@ -103,7 +103,7 @@ export default function SearchPageContent() {
       // Price in dollars filter
       const matchesPriceInDollars =
         priceInDollars === 0 ||
-        (place.priceInDollars && place.priceInDollars == priceInDollars);
+        (place.priceInDollars && place.priceInDollars <= priceInDollars);
 
       // Menu filter - Logique ET (tous les menus sélectionnés doivent être présents)
       const matchesMenus =
@@ -118,7 +118,8 @@ export default function SearchPageContent() {
 
       // Place type filter
       const matchesPlaceType =
-        !placeType || (place.keywords && place.type == placeType);
+        !placeType ||
+        (place.type && place.type.toLowerCase() === placeType.toLowerCase());
 
       return (
         matchesSearch &&

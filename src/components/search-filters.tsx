@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, DollarSign } from "lucide-react";
+import { Check, ChevronsUpDown, DollarSign } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -142,7 +142,7 @@ export function SearchFilters({
                 className="w-full justify-between"
               >
                 {placeType ? placeType : "Sélectionner un type"}
-                <DollarSign className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0">
