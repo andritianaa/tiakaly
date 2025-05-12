@@ -1,5 +1,5 @@
 model PostInsta {
-    id          String   @id @default(cuid())
+    id          String   @id
     date        DateTime
     url         String
     title       String
