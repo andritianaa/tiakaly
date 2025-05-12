@@ -30,9 +30,8 @@ export async function GET(req: NextRequest) {
         content: true,
         type: true,
         MenuPlace: {
-          select: {
-            id: true,
-            menuId: true,
+          include: {
+            menu: true,
           },
         },
         mainMedia: {

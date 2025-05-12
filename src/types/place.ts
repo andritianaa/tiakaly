@@ -96,7 +96,7 @@ export type PlaceSummary = {
   MenuPlace: {
     id: string;
     menuId: string;
-  }[];
+  }[] | any[];
   keywords: string[];
   type: string;
   content: string;

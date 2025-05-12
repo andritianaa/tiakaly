@@ -108,6 +108,10 @@ export default function SearchPageContent() {
               (place.keywords &&
                 place.keywords.some((keyword) =>
                   keyword.toLowerCase().includes(term)
+                )) ||
+              (place.MenuPlace &&
+                place.MenuPlace.some((menuPlace) =>
+                  menuPlace.menu.name.toLowerCase().includes(term)
                 ))
             );
           });

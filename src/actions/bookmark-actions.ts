@@ -47,10 +47,10 @@ export const getUserBookmarks = SA(async (session) => {
                 keywords: true,
                 Contact: true,
                 type: true,
+
                 MenuPlace: {
-                    select: {
-                        id: true,
-                        menuId: true,
+                    include: {
+                        menu: true,
                     },
                 },
                 mainMedia: {
@@ -85,9 +85,8 @@ export const getUserBookmarks = SA(async (session) => {
                 Contact: true,
                 type: true,
                 MenuPlace: {
-                    select: {
-                        id: true,
-                        menuId: true,
+                    include: {
+                        menu: true,
                     },
                 },
                 mainMedia: {
