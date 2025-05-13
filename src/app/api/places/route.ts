@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { prisma } from "@/prisma";
-import { ContactType, Status } from "@prisma/client";
+import { buildSlug } from '@/lib/utils';
+import { prisma } from '@/prisma';
+import { ContactType, Status } from '@prisma/client';
 
 export async function GET() {
   try {
@@ -55,11 +56,28 @@ export async function POST(request: Request) {
       mainMediaId,
       contacts,
       mediaIds,
+      isOpenSunday
     } = body;
 
     // Créer le lieu
+    let generatedId = buildSlug(title);
+    let isUnique = false;
+
+    while (!isUnique) {
+      const existingPlace = await prisma.place.findUnique({
+        where: { id: generatedId },
+      });
+
+      if (!existingPlace) {
+        isUnique = true;
+      } else {
+        const randomNumbers = Math.floor(1000 + Math.random() * 9000); // Generate 4 random digits
+        generatedId = `${buildSlug(title)}-${randomNumbers}`;
+      }
+    }
     const place = await prisma.place.create({
       data: {
+        id: generatedId,
         title,
         localisation,
         content,
@@ -70,6 +88,7 @@ export async function POST(request: Request) {
         priceMin,
         priceMax,
         type,
+        isOpenSunday,
         status: status || Status.draft,
         mainMediaId,
       },
