@@ -75,6 +75,7 @@ export const getUserBookmarks = SA(async (session) => {
                 title: true,
                 content: true,
                 localisation: true,
+                isOpenSunday: true,
                 longitude: true,
                 latitude: true,
                 priceMin: true,
