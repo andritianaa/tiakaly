@@ -1,26 +1,38 @@
 "use client";
 
-import L from 'leaflet';
-import { Route } from 'lucide-react';
-import dynamic from 'next/dynamic';
-import React, { useEffect, useRef, useState } from 'react';
+import L from "leaflet";
+import { Route } from "lucide-react";
+import dynamic from "next/dynamic";
+import React, { useEffect, useRef, useState } from "react";
 // Import Leaflet components only on client side
 import {
-    Circle, MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents
-} from 'react-leaflet';
-import useSWR from 'swr';
+  Circle,
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
+import useSWR from "swr";
 
-import { PlaceResume } from '@/components/place-resume';
-import { Button } from '@/components/ui/button';
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Skeleton } from '@/components/ui/skeleton';
-import { MARKER } from '@/lib/MarkerIcon';
-import { fetcher } from '@/lib/utils';
+import { PlaceResume } from "@/components/place-resume";
+import { Button } from "@/components/ui/button";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
+import { MARKER } from "@/lib/MarkerIcon";
+import { fetcher } from "@/lib/utils";
 
-import { PlacePopup } from './popup';
+import { PlacePopup } from "./popup";
 
 import type { PlaceSummary } from "@/types/place";
 // Types pour les informations de l'itinéraire
@@ -507,9 +519,10 @@ function MapComponent() {
       const textFiltered = fetchedPlaces.filter((place) => {
         const lowerSearchText = searchText.toLowerCase();
         return (
-          place.title.toLowerCase().includes(lowerSearchText) ||
-          (place.bio?.toLowerCase() || "").includes(lowerSearchText) ||
-          (place.localisation?.toLowerCase() || "").includes(lowerSearchText)
+          place.longitude !== 0 &&
+          (place.title.toLowerCase().includes(lowerSearchText) ||
+            (place.bio?.toLowerCase() || "").includes(lowerSearchText) ||
+            (place.localisation?.toLowerCase() || "").includes(lowerSearchText))
         );
       });
 

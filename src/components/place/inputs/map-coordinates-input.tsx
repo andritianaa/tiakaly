@@ -11,11 +11,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 // Type definitions for our props
 interface MapCoordinatesInputProps {
   longitude: number;
   latitude: number;
+  isOnlineProps?: boolean;
   onChange: (longitude: number, latitude: number) => void;
 }
 
@@ -109,12 +111,17 @@ export function MapCoordinatesInput({
   longitude,
   latitude,
   onChange,
+  isOnlineProps,
 }: MapCoordinatesInputProps) {
   const [localLatitude, setLocalLatitude] = useState<string>(
     latitude ? latitude.toString() : ""
   );
   const [localLongitude, setLocalLongitude] = useState<string>(
     longitude ? longitude.toString() : ""
+  );
+
+  const [isOnline, setIsOnline] = useState(
+    isOnlineProps ? isOnlineProps : false
   );
 
   // Flag to prevent infinite loops
@@ -165,66 +172,86 @@ export function MapCoordinatesInput({
 
   return (
     <div className="space-y-2">
-      <Label>Coordonnées géographiques</Label>
-      <Card>
-        <CardContent className="p-4">
-          <DynamicMap
-            longitude={longitude}
-            latitude={latitude}
-            onChange={onChange}
-          />
-          <p className="text-xs text-muted-foreground mt-2">
-            Cliquez sur la carte pour définir la position du lieu
-          </p>
-          <p className="text-xs font-medium mt-1 mb-4">
-            Coordonnées actuelles: {latitude ? latitude.toFixed(6) : "-"},{" "}
-            {longitude ? longitude.toFixed(6) : "-"}
-          </p>
+      <div className="space-y-2">
+        <Label htmlFor="sunday-open">Uniquement en ligne ?</Label>
+        <br />
+        <Switch
+          id="sunday-open"
+          checked={isOnline}
+          onCheckedChange={(checked) => {
+            setIsOnline(checked);
+            if (checked) {
+              onChange(0, 0);
+            } else {
+              onChange(-18.904013, 47.538528);
+            }
+          }}
+        />
+      </div>
+      {!isOnline && (
+        <>
+          <Label>Coordonnées géographiques</Label>
+          <Card>
+            <CardContent className="p-4">
+              <DynamicMap
+                longitude={longitude}
+                latitude={latitude}
+                onChange={onChange}
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                Cliquez sur la carte pour définir la position du lieu
+              </p>
+              <p className="text-xs font-medium mt-1 mb-4">
+                Coordonnées actuelles: {latitude ? latitude.toFixed(6) : "-"},{" "}
+                {longitude ? longitude.toFixed(6) : "-"}
+              </p>
 
-          <div className="grid grid-cols-2 gap-4 mt-2">
-            <div>
-              <Label htmlFor="latitude" className="text-sm">
-                Latitude
-              </Label>
-              <Input
-                id="latitude"
-                type="text"
-                inputMode="decimal"
-                placeholder="-90 à 90"
-                value={localLatitude}
-                onChange={handleLatitudeChange}
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <Label htmlFor="longitude" className="text-sm">
-                Longitude
-              </Label>
-              <Input
-                id="longitude"
-                type="text"
-                inputMode="decimal"
-                placeholder="-180 à 180"
-                value={localLongitude}
-                onChange={handleLongitudeChange}
-                className="mt-1"
-              />
-            </div>
-          </div>
-          <Button
-            onClick={applyCoordinates}
-            className="mt-4 w-full"
-            type="button"
-            variant="secondary"
-          >
-            Appliquer les coordonnées
-          </Button>
-          <p className="text-xs text-muted-foreground mt-2">
-            Saisissez les coordonnées et cliquez sur "Appliquer" pour mettre à
-            jour la carte
-          </p>
-        </CardContent>
-      </Card>
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                <div>
+                  <Label htmlFor="latitude" className="text-sm">
+                    Latitude
+                  </Label>
+                  <Input
+                    id="latitude"
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="-90 à 90"
+                    value={localLatitude}
+                    onChange={handleLatitudeChange}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="longitude" className="text-sm">
+                    Longitude
+                  </Label>
+                  <Input
+                    id="longitude"
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="-180 à 180"
+                    value={localLongitude}
+                    onChange={handleLongitudeChange}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+              <Button
+                onClick={applyCoordinates}
+                className="mt-4 w-full"
+                type="button"
+                variant="secondary"
+              >
+                Appliquer les coordonnées
+              </Button>
+              <p className="text-xs text-muted-foreground mt-2">
+                Saisissez les coordonnées et cliquez sur "Appliquer" pour mettre
+                à jour la carte
+              </p>
+            </CardContent>
+          </Card>
+        </>
+      )}
     </div>
   );
 }

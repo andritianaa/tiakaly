@@ -71,11 +71,12 @@ const KEYWORD_CATEGORIES = {
       "Nature / Jardin / Terrasse",
       "Vue panoramique / Rooftop",
     ],
-    isCheckList: true,
+    isCheckList: false,
   },
   location: {
     name: "Localisation",
     keywords: [
+      "En ligne",
       "Antananarivo",
       "Analakely",
       "Ivandry",

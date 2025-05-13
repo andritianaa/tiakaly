@@ -203,9 +203,15 @@ export const PlaceResume = ({
                 </div>
               </div>
             </div>
-            {distance && (
+            {distance && place.longitude !== 0 && (
               <span className="flex items-center py-0.5 rounded-full max-lg:ml-0">
                 <span className="text-sm font-medium">A {distance}</span>
+              </span>
+            )}
+
+            {place.longitude == 0 && (
+              <span className="flex items-center py-0.5 rounded-full max-lg:ml-0">
+                <span className="text-sm font-medium">Commande en ligne</span>
               </span>
             )}
           </div>

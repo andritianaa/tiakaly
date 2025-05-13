@@ -180,7 +180,10 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
           <MapCoordinatesInput
             longitude={longitude}
             latitude={latitude}
+            isOnlineProps={longitude == 0 ? true : false}
             onChange={(lng, lat) => {
+              console.log("lng ==> ", lng);
+              console.log("lat ==> ", lat);
               setLongitude(lng);
               setLatitude(lat);
             }}
