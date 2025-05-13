@@ -1,29 +1,30 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { BioInput } from '@/components/place/inputs/bio-input';
-import { GmapEmbedInput, GmapLinkInput } from '@/components/place/inputs/gmapLink-input';
-import { InstaLinkInput } from '@/components/place/inputs/Insta-input';
-import { PriceInDollarsInput } from '@/components/place/inputs/priceInDollars-input';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { useToast } from '@/hooks/use-toast';
-import { Status } from '@prisma/client';
+import { BioInput } from "@/components/place/inputs/bio-input";
+import { GmapLinkInput } from "@/components/place/inputs/gmapLink-input";
+import { InstaLinkInput } from "@/components/place/inputs/Insta-input";
+import { OpenSundayInput } from "@/components/place/inputs/is-open-sunday-input";
+import { PriceInDollarsInput } from "@/components/place/inputs/priceInDollars-input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { Status } from "@prisma/client";
 
-import { ContactsInput } from './inputs/contacts-input';
-import { ContentInput } from './inputs/content-input';
-import { KeywordsInput } from './inputs/keywords-input';
-import { LocalisationInput } from './inputs/localisation-input';
-import { MainMediaInput } from './inputs/main-media-input';
-import { MapCoordinatesInput } from './inputs/map-coordinates-input';
-import { MediaPlaceInput } from './inputs/media-place-input';
-import { MenuInput } from './inputs/menu-input';
-import { PlaceTypeInput } from './inputs/place-type-input';
-import { PriceRangeInput } from './inputs/price-range-input';
-import { RatingInput } from './inputs/rating-input';
-import { StatusInput } from './inputs/status-input';
-import { TitleInput } from './inputs/title-input';
+import { ContactsInput } from "./inputs/contacts-input";
+import { ContentInput } from "./inputs/content-input";
+import { KeywordsInput } from "./inputs/keywords-input";
+import { LocalisationInput } from "./inputs/localisation-input";
+import { MainMediaInput } from "./inputs/main-media-input";
+import { MapCoordinatesInput } from "./inputs/map-coordinates-input";
+import { MediaPlaceInput } from "./inputs/media-place-input";
+import { MenuInput } from "./inputs/menu-input";
+import { PlaceTypeInput } from "./inputs/place-type-input";
+import { PriceRangeInput } from "./inputs/price-range-input";
+import { RatingInput } from "./inputs/rating-input";
+import { StatusInput } from "./inputs/status-input";
+import { TitleInput } from "./inputs/title-input";
 
 import type {
   ContactInput,
@@ -59,6 +60,9 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
   const [rating, setRating] = useState(initialData?.rating || 3);
   const [priceInDollars, setPriceInDollars] = useState(
     initialData?.priceInDollars || 2
+  );
+  const [isOpenSunday, setIsOpenSunday] = useState(
+    initialData?.isOpenSunday || false
   );
 
   const [priceMin, setPriceMin] = useState(initialData?.priceMin || 0);
@@ -126,6 +130,7 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
         menu: menuIds,
         status,
         mainMediaId,
+        isOpenSunday,
         contacts,
         mediaIds,
         bio,
@@ -182,13 +187,11 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
           />
           <div className="grid grid-cols-2 gap-4">
             <GmapLinkInput value={gmapLink} onChange={setGmapLink} />
-            <GmapEmbedInput value={gmapEmbed} onChange={setGmapEmbed} />
             <InstaLinkInput value={instagramUrl} onChange={setinstagramUrl} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1">
             <KeywordsInput value={keywords} onChange={setKeywords} />
-            <RatingInput value={rating} onChange={setRating} />
           </div>
 
           <div className="space-y-4">
@@ -198,10 +201,17 @@ export function PlaceForm({ initialData, onSubmit }: PlaceFormProps) {
               onMinChange={setPriceMin}
               onMaxChange={setPriceMax}
             />
-            <PriceInDollarsInput
-              value={priceInDollars}
-              onChange={setPriceInDollars}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
+              <OpenSundayInput
+                value={isOpenSunday}
+                onChange={setIsOpenSunday}
+              />
+              <PriceInDollarsInput
+                value={priceInDollars}
+                onChange={setPriceInDollars}
+              />
+              <RatingInput value={rating} onChange={setRating} />
+            </div>
           </div>
 
           <MainMediaInput

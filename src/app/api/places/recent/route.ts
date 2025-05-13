@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
         title: true,
         content: true,
         localisation: true,
+        isOpenSunday: true,
         longitude: true,
         latitude: true,
         priceMin: true,

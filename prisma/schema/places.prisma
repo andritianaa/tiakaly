@@ -7,6 +7,7 @@ model Place {
     longitude      Float
     latitude       Float
     keywords       String[]
+    isOpenSunday   Boolean      @default(false)
     rating         Int
     priceMin       Int
     priceMax       Int

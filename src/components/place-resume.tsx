@@ -139,7 +139,7 @@ export const PlaceResume = ({
                               <div className="flex">
                                 {" "}
                                 {/* Single wrapper element */}
-                                {[1, 2, 3].map((dollar) => (
+                                {[1, 2, 3, 4].map((dollar) => (
                                   <span
                                     key={dollar}
                                     className={

@@ -21,6 +21,7 @@ export type PlaceInput = {
   id?: string;
   title: string;
   localisation: string;
+  isOpenSunday: boolean;
   bio: string;
   content: string;
   longitude: number;
@@ -44,6 +45,7 @@ export type PlaceInput = {
 export type PlaceWithRelations = {
   id: string;
   title: string;
+  isOpenSunday: boolean;
   localisation: string;
   content: string;
   priceInDollars?: number;
@@ -79,6 +81,8 @@ export type PlaceWithRelations = {
 
 export type PlaceSummary = {
   id: string;
+  isOpenSunday: boolean;
+
   bio?: string | null;
   title: string;
   localisation: string;

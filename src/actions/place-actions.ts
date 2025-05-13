@@ -27,6 +27,7 @@ export async function createPlace(data: PlaceInput) {
       mediaIds,
       bio,
       priceInDollars,
+      isOpenSunday,
       gmapEmbed,
       instagramUrl,
       gmapLink,
@@ -48,13 +49,13 @@ export async function createPlace(data: PlaceInput) {
         generatedId = `${buildSlug(title)}-${randomNumbers}`;
       }
     }
-
     const place = await prisma.place.create({
       data: {
         id: generatedId,
         title,
         localisation,
         content,
+        isOpenSunday,
         longitude,
         latitude,
         keywords,
@@ -147,6 +148,7 @@ export async function updatePlace(id: string, data: PlaceInput) {
       gmapEmbed,
       instagramUrl,
       gmapLink,
+      isOpenSunday
     } = data;
 
     // Vérifier si le lieu existe
@@ -183,6 +185,7 @@ export async function updatePlace(id: string, data: PlaceInput) {
         gmapEmbed,
         instagramUrl,
         gmapLink,
+        isOpenSunday
       },
     });
 

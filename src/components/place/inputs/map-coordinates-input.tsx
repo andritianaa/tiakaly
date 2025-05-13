@@ -5,8 +5,9 @@ import type React from "react";
 import "leaflet/dist/leaflet.css";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,12 +35,7 @@ function MapComponent({
   onChange,
 }: MapCoordinatesInputProps) {
   // Only import Leaflet and React-Leaflet components on the client side
-  const {
-    MapContainer,
-    TileLayer,
-    Marker,
-    useMapEvents,
-  } = require("react-leaflet");
+  const { MapContainer, TileLayer, Marker, useMap } = require("react-leaflet");
   const L = require("leaflet");
 
   // Fix for Leaflet marker icons in Next.js
@@ -50,44 +46,53 @@ function MapComponent({
     iconAnchor: [12, 41],
   });
 
-  const [position, setPosition] = useState<[number, number]>([
-    latitude || -18.8792, // Default coordinates (Madagascar)
-    longitude || 47.5079,
-  ]);
-
-  useEffect(() => {
-    onChange(position[1], position[0]);
-  }, [position, onChange]);
-
   // Define a default zoom
   const defaultZoom = 13;
+  const initialPosition: [number, number] = [
+    latitude || -18.8792, // Default coordinates (Madagascar)
+    longitude || 47.5079,
+  ];
 
-  // Inner component for map events
-  function LocationMarker({
-    position,
-    setPosition,
-  }: {
-    position: [number, number];
-    setPosition: (pos: [number, number]) => void;
-  }) {
-    const map = useMapEvents({
-      click(e) {
-        setPosition([e.latlng.lat, e.latlng.lng]);
-      },
-    });
+  // MapController handles map events and updates
+  function MapController() {
+    const map = useMap();
 
-    return position ? <Marker position={position} icon={icon} /> : null;
+    // Handle map click events
+    useEffect(() => {
+      const handleMapClick = (e: any) => {
+        const { lat, lng } = e.latlng;
+        onChange(lng, lat);
+      };
+
+      map.on("click", handleMapClick);
+
+      return () => {
+        map.off("click", handleMapClick);
+      };
+    }, [map]);
+
+    // Update map view when props change
+    useEffect(() => {
+      if (latitude && longitude) {
+        map.setView([latitude, longitude], map.getZoom());
+      }
+    }, [map, latitude, longitude]);
+
+    return null;
   }
 
   return (
     <div className="h-[500px] w-full rounded-md overflow-hidden">
       <MapContainer
-        center={position}
+        center={initialPosition}
         zoom={defaultZoom}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <LocationMarker position={position} setPosition={setPosition} />
+        {latitude && longitude && (
+          <Marker position={[latitude, longitude]} icon={icon} />
+        )}
+        <MapController />
       </MapContainer>
     </div>
   );
@@ -112,8 +117,13 @@ export function MapCoordinatesInput({
     longitude ? longitude.toString() : ""
   );
 
+  // Flag to prevent infinite loops
+  const isUpdatingRef = useRef(false);
+
   // Update local state when props change (e.g., when map is clicked)
   useEffect(() => {
+    if (isUpdatingRef.current) return;
+
     if (latitude !== undefined && !isNaN(latitude)) {
       setLocalLatitude(latitude.toFixed(6));
     }
@@ -125,20 +135,31 @@ export function MapCoordinatesInput({
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLocalLatitude(value);
-
-    const numValue = Number.parseFloat(value);
-    if (!isNaN(numValue) && numValue >= -90 && numValue <= 90) {
-      onChange(longitude, numValue);
-    }
   };
 
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLocalLongitude(value);
+  };
 
-    const numValue = Number.parseFloat(value);
-    if (!isNaN(numValue) && numValue >= -180 && numValue <= 180) {
-      onChange(numValue, latitude);
+  // Apply coordinates when button is clicked or form is submitted
+  const applyCoordinates = () => {
+    const lat = Number.parseFloat(localLatitude);
+    const lng = Number.parseFloat(localLongitude);
+
+    if (
+      !isNaN(lat) &&
+      !isNaN(lng) &&
+      lat >= -90 &&
+      lat <= 90 &&
+      lng >= -180 &&
+      lng <= 180
+    ) {
+      isUpdatingRef.current = true;
+      onChange(lng, lat);
+      setTimeout(() => {
+        isUpdatingRef.current = false;
+      }, 100);
     }
   };
 
@@ -190,8 +211,17 @@ export function MapCoordinatesInput({
               />
             </div>
           </div>
+          <Button
+            onClick={applyCoordinates}
+            className="mt-4 w-full"
+            type="button"
+            variant="secondary"
+          >
+            Appliquer les coordonnées
+          </Button>
           <p className="text-xs text-muted-foreground mt-2">
-            Vous pouvez également saisir directement les coordonnées
+            Saisissez les coordonnées et cliquez sur "Appliquer" pour mettre à
+            jour la carte
           </p>
         </CardContent>
       </Card>
