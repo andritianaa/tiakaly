@@ -96,6 +96,7 @@ export async function createPostFb(data: PostFacebookFormValues) {
         const post = await prisma.postInsta.create({
             data: {
                 date: new Date(),
+                id: generatedId,
                 url: data.url,
                 title: data.title,
                 placeId: null,
