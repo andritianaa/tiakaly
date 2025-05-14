@@ -66,7 +66,7 @@ const TRANSPORT_CONFIG = {
     profile: "car",
     serviceUrl: "https://router.project-osrm.org/route/v1",
     color: "#3b82f6",
-    speedFactor: 1.0,
+    speedFactor: 0.5,
   },
   cycling: {
     profile: "motorcycle",
@@ -90,7 +90,7 @@ interface RouteInfo {
 
 interface MapControllerProps {
   selectedPlace: PlaceWithRelations | null;
-  userLocation: { latitude: number; longitude: number };
+  userLocation: { latitude: number; longitude: number } | null;
   hasUserLocation: boolean;
   routeDestination: PlaceWithRelations | null;
   setRouteInfo: React.Dispatch<React.SetStateAction<RouteInfo | null>>;
@@ -115,6 +115,7 @@ function MapController({
 }: MapControllerProps) {
   const map = useMap();
   const routingControlRef = useRef<any>(null);
+  const routingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Effect for handling place selection
   useEffect(() => {
@@ -140,6 +141,7 @@ function MapController({
   useEffect(() => {
     if (
       hasUserLocation &&
+      userLocation &&
       userLocation.latitude !== 0 &&
       userLocation.longitude !== 0
     ) {
@@ -196,7 +198,13 @@ function MapController({
     };
 
     const initRouting = async () => {
-      if (!routeDestination || !hasUserLocation) return;
+      // Nettoyer tout timeout précédent
+      if (routingTimeoutRef.current) {
+        clearTimeout(routingTimeoutRef.current);
+        routingTimeoutRef.current = null;
+      }
+
+      if (!routeDestination || !hasUserLocation || !userLocation) return;
 
       try {
         // Load Leaflet Routing Machine if not already loaded
@@ -211,6 +219,7 @@ function MapController({
         // Create new routing if we have both user location and destination
         if (
           hasUserLocation &&
+          userLocation &&
           routeDestination &&
           routeDestination.latitude &&
           routeDestination.longitude
@@ -299,13 +308,16 @@ function MapController({
           // Get route info when route is calculated
           if (routingControlRef.current) {
             // Set a timeout for OSRM response
-            const timeoutId = setTimeout(() => {
+            routingTimeoutRef.current = setTimeout(() => {
               handleRoutingFailure();
             }, 5000);
 
             routingControlRef.current.on("routesfound", function (e: any) {
               // Clear the timeout as we got a response
-              clearTimeout(timeoutId);
+              if (routingTimeoutRef.current) {
+                clearTimeout(routingTimeoutRef.current);
+                routingTimeoutRef.current = null;
+              }
 
               const routes = e.routes;
               const route = routes[0]; // Get the first route
@@ -349,7 +361,10 @@ function MapController({
 
             // Handle routing errors
             routingControlRef.current.on("routingerror", function () {
-              clearTimeout(timeoutId);
+              if (routingTimeoutRef.current) {
+                clearTimeout(routingTimeoutRef.current);
+                routingTimeoutRef.current = null;
+              }
               handleRoutingFailure();
             });
           }
@@ -377,6 +392,11 @@ function MapController({
       if (routingControlRef.current) {
         map.removeControl(routingControlRef.current);
         routingControlRef.current = null;
+      }
+
+      if (routingTimeoutRef.current) {
+        clearTimeout(routingTimeoutRef.current);
+        routingTimeoutRef.current = null;
       }
     };
   }, [
@@ -414,10 +434,66 @@ const createUserLocationDot = () => {
     iconAnchor: [12, 12],
   });
 };
+
 const MADAGASCAR_COORDS = {
   latitude: -18.902379,
   longitude: 47.533765,
 };
+
+// Composant de la barre de statut
+function LocationStatusBar({
+  isLocating,
+  locationError,
+  hasUserLocation,
+  getUserLocation,
+}: {
+  isLocating: boolean;
+  locationError: string;
+  hasUserLocation: boolean;
+  getUserLocation: () => void;
+}) {
+  if (isLocating) {
+    return (
+      <div className=" bg-gray-200  p-2 z-10 flex justify-between items-center">
+        <span>Recherche de votre position...</span>
+        <div className="animate-spin h-5 w-5 border-2 border-black rounded-full border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  if (!hasUserLocation) {
+    return (
+      <div className=" bg-yellow-500 text-white p-2 z-10 flex justify-between items-center">
+        <span>Position non disponible</span>
+        <button
+          onClick={getUserLocation}
+          className="bg-white text-yellow-600 px-3 py-1 rounded text-sm"
+        >
+          Autoriser la localisation
+        </button>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+// Composant de contrôle de transport
+function TransportControls({ routeInfo }: { routeInfo: RouteInfo | null }) {
+  return (
+    <div className="flex flex-col space-y-2">
+      {/* Afficher les infos d'itinéraire */}
+      {routeInfo && (
+        <div className="p-2 pb-0 rounded-md flex justify-between">
+          <div>
+            <strong>Distance:</strong> {routeInfo.distance}
+          </div>
+          <div></div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function PlaceMap({
   latitude,
@@ -427,119 +503,196 @@ export default function PlaceMap({
 }: PlaceMapProps) {
   const position: [number, number] = [latitude, longitude];
   const [isLocating, setIsLocating] = useState(false);
-  const [userLocation, setUserLocation] = useState(MADAGASCAR_COORDS);
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [hasUserLocation, setHasUserLocation] = useState(false);
-  const [distanceFilter, setDistanceFilter] = useState<number | null>(null);
-
   const [locationError, setLocationError] = useState("");
   const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
   const [transportMode, setTransportMode] = useState("driving"); // Default to driving
   const [routeDestination, setRouteDestination] =
     useState<PlaceWithRelations | null>(null);
-  // Get user location automatically when component mounts
-  useEffect(() => {
-    getUserLocation();
-  }, []);
+  const [locationRetryCount, setLocationRetryCount] = useState(0);
 
-  // Get user location
+  // Get user location with improved handling
   const getUserLocation = () => {
     setIsLocating(true);
     setLocationError("");
+    setLocationRetryCount((prev) => prev + 1);
+
+    // Force clear previous location on retry
+    if (locationRetryCount > 0) {
+      setUserLocation(null);
+      setHasUserLocation(false);
+    }
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+      // Options plus agressives pour la géolocalisation
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0,
+      };
+
+      const geolocationId = navigator.geolocation.watchPosition(
         (position) => {
           const userCoords = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           };
-          setUserLocation(userCoords);
-          setHasUserLocation(true);
-          setIsLocating(false);
+
           console.log("User location obtained:", userCoords);
+
+          // Ne définir l'emplacement que s'il est valide
+          if (userCoords.latitude !== 0 && userCoords.longitude !== 0) {
+            setUserLocation(userCoords);
+            setHasUserLocation(true);
+            setIsLocating(false);
+
+            // Arrêter le watching après avoir obtenu une position valide
+            navigator.geolocation.clearWatch(geolocationId);
+
+            // Si nous avons une destination, essayez d'obtenir un itinéraire immédiatement
+            if (routeDestination) {
+              handleShowDirections(routeDestination);
+            }
+          }
         },
         (error) => {
           console.error("Error getting location:", error);
           let errorMsg = "";
           switch (error.code) {
             case error.PERMISSION_DENIED:
-              errorMsg = "Accès à la localisation refusé";
+              errorMsg =
+                "Accès à la localisation refusé. Vérifiez les paramètres de votre navigateur.";
               break;
             case error.POSITION_UNAVAILABLE:
-              errorMsg = "Position indisponible";
+              errorMsg =
+                "Position indisponible. Vérifiez que votre GPS est activé.";
               break;
             case error.TIMEOUT:
-              errorMsg = "Délai d'attente dépassé";
+              errorMsg = "Délai d'attente dépassé pour obtenir votre position.";
               break;
             default:
-              errorMsg = "Erreur inconnue";
+              errorMsg =
+                "Erreur inconnue lors de la récupération de votre position.";
           }
           setLocationError(errorMsg);
           setIsLocating(false);
+          setHasUserLocation(false);
+          navigator.geolocation.clearWatch(geolocationId);
         },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        }
+        options
       );
+
+      // Définir un délai d'expiration global au cas où watchPosition ne se déclencherait jamais
+      setTimeout(() => {
+        if (isLocating) {
+          setIsLocating(false);
+          setLocationError("Délai d'attente dépassé. Veuillez réessayer.");
+          navigator.geolocation.clearWatch(geolocationId);
+        }
+      }, 20000);
     } else {
       setLocationError("Géolocalisation non supportée par ce navigateur");
       setIsLocating(false);
     }
   };
 
-  // Handle show directions request
-  const handleShowDirections = (place: PlaceWithRelations) => {
-    if (!hasUserLocation) {
-      alert(
-        "Votre position n'est pas disponible. Veuillez autoriser la localisation."
-      );
-      getUserLocation();
-      return;
-    }
+  // Get user location automatically when component mounts
+  useEffect(() => {
+    getUserLocation();
 
+    // Nettoyage à la démontage du composant
+    return () => {
+      // Si nous avons des watch position en cours, les nettoyer
+      if (navigator.geolocation) {
+        // Note: nous ne pouvons pas accéder à geolocationId ici
+        // donc cette méthode est moins précise mais suffisante en cas de démontage
+      }
+    };
+  }, []);
+
+  // Handle show directions request with improved error handling
+  const handleShowDirections = (place: PlaceWithRelations) => {
     setRouteDestination(place);
+
+    if (!hasUserLocation) {
+      // Au lieu de montrer une alerte, démarrer automatiquement la localisation
+      // avec une notification dans la barre d'état
+      getUserLocation();
+    }
   };
 
+  // Définir la destination initiale une fois lors du montage du composant
   useEffect(() => {
-    handleShowDirections(place);
+    if (place) {
+      setRouteDestination(place);
+    }
   }, [place]);
 
-  return (
-    <MapContainer
-      center={position}
-      zoom={15}
-      style={{ height: "100%", width: "100%" }}
-    >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {/* Map controller to handle flying to locations and routing */}
-      <MapController
-        selectedPlace={place}
-        userLocation={userLocation}
-        hasUserLocation={hasUserLocation}
-        routeDestination={routeDestination}
-        setRouteInfo={setRouteInfo}
-        transportMode={transportMode}
-      />
+  // Mettre à jour les directions lorsque le mode de transport change
+  useEffect(() => {
+    if (routeDestination && hasUserLocation) {
+      setRouteInfo(null); // Réinitialiser les infos d'itinéraire
+      // Le trajet sera recalculé par le MapController
+    }
+  }, [transportMode]);
 
-      {/* User location blue dot - only show if we have a real user location */}
-      {hasUserLocation &&
-        userLocation.latitude !== 0 &&
-        userLocation.longitude !== 0 && (
-          <Marker
-            position={[userLocation.latitude, userLocation.longitude]}
-            icon={createUserLocationDot()}
-            zIndexOffset={1000}
-          >
-            <Popup closeButton={false}>
-              <div className="text-sm">Votre position</div>
-            </Popup>
+  return (
+    <>
+      <div className="relative w-full h-[300px] rounded-md overflow-hidden">
+        <MapContainer
+          center={position}
+          zoom={15}
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+          {/* Map controller to handle flying to locations and routing */}
+          <MapController
+            selectedPlace={place}
+            userLocation={userLocation}
+            hasUserLocation={hasUserLocation}
+            routeDestination={routeDestination}
+            setRouteInfo={setRouteInfo}
+            transportMode={transportMode}
+          />
+
+          {/* User location blue dot - only show if we have a real user location */}
+          {hasUserLocation &&
+            userLocation &&
+            userLocation.latitude !== 0 &&
+            userLocation.longitude !== 0 && (
+              <Marker
+                position={[userLocation.latitude, userLocation.longitude]}
+                icon={createUserLocationDot()}
+                zIndexOffset={1000}
+              >
+                <Popup closeButton={false}>
+                  <div className="text-sm">Votre position</div>
+                </Popup>
+              </Marker>
+            )}
+
+          {/* Marqueur de la destination */}
+          <Marker position={position} icon={icon}>
+            <Popup>{title}</Popup>
           </Marker>
-        )}
-      <Marker position={position} icon={icon}>
-        <Popup>{title}</Popup>
-      </Marker>
-    </MapContainer>
+        </MapContainer>
+
+        {/* Contrôles de transport en haut */}
+      </div>
+      <TransportControls routeInfo={routeInfo} />
+
+      {/* Barre de statut de localisation en bas */}
+      <LocationStatusBar
+        isLocating={isLocating}
+        locationError={locationError}
+        hasUserLocation={hasUserLocation}
+        getUserLocation={getUserLocation}
+      />
+    </>
   );
 }

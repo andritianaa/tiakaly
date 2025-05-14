@@ -29,7 +29,7 @@ export const DetailsMap = (props: DetailsMapProps) => {
           </Link>
         </span>
 
-        <div className="h-[300px] rounded-md overflow-hidden">
+        <div className="">
           <DynamicMap
             latitude={props.place.latitude}
             longitude={props.place.longitude}

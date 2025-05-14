@@ -92,7 +92,7 @@ const TRANSPORT_CONFIG = {
     profile: "car",
     serviceUrl: "https://router.project-osrm.org/route/v1",
     color: "#3b82f6",
-    speedFactor: 1.0,
+    speedFactor: 0.5,
   },
   cycling: {
     profile: "motorcycle",
