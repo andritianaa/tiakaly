@@ -3,12 +3,11 @@
 import Autoplay from "embla-carousel-autoplay";
 import { Check, DollarSign, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
 
+import { DetailsMap } from "@/app/(web)/place/[id]/details-map";
 import { PlaceBookmark } from "@/components/bookmark/place-bookmark";
-import DynamicMap from "@/components/place/place-map";
 import { RichTextEditor } from "@/components/rich-text-editor";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -366,6 +365,12 @@ export function PlaceDetailClient({
                   Aucun contact disponible
                 </p>
               )}
+              {place.longitude == 0 && (
+                <span className="flex items-center gap-1">
+                  <Check className="size-4 text-green-500" />
+                  Commande en ligne uniquement
+                </span>
+              )}
               {place.isOpenSunday && (
                 <span className="flex items-center gap-1">
                   <Check className="size-4 text-green-500" />
@@ -448,44 +453,11 @@ export function PlaceDetailClient({
           </div>
         )}
 
-        {/* Carte */}
-        <Card>
-          <CardContent className="p-4">
-            <span className="flex gap-2">
-              <h2 className="text-lg font-medium mb-2">Localisation</h2>
-              <Link
-                href={
-                  place.gmapLink ??
-                  `https://www.google.com/maps?q=${place.latitude},${place.longitude}`
-                }
-                className="text-yellow-500 underline"
-                target="_blank"
-              >
-                Voir sur google map
-              </Link>
-            </span>
-            {place.gmapEmbed ? (
-              <div className="w-full overflow-hidden rounded-md ">
-                <iframe
-                  src={place.gmapEmbed}
-                  height="450"
-                  loading="lazy"
-                  className="w-full"
-                ></iframe>
-              </div>
-            ) : (
-              <div className="h-[300px] rounded-md overflow-hidden">
-                <DynamicMap
-                  latitude={place.latitude}
-                  longitude={place.longitude}
-                  title={place.title}
-                />
-              </div>
-            )}
-          </CardContent>
-        </Card>
         {/* Description */}
         <RichTextEditor content={place.content} readOnly />
+
+        {/* Carte */}
+        {place.longitude != 0 && <DetailsMap place={place} />}
 
         <div>
           <div className="flex flex-wrap gap-2">
