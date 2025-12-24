@@ -25,6 +25,7 @@ async function exportData() {
       "ErrorLog",
       "PostInsta",
       "Media",
+      "Place",
       "MediaPlace",
       "Contact",
       "Menu",
